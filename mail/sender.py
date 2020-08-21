@@ -47,18 +47,18 @@ class Sender:
                              timeout_seconds: int = 60,
                              send_self: bool = True,
                              test_next_day: bool = True):
-        destination_email_addresses = [recipient.email_address]
+        destination_email_address = [recipient.email_address]
         if send_self:
-            destination_email_addresses.append(self.email_address)
+            destination_email_address.append(self.email_address)
         try:
             self.send_email(recipient.generate_subject(),
-                            destination_email_addresses,
+                            destination_email_address,
                             recipient.generate_body(), retry,
                             timeout_seconds)
         except Exception as exception:
             logging.info(exception)
             self.send_exception(
-                    f"BotDaily - !CURRENT_DAY EXCEPTION! for {date_to_string(recipient.current_date_time)}",
+                    f"BotDaily - CURRENT_DAY EXCEPTION for {date_to_string(recipient.current_date_time)}",
                     recipient, exception)
 
         if test_next_day:

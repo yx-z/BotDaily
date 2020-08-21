@@ -21,7 +21,7 @@ class Weather(Feature):
         data_url = f"https://api.darksky.net/forecast/{DARKSKY_API_KEY}/{self.latitude},{self.longitude}?lang=zh&units=si"
         data = requests.get(data_url).json()
         logging.info(
-            f"Weather latitude: {data['latitude']}, longitude: {data['longitude']}")
+                f"Weather latitude: {data['latitude']}, longitude: {data['longitude']}")
         weather = data["daily"]["data"][0]
 
         summary = weather["summary"]
@@ -33,6 +33,6 @@ class Weather(Feature):
         if min_temperature <= 0:
             min_temperature_text = f"<i><b>{min_temperature_text}</b></i>"
 
-        return f"""{self.generate_title_html()}
+        return f"""{super().generate_html()}
 {self.location_name} - {summary} 最高 {weather['temperatureHigh']}°C, {min_temperature_text}。 
 """
