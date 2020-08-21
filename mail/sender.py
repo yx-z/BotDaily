@@ -1,3 +1,4 @@
+import logging
 import smtplib
 import sys
 import traceback
@@ -55,8 +56,10 @@ class Sender:
                             recipient.generate_body(), retry,
                             timeout_seconds)
         except Exception as exception:
-            self.send_exception(f"BotDaily - CURRENT_DAY EXCEPTION!!",
-                                recipient, exception)
+            logging.info(exception)
+            self.send_exception(
+                    f"BotDaily - !CURRENT_DAY EXCEPTION! for {date_to_string(recipient.current_date_time)}",
+                    recipient, exception)
 
         if test_next_day:
             self.test_recipient_next_day(recipient, timeout_seconds)
@@ -73,6 +76,7 @@ class Sender:
                 recipient_next_day.generate_subject()
                 recipient_next_day.generate_body()
         except Exception as exception:
+            logging.info(exception)
             self.send_exception(
                     f"BotDaily - NextDay Exception for {date_to_string(next_day_date_time)}",
                     recipient, exception)
@@ -81,8 +85,11 @@ class Sender:
                        exception: Exception):
         self.send_email(subject, [self.email_address],
                         f"""Recipient: {recipient}
+
 Exception: {exception}
+
 Traceback: {traceback.format_exc()}
+
 System Information: {sys.exc_info()[2]}
 """)
 
