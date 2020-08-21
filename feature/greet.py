@@ -10,6 +10,7 @@ class Greet(Text):
         super().__init__("")
         self.recipient_name = recipient_name
         self.know_date_time = know_date_time
+        self.current_date_time = None  # lazy initialization by Recipient class
 
     def generate_html(self) -> str:
         hour = self.current_date_time.hour

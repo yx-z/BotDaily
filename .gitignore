@@ -1,8 +1,7 @@
 # Custom
 .idea/
-venv/
-
 configuration/secret.py
+**/.DS_Store
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

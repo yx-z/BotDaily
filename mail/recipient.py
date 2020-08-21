@@ -13,12 +13,14 @@ class Recipient:
                  subject: Subject, features: List[Feature]):
         self.email_address = email_address
 
-        self.subject = subject
-        self.subject.current_date_time = current_date_time
+        self.current_date_time = current_date_time
 
-        self.features = features
+        subject.current_date_time = current_date_time
+        self.subject = subject
+
         for feature in self.features:
             feature.current_date_time = current_date_time
+        self.features = features
 
     def generate_subject(self) -> str:
         return self.subject.to_complete_string()
