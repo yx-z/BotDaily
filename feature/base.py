@@ -15,10 +15,6 @@ class Feature(ABC):
     def title(self) -> str:
         return ""
 
-    @property
-    def background_path(self) -> str:
-        return f"{RESOURCE_PATH}/feature_background.png"
-
     def generate_title_html(self) -> str:
         if self.title == "":
             return ""
@@ -28,7 +24,7 @@ class Feature(ABC):
         text_color = (0, 0, 0)
         shadow_color = (255, 255, 255)
 
-        background = open_image(self.background_path)
+        background = open_image(f"{RESOURCE_PATH}/feature_background.png")
         font = ImageFont.truetype(f"{RESOURCE_PATH}/{FONT_NAME}", text_size)
         title_image = draw_text(background, position, self.title, font,
                                 text_color, shadow_color)

@@ -39,6 +39,6 @@ class Gif(Feature):
         logging.info(f"Gif: {file}")
         image_url = upload_image(
                 f"{RESOURCE_PATH}/{FEATURE_PATH}/{self.directory_path}/{file}")
-        return f"""<h3><i>第{days}天</i></h3>
+        return f"""<h3><i>第{days + 1}天</i></h3>
 <img src='{image_url}' style='{self.image_style}'>
 """
