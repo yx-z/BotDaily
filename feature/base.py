@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 from PIL import ImageFont
 
@@ -34,4 +34,9 @@ class Feature(ABC):
         return f"<img src='{upload_image(out_path)}' style='{CSS_FULL_WIDTH}'/>"
 
     def generate_html(self) -> str:
-        return f"<div style='{self.div_style}'>{self.generate_title_html()}</div>"
+        return f"<div style='{self.div_style}'>{self.generate_title_html()}{self.generate_content()}</div>".replace(
+                "\n", "<br>")
+
+    @abstractmethod
+    def generate_content(self) -> str:
+        pass

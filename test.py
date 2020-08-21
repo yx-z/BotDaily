@@ -3,11 +3,17 @@ import os
 from datetime import datetime
 
 from configuration.secret import TEST_SENDER_PASSWORD
+from feature.end import End
 from feature.gif import Gif
+from feature.greet import Greet
+from feature.header import Header
 from feature.music import Music
-from feature.subject import Subject
+from feature.text import Text
+from feature.weather import Weather
 from mail.recipient import Recipient
 from mail.sender import GmailSender
+from mail.subject import Subject
+from utility.constant import CSS_CENTER, CSS_MEDIUM
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO,
@@ -17,11 +23,25 @@ if __name__ == '__main__':
     current_date_time = datetime.now()
 
     os.system("node netease-api/app.js &")
-    test_recipient = Recipient("wilsonzyx@gmail.com", current_date_time,
-                               Subject("Hi"),
-                               [Music("favorite_music.json", current_date_time),
-                                Gif("bloom", current_date_time)],
-                               "font-size: 1.15em; color: #000; padding: 5px;")
+    test_recipient = Recipient("yx.z@hotmail.com", current_date_time,
+                               Subject("Bot Daily"),
+                               [Greet("David",
+                                      know_date_time=current_date_time),
+                                Header("cloud", "Bot Daily",
+                                       start_date_time=current_date_time),
+                                Weather(1, 1, "city_name"),
+                                Music("favorite_music.json",
+                                      start_date_time=current_date_time,
+                                      div_style=CSS_CENTER,
+                                      image_style=CSS_MEDIUM),
+                                Text("custom text"),
+                                Gif("bloom",
+                                    start_date_time=current_date_time,
+                                    div_style=CSS_CENTER,
+                                    image_style=CSS_MEDIUM),
+                                End("Bot")])
 
     test_sender = GmailSender("wilsonzyx@gmail.com", TEST_SENDER_PASSWORD)
-    test_sender.send_recipient_email(test_recipient, test_next_day=False)
+    test_sender.send_recipient_email(test_recipient, retry=1,
+                                     timeout_seconds=20,
+                                     test_next_day=True)

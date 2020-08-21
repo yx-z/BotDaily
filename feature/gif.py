@@ -23,7 +23,7 @@ class Gif(Feature):
         self.id_multiplier = id_multiplier
         self.image_style = image_style
 
-    def generate_html(self) -> str:
+    def generate_content(self) -> str:
         FEATURE_PATH = "gif"
         days = (self.current_date_time - self.start_date_time).days
         gif_id = days * self.id_multiplier

@@ -3,7 +3,7 @@ from datetime import datetime
 from PIL import ImageFont
 
 from feature.base import Feature
-from utility.constant import FONT_NAME, RESOURCE_PATH, CSS_FULL_WIDTH
+from utility.constant import FONT_NAME, RESOURCE_PATH
 from utility.image import search_unsplash, download_image, upload_image, \
     draw_text
 
@@ -11,14 +11,17 @@ from utility.image import search_unsplash, download_image, upload_image, \
 class Header(Feature):
 
     def __init__(self, topic: str, text: str, start_date_time: datetime,
-                 text_size: int = 40):
+                 text_size: int = 40, image_style: str = "",
+                 div_style: str = ""):
+        super().__init__(div_style)
         self.text = text
         self.topic = topic
         self.text_size = text_size
         self.start_date_time = start_date_time
+        self.image_style = image_style
         self.current_date_time = None  # lazy initialization by Recipient class
 
-    def generate_html(self) -> str:
+    def generate_content(self) -> str:
         image_url = search_unsplash(self.topic, (
                 self.current_date_time - self.start_date_time).days)
         image = download_image(image_url)
@@ -40,4 +43,4 @@ class Header(Feature):
 
         out_path = f"{RESOURCE_PATH}/header.png"
         image.save(out_path)
-        return f"<img src='{upload_image(out_path)}' style='{CSS_FULL_WIDTH}'/>"
+        return f"<img src='{upload_image(out_path)}' style='{self.image_style}'/>"

@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import List
 
 from feature.base import Feature
-from feature.subject import Subject
+from mail.subject import Subject
 from utility.constant import HTML_NEW_LINE
 
 

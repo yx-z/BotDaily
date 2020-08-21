@@ -15,5 +15,5 @@ def timeout(time):
         signal.signal(signal.SIGALRM, signal.SIG_IGN)
 
 
-def raise_timeout():
+def raise_timeout(signum, frame):
     raise TimeoutError

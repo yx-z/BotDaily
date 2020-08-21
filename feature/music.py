@@ -21,7 +21,7 @@ class Music(Feature):
         self.current_date_time = None
         self.image_style = image_style
 
-    def generate_html(self) -> str:
+    def generate_content(self) -> str:
         music_list = json.load(open(f"{RESOURCE_PATH}/{self.file_name}", "r"))
         days = (self.current_date_time - self.start_date_time).days
         music_today = music_list[len(music_list) - days - 2]
