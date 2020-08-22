@@ -84,7 +84,7 @@ class Sender:
                        exception: Exception):
         logging.info(f"Sending exception")
         self.send_email(subject, {self.email_address},
-                        text_to_html(f"""Recipient: {recipient}
+                        text_to_html(f"""Recipient: {recipient.email_address}
 
 
 Exception: {exception}
