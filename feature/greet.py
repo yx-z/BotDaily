@@ -1,9 +1,9 @@
 from datetime import datetime
 
-from feature.text import Text
+from feature.base import Feature
 
 
-class Greet(Text):
+class Greet(Feature):
 
     def __init__(self, recipient_name: str,
                  know_date_time: datetime = None, div_style: str = ""):
@@ -22,8 +22,6 @@ class Greet(Text):
             phase = "晚"
 
         if self.know_date_time is None:
-            self.text = f"{self.recipient_name}{phase}安~"
-            return super().generate_content()
+            return f"{self.recipient_name}{phase}安~"
         else:
-            self.text = f"遇见{self.recipient_name}的第{(self.current_date_time - self.know_date_time).days + 1}天，{phase}安~"
-            return super().generate_content()
+            return f"遇见{self.recipient_name}的第{(self.current_date_time - self.know_date_time).days + 1}天，{phase}安~"

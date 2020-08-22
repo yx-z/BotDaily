@@ -33,9 +33,9 @@ class Sender:
 
     def send_recipient_email(self, recipient: Recipient, retry: int = 0,
                              timeout_seconds: int = 60,
-                             send_self: bool = True,
-                             test_next_day: bool = True):
-        destination_email_address = set(recipient.email_address)
+                             send_self: bool = False,
+                             test_next_day: bool = False):
+        destination_email_address = {recipient.email_address}
         if send_self:
             destination_email_address.add(self.email_address)
         try:
