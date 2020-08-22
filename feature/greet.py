@@ -25,5 +25,5 @@ class Greet(Text):
             self.text = f"{self.recipient_name}{phase}安~"
             return super().generate_content()
         else:
-            self.text = f"遇见{self.recipient_name}的第{(self.current_date_time - self.know_date_time).days}天，{phase}安~"
+            self.text = f"遇见{self.recipient_name}的第{(self.current_date_time - self.know_date_time).days + 1}天，{phase}安~"
             return super().generate_content()

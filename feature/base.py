@@ -4,6 +4,7 @@ from PIL import ImageFont
 
 from utility.constant import RESOURCE_PATH, FONT_NAME, CSS_FULL_WIDTH
 from utility.image import open_image, draw_text, save_image, upload_image
+from utility.parse import text_to_html
 
 
 class Feature(ABC):
@@ -15,7 +16,7 @@ class Feature(ABC):
     def title(self) -> str:
         return ""
 
-    def generate_title_html(self) -> str:
+    def generate_title(self) -> str:
         if self.title == "":
             return ""
 
@@ -34,8 +35,8 @@ class Feature(ABC):
         return f"<img src='{upload_image(out_path)}' style='{CSS_FULL_WIDTH}'/>"
 
     def generate_html(self) -> str:
-        return f"<div style='{self.div_style}'>{self.generate_title_html()}{self.generate_content()}</div>".replace(
-                "\n", "<br>")
+        return text_to_html(
+                f"<div style='{self.div_style}'>{self.generate_title()}{self.generate_content()}</div>")
 
     @abstractmethod
     def generate_content(self) -> str:

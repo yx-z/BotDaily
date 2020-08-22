@@ -3,9 +3,9 @@ from contextlib import contextmanager
 
 
 @contextmanager
-def timeout(time):
+def timeout_limit(second):
     signal.signal(signal.SIGALRM, raise_timeout)
-    signal.alarm(time)
+    signal.alarm(second)
 
     try:
         yield

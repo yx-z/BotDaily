@@ -23,7 +23,7 @@ class Weather(Feature):
         data_url = f"https://api.darksky.net/forecast/{DARK_SKY_API_KEY}/{self.latitude},{self.longitude}?lang=zh&units=si"
         data = requests.get(data_url).json()
         logging.info(
-                f"Weather latitude: {data['latitude']}, longitude: {data['longitude']}")
+                f"Weather: latitude: {data['latitude']}, longitude: {data['longitude']}")
         weather = data["daily"]["data"][0]
 
         summary = weather["summary"]

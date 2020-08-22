@@ -7,3 +7,7 @@ def string_to_date(date_string: str) -> datetime:
 
 def date_to_string(date: datetime) -> str:
     return datetime.strftime(date, "%Y-%m-%d")
+
+
+def text_to_html(text: str) -> str:
+    return text.replace("\n", "<br>")
