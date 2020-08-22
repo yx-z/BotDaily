@@ -1,6 +1,5 @@
 import logging
 import smtplib
-import sys
 import traceback
 from datetime import timedelta
 from email.mime.multipart import MIMEMultipart
@@ -22,7 +21,7 @@ class Sender:
         self.server.login(email_address, password)
 
     def send_email(self, subject: str, recipients: Set[str], body_html: str):
-        logging.info(f"Sending from {self.email_address}, to {recipients}")
+        logging.info(f"Sending from {self.email_address} to {recipients}")
         message = MIMEMultipart("alternative")
         message["Subject"] = subject
         message["From"] = self.email_address
@@ -91,9 +90,6 @@ Exception: {exception}
 
 
 Traceback: {traceback.format_exc()}
-
-
-System Information: {sys.exc_info()[2]}
 """))
 
 

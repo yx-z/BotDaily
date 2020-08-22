@@ -17,7 +17,7 @@ class Weather(Feature):
 
     @property
     def title(self):
-        return "天气"
+        return "今日天气"
 
     def generate_content(self) -> str:
         data_url = f"https://api.darksky.net/forecast/{DARK_SKY_API_KEY}/{self.latitude},{self.longitude}?lang=zh&units=si"
