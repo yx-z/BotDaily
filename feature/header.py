@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 
 from PIL import ImageFont
 
@@ -12,8 +13,8 @@ class Header(Feature):
 
     def __init__(self, topic: str, text: str, start_date_time: datetime,
                  text_size: int = 40, image_style: str = "",
-                 div_style: str = ""):
-        super().__init__(div_style)
+                 div_style: str = "", title: Optional[str] = None):
+        super().__init__(div_style, title)
         self.text = text
         self.topic = topic
         self.text_size = text_size

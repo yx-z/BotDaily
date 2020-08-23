@@ -1,6 +1,7 @@
 import logging
 import os
 from datetime import datetime
+from typing import Optional
 
 from feature.base import Feature
 from utility.constant import RESOURCE_PATH
@@ -8,15 +9,10 @@ from utility.image import upload_image
 
 
 class Gif(Feature):
-
-    @property
-    def title(self):
-        return "云·养花"
-
     def __init__(self, directory_path: str, start_date_time: datetime,
                  id_multiplier: int = 1, div_style: str = "",
-                 image_style: str = ""):
-        super().__init__(div_style)
+                 image_style: str = "", title: Optional[str] = "云·养花"):
+        super().__init__(div_style, title)
         self.directory_path = directory_path
         self.start_date_time = start_date_time
         self.current_date_time = None  # lazy initialization by Recipient class

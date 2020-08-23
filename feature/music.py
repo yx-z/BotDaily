@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+from typing import Optional
 
 import requests
 
@@ -9,13 +10,10 @@ from utility.constant import RESOURCE_PATH
 
 class Music(Feature):
 
-    @property
-    def title(self):
-        return "云·音乐"
-
     def __init__(self, file_name: str, start_date_time: datetime,
-                 div_style: str = "", image_style: str = ""):
-        super().__init__(div_style)
+                 div_style: str = "", image_style: str = "",
+                 title: Optional[str] = "云·音乐"):
+        super().__init__(div_style, title)
         self.file_name = file_name
         self.start_date_time = start_date_time
         self.current_date_time = None

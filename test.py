@@ -8,6 +8,7 @@ from feature.gif import Gif
 from feature.greet import Greet
 from feature.header import Header
 from feature.music import Music
+from feature.one import One
 from feature.text import Text
 from feature.weather import Weather
 from mail.recipient import Recipient
@@ -28,7 +29,9 @@ if __name__ == '__main__':
                                [Header("cloud", "Bot Daily",
                                        start_date_time=current_date_time),
                                 Greet("hi", know_date_time=current_date_time),
-                                Weather(1, 1, "test_city_name"),
+                                Weather(1, 1, "test_city_name", title=None),
+                                One(["cover", "quote"], image_style=CSS_MEDIUM,
+                                    div_style=CSS_CENTER),
                                 Music("favorite_music.json",
                                       start_date_time=current_date_time,
                                       div_style=CSS_CENTER,

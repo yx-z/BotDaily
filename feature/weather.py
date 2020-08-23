@@ -1,4 +1,5 @@
 import logging
+from typing import Optional
 
 import requests
 
@@ -9,15 +10,11 @@ from feature.base import Feature
 class Weather(Feature):
 
     def __init__(self, latitude: float, longitude: float, city_name: str,
-                 div_style: str = ""):
-        super().__init__(div_style)
+                 div_style: str = "", title: Optional[str] = "今日天气"):
+        super().__init__(div_style, title)
         self.latitude = latitude
         self.longitude = longitude
         self.location_name = city_name
-
-    @property
-    def title(self):
-        return "今日天气"
 
     def generate_content(self) -> str:
         data_url = f"https://api.darksky.net/forecast/{DARK_SKY_API_KEY}/{self.latitude},{self.longitude}?lang=zh&units=si"

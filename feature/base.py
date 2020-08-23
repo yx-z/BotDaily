@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Optional
 
 from PIL import ImageFont
 
@@ -9,15 +10,12 @@ from utility.parse import text_to_html
 
 class Feature(ABC):
 
-    def __init__(self, div_style: str = None):
+    def __init__(self, div_style: str = "", title: Optional[str] = None):
         self.div_style = div_style
-
-    @property
-    def title(self) -> str:
-        return ""
+        self.title = title
 
     def generate_title(self) -> str:
-        if self.title == "":
+        if self.title is None:
             return ""
 
         position = (120, 25)

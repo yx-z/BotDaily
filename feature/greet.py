@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 
 from feature.base import Feature
 
@@ -6,8 +7,9 @@ from feature.base import Feature
 class Greet(Feature):
 
     def __init__(self, recipient_name: str,
-                 know_date_time: datetime = None, div_style: str = ""):
-        super().__init__(div_style)
+                 know_date_time: datetime = None, div_style: str = "",
+                 title: Optional[str] = None):
+        super().__init__(div_style, title)
         self.recipient_name = recipient_name
         self.know_date_time = know_date_time
         self.current_date_time = None  # lazy initialization by Recipient class

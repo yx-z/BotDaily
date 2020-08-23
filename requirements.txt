@@ -2,3 +2,4 @@ pyimgur
 pillow
 requests
 unsplash
+bs4

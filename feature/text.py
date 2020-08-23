@@ -1,16 +1,14 @@
+from typing import Optional
+
 from feature.base import Feature
 
 
 class Text(Feature):
 
-    def __init__(self, text: str, title: str = "", div_style: str = ""):
-        super().__init__(div_style)
+    def __init__(self, text: str, div_style: str = "",
+                 title: Optional[str] = None):
+        super().__init__(div_style, title)
         self.text = text
-        self.__header_title__ = title
-
-    @property
-    def title(self) -> str:
-        return self.__header_title__
 
     def generate_content(self) -> str:
         return self.text
