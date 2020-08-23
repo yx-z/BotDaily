@@ -19,7 +19,7 @@ class Feature(ABC):
             return ""
 
         position = (120, 25)
-        text_size = 35
+        text_size = 30
         text_color = (0, 0, 0)
         shadow_color = (255, 255, 255)
 
