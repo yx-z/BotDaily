@@ -1,2 +1,3 @@
-# BotDailyRefactor
-refactoring
+# BotDaily
+
+An email bot that sends daily updates.
