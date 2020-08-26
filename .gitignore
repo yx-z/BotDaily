@@ -1,6 +1,7 @@
 # Custom
 .idea/
-configuration/
+configuration/secret.py
+configuration/recipient.py
 **/.DS_Store
 *.pem
 
