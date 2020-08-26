@@ -44,3 +44,9 @@ def search_unsplash(topic: str, index: int) -> str:
 
 def download_image(url: str) -> Image:
     return Image.open(io.BytesIO(requests.get(url).content))
+
+
+def is_image_file(file: str) -> bool:
+    f = file.lower()
+    return f.endswith(".jpg") or f.endswith(".jpeg") or f.endswith(
+            ".gif") or f.endswith(".png")

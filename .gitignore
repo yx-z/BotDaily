@@ -1,6 +1,6 @@
 # Custom
 .idea/
-configuration/secret.py
+configuration/
 **/.DS_Store
 
 # Byte-compiled / optimized / DLL files

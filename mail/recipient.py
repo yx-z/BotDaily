@@ -10,21 +10,20 @@ from utility.constant import HTML_NEW_LINE
 
 class Recipient:
 
-    def __init__(self, email_address: str, current_date_time: datetime,
+    def __init__(self, email_address: str,
                  subject: Subject, features: List[Feature],
                  div_style: str = ""):
         self.email_address = email_address
-
-        self.current_date_time = current_date_time
-
-        subject.current_date_time = current_date_time
         self.subject = subject
-
-        for feature in features:
-            feature.current_date_time = current_date_time
-        self.features = features
-
         self.div_style = div_style
+        self.features = features
+        self.current_date_time = None  # lazy initialization by add_current_date_time
+
+    def add_current_date_time(self, current_date_time: datetime):
+        self.current_date_time = current_date_time
+        self.subject.current_date_time = current_date_time
+        for feature in self.features:
+            feature.current_date_time = current_date_time
 
     def generate_subject(self) -> str:
         return self.subject.to_complete_string()
