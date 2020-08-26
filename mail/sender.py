@@ -63,14 +63,11 @@ class Sender:
     def test_recipient_next_day(self, recipient: Recipient,
                                 timeout_seconds: int):
         next_day_date_time = recipient.current_date_time + timedelta(days=1)
-        recipient_next_day = recipient.copy()
-        recipient_next_day.subject.current_date_time = next_day_date_time
-        for feature in recipient.features:
-            feature.current_date_time = next_day_date_time
+        recipient.add_current_date_time(next_day_date_time)
         try:
             with timeout_limit(timeout_seconds):
-                recipient_next_day.generate_subject()
-                recipient_next_day.generate_body()
+                recipient.generate_subject()
+                recipient.generate_body()
                 logging.info(
                         f"Checked for {recipient.email_address} on {date_to_string(next_day_date_time)}")
         except Exception as exception:

@@ -1,4 +1,3 @@
-import copy
 import logging
 from datetime import datetime
 from typing import List
@@ -35,6 +34,3 @@ class Recipient:
             return generated_html
 
         return f"<div style='{self.div_style}'>{HTML_NEW_LINE.join(map(lambda f: generate_feature(f), self.features))}</div>"
-
-    def copy(self):
-        return copy.deepcopy(self)
