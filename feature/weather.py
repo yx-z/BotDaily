@@ -32,4 +32,4 @@ class Weather(Feature):
         if min_temperature <= 0:
             min_temperature_text = f"<i><b>{min_temperature_text}</b></i>"
 
-        return f"{self.location_name} - {summary} 最高 {weather['temperatureHigh']}°C, {min_temperature_text}。"
+        return f"{self.location_name} - {summary} 最高 {int(weather['temperatureHigh'])}°C, {min_temperature_text}。"
