@@ -4,14 +4,14 @@ from typing import List
 
 from feature.base import Feature
 from mail.subject import Subject
-from utility.constant import HTML_NEW_LINE
+from utility.constant import HTML_NEW_LINE, CSS_DEFAULT_DIV
 
 
 class Recipient:
 
     def __init__(self, email_address: str,
                  subject: Subject, features: List[Feature],
-                 div_style: str = ""):
+                 div_style: str = CSS_DEFAULT_DIV):
         self.email_address = email_address
         self.subject = subject
         self.div_style = div_style

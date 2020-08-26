@@ -2,8 +2,7 @@ import logging
 import os
 from datetime import datetime
 
-from configuration.secret import SENDER_PASSWORD, \
-    SENDER_EMAIL
+from configuration.secret import SENDER_PASSWORD, SENDER_EMAIL
 from feature.end import End
 from feature.gif import Gif
 from feature.greet import Greet
@@ -18,8 +17,7 @@ from feature.zhihu_story import ZhihuStory
 from mail.recipient import Recipient
 from mail.sender import GmailSender
 from mail.subject import Subject
-from utility.constant import CSS_CENTER, CSS_MEDIUM, CSS_SMALL, CSS_DEFAULT_DIV, \
-    CSS_FULL_WIDTH
+from utility.constant import CSS_CENTER, CSS_MEDIUM, CSS_SMALL, CSS_FULL_WIDTH
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO,
@@ -29,7 +27,7 @@ if __name__ == '__main__':
     current_date_time = datetime.now()
 
     os.system("node netease-api/app.js &")
-    test_recipient = Recipient("yx.z@hotmail.com", Subject("Bot Daily"),
+    test_recipient = Recipient("wilsonzyx@gmail.com", Subject("Bot Daily"),
                                [Header("cloud", "Bot Daily",
                                        start_date_time=current_date_time,
                                        image_style=CSS_FULL_WIDTH),
@@ -50,8 +48,7 @@ if __name__ == '__main__':
                                     start_date_time=current_date_time,
                                     div_style=CSS_CENTER,
                                     image_style=CSS_MEDIUM),
-                                End("Bot")],
-                               div_style=CSS_DEFAULT_DIV)
+                                End("Bot")])
     test_recipient.add_current_date_time(current_date_time)
 
     test_sender = GmailSender(SENDER_EMAIL, SENDER_PASSWORD)
