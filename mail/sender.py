@@ -15,10 +15,19 @@ class Sender:
 
     def __init__(self, smtp_server: str, port: int, email_address: str,
                  password: str):
+        self.smtp_server = smtp_server
+        self.port = port
+        self.email_address = email_address
+        self.password = password
         self.server = smtplib.SMTP_SSL(smtp_server, port)
         self.server.ehlo()
         self.email_address = email_address
         self.server.login(email_address, password)
+
+    def restart(self):
+        self.server.close()
+        self.__init__(self.smtp_server, self.port, self.email_address,
+                      self.password)
 
     def send_email(self, subject: str, recipients: Set[str], body_html: str):
         logging.info(f"Sending from {self.email_address} to {recipients}")
@@ -46,12 +55,15 @@ class Sender:
         except Exception as exception:
             logging.info(
                     f"Exception occured during body generation: {exception}")
+            logging.info(traceback.format_exc())
             if retry > 0:
                 logging.info(f"Retrying with remaining tries of {retry}")
+                self.restart()
                 self.send_recipient_email(recipient, retry - 1, timeout_seconds,
                                           send_self, test_next_day)
             else:
                 logging.info("No more retires")
+                self.restart()
                 self.send_exception(
                         f"BotDaily - CURRENT_DAY EXCEPTION for {date_to_string(recipient.current_date_time)}",
                         recipient, exception)
@@ -72,6 +84,7 @@ class Sender:
                         f"Checked for {recipient.email_address} on {date_to_string(next_day_date_time)}")
         except Exception as exception:
             logging.info(exception)
+            self.restart()
             self.send_exception(
                     f"BotDaily - NextDay Exception for {date_to_string(next_day_date_time)}",
                     recipient, exception)
