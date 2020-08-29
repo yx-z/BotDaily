@@ -75,6 +75,8 @@ class Sender:
     def test_recipient_next_day(self, recipient: Recipient,
                                 timeout_seconds: int):
         next_day_date_time = recipient.current_date_time + timedelta(days=1)
+        logging.info(
+                f"Checking for {recipient.email_address} on {date_to_string(next_day_date_time)}")
         recipient.add_current_date_time(next_day_date_time)
         try:
             with timeout_limit(timeout_seconds):
