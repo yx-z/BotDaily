@@ -13,8 +13,8 @@ from utility.timeout import timeout_limit
 
 class Sender:
 
-    def __init__(self, smtp_server: str, port: int, email_address: str,
-                 password: str):
+    def __init__(self, email_address: str, password: str, smtp_server: str,
+                 port: int):
         self.smtp_server = smtp_server
         self.port = port
         self.email_address = email_address
@@ -26,8 +26,8 @@ class Sender:
 
     def restart(self):
         self.server.close()
-        self.__init__(self.smtp_server, self.port, self.email_address,
-                      self.password)
+        self.__init__(self.email_address, self.password, self.smtp_server,
+                      self.port)
 
     def send_email(self, subject: str, recipients: Set[str], body_html: str):
         logging.info(f"Sending from {self.email_address} to {recipients}")
@@ -105,5 +105,6 @@ Traceback: {traceback.format_exc()}
 
 class GmailSender(Sender):
 
-    def __init__(self, email_address: str, password: str):
-        super().__init__("smtp.gmail.com", 465, email_address, password)
+    def __init__(self, email_address: str, password: str,
+                 smtp_server: str = "smtp.gmail.com", port: int = 465):
+        super().__init__(email_address, password, smtp_server, port)
