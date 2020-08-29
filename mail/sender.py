@@ -19,15 +19,6 @@ class Sender:
         self.port = port
         self.email_address = email_address
         self.password = password
-        self.server = smtplib.SMTP_SSL(smtp_server, port)
-        self.server.ehlo()
-        self.email_address = email_address
-        self.server.login(email_address, password)
-
-    def restart(self):
-        self.server.close()
-        self.__init__(self.email_address, self.password, self.smtp_server,
-                      self.port)
 
     def send_email(self, subject: str, recipients: Set[str], body_html: str):
         logging.info(f"Sending from {self.email_address} to {recipients}")
@@ -36,8 +27,13 @@ class Sender:
         message["From"] = self.email_address
         message["To"] = ", ".join(recipients)
         message.attach(MIMEText(body_html, "html"))
-        self.server.sendmail(self.email_address, list(recipients),
-                             message.as_string())
+
+        server = smtplib.SMTP_SSL(self.smtp_server, self.port)
+        server.ehlo()
+        server.login(self.email_address, self.password)
+        server.sendmail(self.email_address, list(recipients),
+                        message.as_string())
+        server.close()
 
     def send_recipient_email(self, recipient: Recipient, retry: int = 0,
                              timeout_seconds: int = 60,
@@ -58,12 +54,10 @@ class Sender:
             logging.info(traceback.format_exc())
             if retry > 0:
                 logging.info(f"Retrying with remaining tries of {retry}")
-                self.restart()
                 self.send_recipient_email(recipient, retry - 1, timeout_seconds,
                                           send_self, test_next_day)
             else:
                 logging.info("No more retires")
-                self.restart()
                 self.send_exception(
                         f"BotDaily - CURRENT_DAY EXCEPTION for {date_to_string(recipient.current_date_time)}",
                         recipient, exception)
