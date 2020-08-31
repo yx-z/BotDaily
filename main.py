@@ -7,6 +7,8 @@ from configuration.recipient import TIME_TO_RECIPIENTS
 from configuration.secret import LOG_FILE, SENDER_EMAIL, SENDER_PASSWORD
 from mail.sender import GmailSender
 
+SECONDS_IN_MINUTE = 60
+
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO,
                         format="%(asctime)s %(levelname)-8s %(message)s",
@@ -26,4 +28,4 @@ if __name__ == '__main__':
                                             test_next_day=True)
         elif now.minute == 0:
             logging.info("Sleeping.")
-        time.sleep(60)
+        time.sleep(SECONDS_IN_MINUTE)
