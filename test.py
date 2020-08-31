@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 
 from configuration.secret import SENDER_PASSWORD, SENDER_EMAIL
+from feature.AbsoluteKid import AbsoluteKid
 from feature.end import End
 from feature.gif import Gif
 from feature.greet import Greet
@@ -37,6 +38,8 @@ if __name__ == '__main__':
                                            start_date_time=current_date_time),
                                 Weather(1, 1, "test_city_name", title=None),
                                 Poem(),
+                                AbsoluteKid(
+                                    start_date_time=datetime(2020, 8, 29)),
                                 OneCover(image_style=CSS_MEDIUM),
                                 OneQuote(div_style=CSS_CENTER, title=None),
                                 Music("favorite_music.json",
@@ -52,4 +55,4 @@ if __name__ == '__main__':
     test_recipient.add_current_date_time(current_date_time)
 
     test_sender = GmailSender(SENDER_EMAIL, SENDER_PASSWORD)
-    test_sender.send_recipient_email(test_recipient, timeout_seconds=20)
+    test_sender.send_recipient_email(test_recipient, timeout_seconds=60)
