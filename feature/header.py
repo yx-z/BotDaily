@@ -31,10 +31,10 @@ class Header(Feature):
         left = 0
         top = height / 4
         right = min(1080, width)
-        bottom = min(height, top + 360)
+        bottom = min(height, top + 400)
         image = image.crop((left, top, right, bottom))
 
-        position = (100, 140)
+        position = (96, 140)
         text_color = (255, 255, 255)
         border_color = (0, 20, 20)
         font = ImageFont.truetype(f"{RESOURCE_PATH}/{FONT_NAME}",
