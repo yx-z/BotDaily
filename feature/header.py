@@ -17,16 +17,18 @@ class Header(Feature):
                  div_style: str = "", title: Optional[str] = None):
         super().__init__(div_style, title)
         self.text = text
-        self.topic = topic
+        self.topics = topic
         self.text_size = text_size
         self.start_date_time = start_date_time
         self.image_style = image_style
         self.current_date_time = None  # lazy initialization by Recipient class
 
     def generate_content(self) -> str:
-        image_url = search_unsplash(random.choice(self.topic), (
+        topic = random.choice(self.topics)
+        image_url = search_unsplash(topic, (
                 self.current_date_time - self.start_date_time).days)
         image = download_image(image_url)
+
         width, height = image.size
         left = 0
         top = height / 4
@@ -39,9 +41,12 @@ class Header(Feature):
         border_color = (0, 20, 20)
         font = ImageFont.truetype(f"{RESOURCE_PATH}/{FONT_NAME}",
                                   self.text_size)
+        font2 = ImageFont.truetype(f"{RESOURCE_PATH}/{FONT_NAME}", 20)
 
         text = f"{self.current_date_time.month}/{self.current_date_time.day} {self.text}"
         image = draw_text(image, position, text, font, text_color, border_color)
+        image = draw_text(image, (96, bottom - 50), topic, font2, text_color,
+                          border_color)
 
         out_path = f"{RESOURCE_PATH}/header.png"
         image.save(out_path)
