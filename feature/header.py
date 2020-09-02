@@ -41,11 +41,11 @@ class Header(Feature):
         border_color = (0, 20, 20)
         font = ImageFont.truetype(f"{RESOURCE_PATH}/{FONT_NAME}",
                                   self.text_size)
-        font2 = ImageFont.truetype(f"{RESOURCE_PATH}/{FONT_NAME}", 20)
-
         text = f"{self.current_date_time.month}/{self.current_date_time.day} {self.text}"
         image = draw_text(image, position, text, font, text_color, border_color)
-        image = draw_text(image, (96, bottom - 100), topic, font2, text_color,
+
+        font2 = ImageFont.truetype(f"{RESOURCE_PATH}/{FONT_NAME}", 20)
+        image = draw_text(image, (96, 256), topic, font2, text_color,
                           border_color)
 
         out_path = f"{RESOURCE_PATH}/header.png"
