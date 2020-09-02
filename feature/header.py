@@ -45,7 +45,7 @@ class Header(Feature):
         image = draw_text(image, position, text, font, text_color, border_color)
 
         font2 = ImageFont.truetype(f"{RESOURCE_PATH}/{FONT_NAME}", 28)
-        image = draw_text(image, (80, 360), topic, font2, text_color,
+        image = draw_text(image, (80, 350), topic, font2, text_color,
                           border_color)
 
         out_path = f"{RESOURCE_PATH}/header.png"
