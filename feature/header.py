@@ -13,7 +13,7 @@ from utility.image import search_unsplash, download_image, upload_image, \
 class Header(Feature):
 
     def __init__(self, topic: List[str], text: str, start_date_time: datetime,
-                 text_size: int = 32, image_style: str = "",
+                 text_size: int = 40, image_style: str = "",
                  div_style: str = "", title: Optional[str] = None):
         super().__init__(div_style, title)
         self.text = text
@@ -36,7 +36,7 @@ class Header(Feature):
         bottom = min(height, top + 400)
         image = image.crop((left, top, right, bottom))
 
-        position = (96, 140)
+        position = (80, 128)
         text_color = (255, 255, 255)
         border_color = (0, 20, 20)
         font = ImageFont.truetype(f"{RESOURCE_PATH}/{FONT_NAME}",
@@ -45,7 +45,7 @@ class Header(Feature):
         image = draw_text(image, position, text, font, text_color, border_color)
 
         font2 = ImageFont.truetype(f"{RESOURCE_PATH}/{FONT_NAME}", 20)
-        image = draw_text(image, (96, bottom - 64), topic, font2, text_color,
+        image = draw_text(image, (80, 360), topic, font2, text_color,
                           border_color)
 
         out_path = f"{RESOURCE_PATH}/header.png"
