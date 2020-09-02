@@ -36,7 +36,7 @@ class Header(Feature):
         bottom = min(height, top + 400)
         image = image.crop((left, top, right, bottom))
 
-        position = (80, 128)
+        position = (80, 100)
         text_color = (255, 255, 255)
         border_color = (0, 20, 20)
         font = ImageFont.truetype(f"{RESOURCE_PATH}/{FONT_NAME}",
@@ -44,7 +44,7 @@ class Header(Feature):
         text = f"{self.current_date_time.month}/{self.current_date_time.day} {self.text}"
         image = draw_text(image, position, text, font, text_color, border_color)
 
-        font2 = ImageFont.truetype(f"{RESOURCE_PATH}/{FONT_NAME}", 20)
+        font2 = ImageFont.truetype(f"{RESOURCE_PATH}/{FONT_NAME}", 28)
         image = draw_text(image, (80, 360), topic, font2, text_color,
                           border_color)
 
