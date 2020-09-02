@@ -16,7 +16,7 @@ from utility.constant import CSS_DEFAULT_DIV, CSS_FULL_WIDTH, CSS_CENTER, \
 TIME_TO_RECIPIENTS = {
     "08:00": [
         Recipient("123@123.123", Subject("Bot 早报"), [
-            Header("cloud", "Bot 早报", image_style=CSS_FULL_WIDTH,
+            Header(["cloud"], "Bot 早报", image_style=CSS_FULL_WIDTH,
                    start_date_time=datetime(2020, 8, 4)),
             Greet("123", start_date_time=datetime(2020, 7, 28)),
             Weather(123, 123, "123", title=None),

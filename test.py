@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 
 from configuration.secret import SENDER_PASSWORD, SENDER_EMAIL
-from feature.AbsoluteKid import AbsoluteKid
+from feature.absolute_kid import AbsoluteKid
 from feature.end import End
 from feature.gif import Gif
 from feature.greet import Greet
@@ -29,7 +29,7 @@ if __name__ == '__main__':
 
     os.system("node netease-api/app.js &")
     test_recipient = Recipient("wilsonzyx@gmail.com", Subject("Bot Daily"),
-                               [Header("cloud", "Bot Daily",
+                               [Header(["cloud"], "Bot Daily",
                                        start_date_time=current_date_time,
                                        image_style=CSS_FULL_WIDTH),
                                 Greet("hi", start_date_time=current_date_time),
@@ -39,7 +39,7 @@ if __name__ == '__main__':
                                 Weather(1, 1, "test_city_name", title=None),
                                 Poem(),
                                 AbsoluteKid(
-                                    start_date_time=datetime(2020, 8, 29)),
+                                        start_date_time=datetime(2020, 8, 29)),
                                 OneCover(image_style=CSS_MEDIUM),
                                 OneQuote(div_style=CSS_CENTER, title=None),
                                 Music("favorite_music.json",
