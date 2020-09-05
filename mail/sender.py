@@ -46,6 +46,7 @@ class Sender:
             with timeout_limit(timeout_seconds):
                 subject = recipient.generate_subject()
                 body_html = recipient.generate_body()
+                logging.info(body_html)
                 self.send_email(subject, destination_email_address, body_html)
                 logging.info(f"Email sent to {destination_email_address}")
         except Exception as exception:
