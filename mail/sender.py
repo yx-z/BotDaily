@@ -47,7 +47,7 @@ class Sender:
                 subject = recipient.generate_subject()
                 body_html = recipient.generate_body()
                 self.send_email(subject, destination_email_address, body_html)
-                logging.info(f"Email sent to {recipient.email_address}")
+                logging.info(f"Email sent to {destination_email_address}")
         except Exception as exception:
             logging.info(
                     f"Exception occured during body generation: {exception}")
@@ -68,22 +68,25 @@ class Sender:
 
     def test_recipient_next_day(self, recipient: Recipient,
                                 timeout_seconds: int):
-        next_day_date_time = recipient.current_date_time + timedelta(days=1)
+        current_date_time = recipient.current_date_time
+        next_day_date_time = current_date_time + timedelta(days=1)
+        next_day_date_time_string = date_to_string(next_day_date_time)
         logging.info(
-                f"Checking for {recipient.email_address} on {date_to_string(next_day_date_time)}")
-        recipient.add_current_date_time(next_day_date_time)
+                f"Checking for {recipient.email_address} on {next_day_date_time_string}")
+        recipient.set_current_date_time(next_day_date_time)
         try:
             with timeout_limit(timeout_seconds):
                 recipient.generate_subject()
                 recipient.generate_body()
                 logging.info(
-                        f"Checked for {recipient.email_address} on {date_to_string(next_day_date_time)}")
+                        f"Checked for {recipient.email_address} on {next_day_date_time_string}")
         except Exception as exception:
             logging.info(exception)
-            self.restart()
             self.send_exception(
-                    f"BotDaily - NextDay Exception for {date_to_string(next_day_date_time)}",
+                    f"BotDaily - NextDay Exception for {next_day_date_time_string}",
                     recipient, exception)
+        finally:
+            recipient.set_current_date_time(current_date_time)
 
     def send_exception(self, subject: str, recipient: Recipient,
                        exception: Exception):

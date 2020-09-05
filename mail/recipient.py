@@ -18,7 +18,7 @@ class Recipient:
         self.features = features
         self.current_date_time = None  # lazy initialization by add_current_date_time
 
-    def add_current_date_time(self, current_date_time: datetime):
+    def set_current_date_time(self, current_date_time: datetime):
         self.current_date_time = current_date_time
         self.subject.current_date_time = current_date_time
         for feature in self.features:

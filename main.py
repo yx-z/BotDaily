@@ -22,7 +22,7 @@ if __name__ == '__main__':
         now_str = now.strftime("%H:%M")
         if now_str in TIME_TO_RECIPIENTS.keys():
             for recipient in TIME_TO_RECIPIENTS[now_str]:
-                recipient.add_current_date_time(now)
+                recipient.set_current_date_time(now)
                 sender.send_recipient_email(recipient, timeout_seconds=60,
                                             send_self=True, retry=2,
                                             test_next_day=True)
