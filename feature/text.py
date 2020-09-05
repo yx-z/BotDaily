@@ -1,6 +1,7 @@
 from typing import Optional
 
 from feature.base import Feature
+from utility.parse import text_to_html
 
 
 class Text(Feature):
@@ -11,4 +12,4 @@ class Text(Feature):
         self.text = text
 
     def generate_content(self) -> str:
-        return self.text
+        return text_to_html(self.text)
