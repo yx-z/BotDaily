@@ -6,6 +6,7 @@ import requests
 
 from feature.base import Feature
 from utility.constant import RESOURCE_PATH
+from utility.parse import text_to_html
 
 
 class Music(Feature):
@@ -34,11 +35,12 @@ class Music(Feature):
         album_cover_data = requests.get(
                 f"http://localhost:3000/song/detail?ids={song_id}").json()
         album_cover_url = album_cover_data["songs"][0]["al"]["picUrl"]
-        return f"""<img src="{album_cover_url}" style="{self.image_style}"/>
+        return text_to_html(
+                f"""<img src="{album_cover_url}" style="{self.image_style}"/>
     曲名: {music_name}
     作者: {music_author}
     <a href="{netease_url}">网易云链接</a>
     <a href="{youtube_url}">搜索Youtube (备用)</a>
     
     {music_today[2]}
-    """
+    """)
