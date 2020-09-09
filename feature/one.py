@@ -13,11 +13,14 @@ class One(Feature):
                  title: Optional[str] = "ONE·一个"):
         super().__init__(div_style, title)
         self.image_style = image_style
-        self.home = self.__get_soup__("http://www.wufazhuce.com/")
 
     @staticmethod
     def __get_soup__(url: str) -> BeautifulSoup:
         return BeautifulSoup(requests.get(url).text, "html.parser")
+
+    @staticmethod
+    def __get_home__() -> BeautifulSoup:
+        return One.__get_soup__("http://www.wufazhuce.com/")
 
     @abstractmethod
     def generate_content(self) -> str:
@@ -27,22 +30,22 @@ class One(Feature):
 class OneCover(One):
 
     def generate_content(self) -> str:
-        img = self.home.find("img", class_="fp-one-imagen")
+        img = One.__get_home__().find("img", class_="fp-one-imagen")
         img["style"] = self.image_style
         return str(img)
 
 
 class OneQuote(One):
     def generate_content(self) -> str:
-        return self.home.find("div", class_="fp-one-cita").text.strip()
+        return One.__get_home__().find("div", class_="fp-one-cita").text.strip()
 
 
 class OneArticle(One):
 
     def generate_content(self) -> str:
-        p = self.home.find("p", class_="one-articulo-titulo")
+        p = One.__get_home__().find("p", class_="one-articulo-titulo")
         article_url = p.find("a")["href"]
-        soup = self.__get_soup__(article_url)
+        soup = One.__get_soup__(article_url)
         quote = soup.find("div", class_="comilla-cerrar").text.strip()
         title = soup.find("h2", class_="articulo-titulo").text.strip()
         author = soup.find("p", class_="articulo-autor").text.strip()[3:]
@@ -57,9 +60,9 @@ class OneArticle(One):
 
 class OneQuestionAnser(One):
     def generate_content(self) -> str:
-        p = self.home.find("p", class_="one-cuestion-titulo")
+        p = One.__get_home__().find("p", class_="one-cuestion-titulo")
         qa_url = p.find("a")["href"]
-        soup = self.__get_soup__(qa_url)
+        soup = One.__get_soup__(qa_url)
         q = soup.find("div", class_="cuestion-contenido").text.strip()
         a = soup.find_all("div", class_="cuestion-contenido")[-1].get_text(
                 separator="\n").strip()
