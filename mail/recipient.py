@@ -33,4 +33,4 @@ class Recipient:
             logging.info(f"{type(feature).__name__} generated.")
             return generated_html
 
-        return f"<div style='{self.div_style}'>{HTML_NEW_LINE.join(map(lambda f: generate_feature(f), self.features))}</div>"
+        return f"<div style='{self.div_style}'>{HTML_NEW_LINE.join(map(generate_feature, self.features))}</div>"

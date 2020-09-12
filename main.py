@@ -14,7 +14,7 @@ if __name__ == '__main__':
                         format="%(asctime)s %(levelname)-8s %(message)s",
                         datefmt="%Y-%m-%d %H:%M:%S",
                         filename=LOG_FILE)
-    logging.info("PID - {}.".format(os.getpid()))
+    logging.info(f"PID - {os.getpid()}")
 
     sender = GmailSender(SENDER_EMAIL, SENDER_PASSWORD)
     while True:
