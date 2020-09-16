@@ -34,3 +34,7 @@ class Recipient:
             return generated_html
 
         return f"<div style='{self.div_style}'>{HTML_NEW_LINE.join(map(generate_feature, self.features))}</div>"
+
+    def on_email_sent(self):
+        for feature in self.features:
+            feature.on_email_sent()

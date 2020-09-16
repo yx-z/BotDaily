@@ -37,3 +37,6 @@ class Feature(ABC):
     @abstractmethod
     def generate_content(self) -> str:
         pass
+
+    def on_email_sent(self):
+        pass

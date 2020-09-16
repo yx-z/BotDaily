@@ -15,6 +15,8 @@ class ExternalText(Text):
     def generate_content(self) -> str:
         with open(f"{RESOURCE_PATH}/{self.text_file}", "r+") as file:
             self.text = file.read()
-            if self.clear_after:
-                file.truncate(0)
             return super().generate_content()
+
+    def on_email_sent(self):
+        if self.clear_after:
+            open(f"{RESOURCE_PATH}/{self.text_file}", "w+").truncate(0)

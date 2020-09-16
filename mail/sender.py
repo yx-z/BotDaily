@@ -49,6 +49,7 @@ class Sender:
                 logging.info(body_html)
                 self.send_email(subject, destination_email_address, body_html)
                 logging.info(f"Email sent to {destination_email_address}")
+                recipient.on_email_sent()
         except Exception as exception:
             logging.info(
                     f"Exception occured during body generation: {exception}")
