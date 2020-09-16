@@ -20,6 +20,7 @@ class ExternalImage(Feature):
     def generate_content(self) -> str:
         image_url = self.image_url if self.file_name is None \
             else upload_image(f"{RESOURCE_PATH}/{self.file_name}")
+        self.image_url = image_url  # cache
         return f"<img src='{image_url}' style='{self.image_style}'/>"
 
     def on_email_sent(self):
