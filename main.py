@@ -1,13 +1,9 @@
-import logging
-import os
 import time
-from datetime import datetime
 
-from configuration.recipient import TIME_TO_RECIPIENTS
 from configuration.secret import LOG_FILE, SENDER_EMAIL, SENDER_PASSWORD
+from feature import *
 from mail.sender import GmailSender
-
-SECONDS_IN_MINUTE = 60
+from utility.constant import *
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO,
@@ -20,11 +16,13 @@ if __name__ == '__main__':
     while True:
         now = datetime.now()
         now_str = now.strftime("%H:%M")
+        TIME_TO_RECIPIENTS = eval(
+            open("configuration/recipient.py", "r").read())
         if now_str in TIME_TO_RECIPIENTS.keys():
             for recipient in TIME_TO_RECIPIENTS[now_str]:
                 recipient.set_current_date_time(now)
                 sender.send_recipient_email(recipient, timeout_seconds=60,
-                                            send_self=True, retry=2,
+                                            send_self=True, retry=0,
                                             test_next_day=True)
         elif now.minute == 0:
             logging.info("Sleeping.")

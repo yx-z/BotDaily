@@ -16,7 +16,7 @@ def month_to_string(date: datetime) -> str:
 
 
 def text_to_html(text: str) -> str:
-    return text.replace("\n", "<br>")
+    return text.replace("\n", "<br>").replace("<", "&lt;").replace(">", "&gt;")
 
 
 def html_to_pdf(in_path: str, out_path: str) -> bool:

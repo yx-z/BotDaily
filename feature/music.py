@@ -24,17 +24,27 @@ class Music(Feature):
         music_list = json.load(open(f"{RESOURCE_PATH}/{self.file_name}", "r"))
         days = (self.current_date_time - self.start_date_time).days
         music_today = music_list[len(music_list) - days - 2]
-        music_name = music_today[0]
-        music_author = music_today[1]
-        youtube_url = f"https://youtube.com/results?search_query={music_name}, {music_author}"
-        data = requests.get(
-                f"http://localhost:3000/search?keywords={music_name}, {music_author}").json()
-        song_id = data["result"]["songs"][1]["id"]
-        netease_url = f"https://y.music.163.com/m/song?id={song_id}"
 
-        album_cover_data = requests.get(
-                f"http://localhost:3000/song/detail?ids={song_id}").json()
-        album_cover_url = album_cover_data["songs"][0]["al"]["picUrl"]
+        has_id_only = len(music_today) == 2  # [music_id, comment]
+        if has_id_only:
+            music_id = music_today[0]
+        else:  # [music_name, music_author, comment]
+            music_name = music_today[0]
+            music_author = music_today[1]
+            search_data = requests.get(
+                    f"http://localhost:3000/search?keywords={music_name}, {music_author}").json()
+            music_id = search_data["result"]["songs"][0]["id"]
+
+        music_data = requests.get(
+            f"http://localhost:3000/song/detail?ids={music_id}").json()[
+            "songs"][0]
+        if has_id_only:
+            music_name = music_data["name"]
+            music_author = music_data["ar"][0]["name"]
+        album_cover_url = music_data["al"]["picUrl"]
+
+        netease_url = f"https://y.music.163.com/m/song?id={music_id}"
+        youtube_url = f"https://youtube.com/results?search_query={music_name}, {music_author}"
         return text_to_html(
                 f"""<img src="{album_cover_url}" style="{self.image_style}"/>
     曲名: {music_name}
@@ -42,5 +52,5 @@ class Music(Feature):
     <a href="{netease_url}">网易云链接</a>
     <a href="{youtube_url}">搜索Youtube (备用)</a>
     
-    {music_today[2]}
+    {music_today[-1]}
     """)

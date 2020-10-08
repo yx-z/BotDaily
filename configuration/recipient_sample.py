@@ -1,19 +1,4 @@
-from datetime import datetime
-
-from feature.gif import Gif
-from feature.greet import Greet
-from feature.header import Header
-from feature.music import Music
-from feature.one import OneCover, OneQuote
-from feature.poem import Poem
-from feature.weather import Weather
-from feature.zhihu_story import ZhihuStory
-from mail.recipient import Recipient
-from mail.subject import Subject
-from utility.constant import CSS_DEFAULT_DIV, CSS_FULL_WIDTH, CSS_CENTER, \
-    CSS_SMALL, CSS_MEDIUM
-
-TIME_TO_RECIPIENTS = {
+{
     "08:00": [
         Recipient("123@123.123", Subject("Bot 早报"), [
             Header(["cloud"], "Bot 早报", image_style=CSS_FULL_WIDTH,

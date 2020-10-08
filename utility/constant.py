@@ -10,3 +10,5 @@ CSS_CENTER = "text-align: center;"
 CSS_BIG = "display: block; width: 90%; margin: auto;"
 CSS_MEDIUM = "display: block; width: 60%; margin: auto;"
 CSS_SMALL = "display: block; width: 40%; margin: auto;"
+
+SECONDS_IN_MINUTE = 60
