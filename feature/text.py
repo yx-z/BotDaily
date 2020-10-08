@@ -7,9 +7,10 @@ from utility.parse import text_to_html
 class Text(Feature):
 
     def __init__(self, text: str, div_style: str = "",
-                 title: Optional[str] = None):
+                 title: Optional[str] = None, *args):
         super().__init__(div_style, title)
         self.text = text
+        self.args = args
 
     def generate_content(self) -> str:
-        return text_to_html(self.text)
+        return text_to_html(self.text, self.args)

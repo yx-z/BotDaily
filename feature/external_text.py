@@ -2,13 +2,15 @@ from typing import Optional
 
 from feature.text import Text
 from utility.constant import RESOURCE_PATH
+from utility.parse import PARSE_NEW_LINE, PARSE_ANGLE_BRACKETS
 
 
 class ExternalText(Text):
     def __init__(self, text_file: str, clear_after: bool = False,
                  div_style: str = "",
                  title: Optional[str] = None):
-        super().__init__("", div_style, title)
+        super().__init__("", div_style, title, PARSE_NEW_LINE,
+                         PARSE_ANGLE_BRACKETS)
         self.text_file = text_file
         self.clear_after = clear_after
 

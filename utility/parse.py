@@ -15,13 +15,16 @@ def month_to_string(date: datetime) -> str:
     return datetime.strftime(date, "%Y-%m")
 
 
-def text_to_html(text: str, parse_new_line: bool = True,
-                 parse_angle_brackets: bool = True) -> str:
+PARSE_ANGLE_BRACKETS = "parse_angle_brackets"
+PARSE_NEW_LINE = "parse_NEW_LINE"
+
+
+def text_to_html(text: str, *args) -> str:
     parsed = text
-    # order matters
-    if parse_angle_brackets:
+    # process order matters, not the order of args
+    if PARSE_ANGLE_BRACKETS in args:
         parsed = parsed.replace("<", "&lt;").replace(">", "&gt;")
-    if parse_new_line:
+    if PARSE_NEW_LINE in args:
         parsed = parsed.replace("\n", "<br>")
     return parsed
 

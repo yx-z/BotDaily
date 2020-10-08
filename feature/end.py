@@ -1,6 +1,7 @@
 from typing import Optional
 
 from feature.text import Text
+from utility.parse import PARSE_NEW_LINE
 
 
 class End(Text):
@@ -11,4 +12,4 @@ class End(Text):
 -----
 你的,
 {sender_name}
-""", div_style, title)
+""", div_style, title, PARSE_NEW_LINE)
