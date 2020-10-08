@@ -29,7 +29,7 @@ class Music(Feature):
         youtube_url = f"https://youtube.com/results?search_query={music_name}, {music_author}"
         data = requests.get(
                 f"http://localhost:3000/search?keywords={music_name}, {music_author}").json()
-        song_id = data["result"]["songs"][0]["id"]
+        song_id = data["result"]["songs"][1]["id"]
         netease_url = f"https://y.music.163.com/m/song?id={song_id}"
 
         album_cover_data = requests.get(
