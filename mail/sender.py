@@ -66,10 +66,10 @@ class Sender:
                 logging.info("Exception Email sent to sender.")
 
         if test_next_day:
-            self.test_recipient_next_day(recipient, timeout_seconds)
+            self.test_recipient_next_day(recipient, timeout_seconds, send_self)
 
     def test_recipient_next_day(self, recipient: Recipient,
-                                timeout_seconds: int):
+                                timeout_seconds: int, send_self: bool):
         current_date_time = recipient.current_date_time
         next_day_date_time = current_date_time + timedelta(days=1)
         next_day_date_time_string = date_to_string(next_day_date_time)
@@ -78,10 +78,14 @@ class Sender:
         recipient.set_current_date_time(next_day_date_time)
         try:
             with timeout_limit(timeout_seconds):
-                recipient.generate_subject()
-                recipient.generate_body()
+                subject = recipient.generate_subject()
+                body_html = recipient.generate_body()
                 logging.info(
                         f"Checked for {recipient.email_address} on {next_day_date_time_string}")
+                if send_self:
+                    self.send_email(
+                            f"NextDay {subject} for {recipient.email_address} on {next_day_date_time_string}",
+                            {self.email_address}, body_html)
         except Exception as exception:
             logging.info(exception)
             self.send_exception(

@@ -53,4 +53,4 @@ class Music(Feature):
     <a href="{youtube_url}">搜索Youtube (备用)</a>
     
     {music_today[-1]}
-    """)
+    """, parse_angle_brackets=False)
