@@ -7,7 +7,7 @@ from email.mime.text import MIMEText
 from typing import Set
 
 from mail.recipient import Recipient
-from utility.parse import date_to_string, text_to_html
+from utility.parse import date_to_string, text_to_html, PARSE_NEW_LINE
 from utility.timeout import timeout_limit
 
 
@@ -105,7 +105,7 @@ Exception: {exception}
 
 
 Traceback: {traceback.format_exc()}
-"""))
+""", PARSE_NEW_LINE))
 
 
 class GmailSender(Sender):

@@ -6,7 +6,7 @@ import requests
 
 from feature.base import Feature
 from utility.constant import RESOURCE_PATH
-from utility.parse import text_to_html
+from utility.parse import text_to_html, PARSE_NEW_LINE
 
 
 class Music(Feature):
@@ -53,4 +53,4 @@ class Music(Feature):
     <a href="{youtube_url}">搜索Youtube (备用)</a>
     
     {music_today[-1]}
-    """, parse_angle_brackets=False)
+    """, PARSE_NEW_LINE)
