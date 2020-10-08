@@ -18,10 +18,11 @@ def month_to_string(date: datetime) -> str:
 def text_to_html(text: str, parse_new_line: bool = True,
                  parse_angle_brackets: bool = True) -> str:
     parsed = text
-    if parse_new_line:
-        parsed = parsed.replace("\n", "<br>")
+    # order matters
     if parse_angle_brackets:
         parsed = parsed.replace("<", "&lt;").replace(">", "&gt;")
+    if parse_new_line:
+        parsed = parsed.replace("\n", "<br>")
     return parsed
 
 
