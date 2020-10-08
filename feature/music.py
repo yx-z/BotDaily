@@ -6,7 +6,7 @@ import requests
 
 from feature.base import Feature
 from utility.constant import RESOURCE_PATH
-from utility.parse import text_to_html, PARSE_NEW_LINE
+from utility.parse import text_to_html
 
 
 class Music(Feature):
@@ -36,7 +36,7 @@ class Music(Feature):
             music_id = search_data["result"]["songs"][0]["id"]
 
         music_data = requests.get(
-            f"http://localhost:3000/song/detail?ids={music_id}").json()[
+                f"http://localhost:3000/song/detail?ids={music_id}").json()[
             "songs"][0]
         if has_id_only:
             music_name = music_data["name"]
@@ -53,4 +53,5 @@ class Music(Feature):
     <a href="{youtube_url}">搜索Youtube (备用)</a>
     
     {music_today[-1]}
-    """, PARSE_NEW_LINE)
+    """,
+                parse_angle_brackets=False)  # don't parse angle brackets for having image tags

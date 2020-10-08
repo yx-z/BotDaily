@@ -7,7 +7,7 @@ from email.mime.text import MIMEText
 from typing import Set
 
 from mail.recipient import Recipient
-from utility.parse import date_to_string, text_to_html, PARSE_NEW_LINE
+from utility.parse import month_to_string, text_to_html
 from utility.timeout import timeout_limit
 
 
@@ -61,7 +61,7 @@ class Sender:
             else:
                 logging.info("No more retires")
                 self.send_exception(
-                        f"BotDaily - CURRENT_DAY EXCEPTION for {date_to_string(recipient.current_date_time)}",
+                        f"BotDaily - CURRENT_DAY EXCEPTION for {month_to_string(recipient.current_date_time)}",
                         recipient, exception)
                 logging.info("Exception Email sent to sender.")
 
@@ -72,7 +72,7 @@ class Sender:
                                 timeout_seconds: int, send_self: bool):
         current_date_time = recipient.current_date_time
         next_day_date_time = current_date_time + timedelta(days=1)
-        next_day_date_time_string = date_to_string(next_day_date_time)
+        next_day_date_time_string = month_to_string(next_day_date_time)
         logging.info(
                 f"Checking for {recipient.email_address} on {next_day_date_time_string}")
         recipient.set_current_date_time(next_day_date_time)
@@ -105,7 +105,7 @@ Exception: {exception}
 
 
 Traceback: {traceback.format_exc()}
-""", PARSE_NEW_LINE))
+"""))
 
 
 class GmailSender(Sender):
