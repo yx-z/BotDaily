@@ -31,7 +31,7 @@ if __name__ == '__main__':
     current_date_time = datetime.now()
 
     os.system("node netease-api/app.js &")
-    test_recipient = Recipient("wilsonzyx@gmail.com", Subject("Bot Daily"), [Music("favorite_music.json", start_date_time=datetime(2020,9,24), div_style=CSS_CENTER, image_style=CSS_MEDIUM), ZhihuStory("answer_id.txt", start_date_time=datetime(2020, 8, 4))])
+    test_recipient = Recipient("test@test.com", Subject("Bot Daily"), [Music("favorite_music.json", start_date_time=datetime(2020,9,24), div_style=CSS_CENTER, image_style=CSS_MEDIUM), ZhihuStory("answer_id.txt", start_date_time=datetime(2020, 8, 4))])
     test_recipient.set_current_date_time(current_date_time)
 
     test_sender = GmailSender(SENDER_EMAIL, SENDER_PASSWORD)
