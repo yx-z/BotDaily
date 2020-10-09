@@ -11,6 +11,9 @@ from utility.constant import CSS_BIG
 from utility.image import is_image_file
 from utility.parse import date_to_string, month_to_string, html_to_pdf
 
+# Legacy
+
+
 SRC_MBOX = "收件箱.mbox"
 
 # year-month to output, empty list for all dates
