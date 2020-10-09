@@ -16,7 +16,7 @@ class Recipient:
         self.subject = subject
         self.div_style = div_style
         self.features = features
-        self.current_date_time = None  # lazy initialization by add_current_date_time
+        self.current_date_time = None  # lazy initialization by set_current_date_time
 
     def set_current_date_time(self, current_date_time: datetime):
         self.current_date_time = current_date_time
