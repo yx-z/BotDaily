@@ -28,8 +28,8 @@ SINGLE_OUT_FILE = False
 HTML_FILE = "out.html"
 PDF_FILE = "out.pdf"
 
-REPLIER_EMAILS = ["harvard.edu", "wisc.edu"]
-FIX_DATES = ["2/26", "3/14"]
+REPLIER_EMAILS = [""]  # ["gmail.com"]
+FIX_DATES = [""]  # ["1/1"]
 
 
 def get_attach(date: datetime, message: mailbox.mboxMessage) -> Set[str]:
