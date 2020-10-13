@@ -64,7 +64,7 @@ class ZhihuStory(Feature):
         return f"""{build_html_img(image_url=response["author"]["avatar_url"], image_style=self.avatar_style)}
 作者: {response["author"]["name"]}
 <br>
-{str_soup}
+<div>{str_soup}</div>
 """
 
     # ON HOLD, NOT IN USE
