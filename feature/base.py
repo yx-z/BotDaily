@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import Optional
 
 from PIL import ImageFont
 
@@ -11,7 +10,7 @@ from utility.image import open_image, draw_text, save_image
 
 class Feature(ABC):
 
-    def __init__(self, div_style: str = "", title: Optional[str] = None):
+    def __init__(self, div_style: str = "", title: str = None):
         self.div_style = div_style
         self.title = title
 

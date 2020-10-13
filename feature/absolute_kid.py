@@ -1,16 +1,14 @@
 from datetime import datetime
-from typing import Optional
 
 from feature.base import Feature
 from utility.constant import CSS_FULL_WIDTH
-from utility.html_builder import html_tag, html_img
+from utility.html_builder import html_img
 
 
 class AbsoluteKid(Feature):
 
     def __init__(self, start_date_time: datetime, div_style: str = "",
-                 image_style: str = CSS_FULL_WIDTH,
-                 title: Optional[str] = "绝对小孩"):
+                 image_style: str = CSS_FULL_WIDTH, title: str = "绝对小孩"):
         super().__init__(div_style, title)
         self.start_date_time = start_date_time
         self.image_style = image_style

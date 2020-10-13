@@ -1,13 +1,10 @@
-from typing import Optional
-
 from feature.text import Text
 from utility.file_io import get_resource
 
 
 class ExternalText(Text):
     def __init__(self, text_file: str, clear_after: bool = False,
-                 div_style: str = "",
-                 title: Optional[str] = None):
+                 div_style: str = "", title: str = None):
         super().__init__("", div_style, title)
         self.text_file = text_file
         self.clear_after = clear_after

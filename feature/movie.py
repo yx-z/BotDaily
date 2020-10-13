@@ -1,6 +1,5 @@
 import json
 from datetime import datetime
-from typing import Optional
 
 from feature.base import Feature
 from utility.file_io import get_resource
@@ -12,7 +11,7 @@ MOVIE_PATH = "movie"
 class Movie(Feature):
 
     def __init__(self, order_file_name: str, start_date_time: datetime,
-                 div_style: str = "", title: Optional[str] = "云·电影"):
+                 div_style: str = "", title: str = "云·电影"):
         super().__init__(div_style, title)
         self.order_file_name = order_file_name
         self.start_date_time = start_date_time

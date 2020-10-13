@@ -1,20 +1,18 @@
 import json
 from datetime import datetime
-from typing import Optional
 
 import requests
 
 from feature.base import Feature
 from utility.file_io import get_resource
-from utility.html_builder import html_img, html_tag, \
-    html_from_text, html_a
+from utility.html_builder import html_img, html_from_text, html_a
 
 
 class Music(Feature):
 
     def __init__(self, file_name: str, start_date_time: datetime,
                  div_style: str = "", image_style: str = "",
-                 title: Optional[str] = "云·音乐"):
+                 title: str = "云·音乐"):
         super().__init__(div_style, title)
         self.file_name = file_name
         self.start_date_time = start_date_time
