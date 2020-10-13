@@ -17,7 +17,7 @@ def build_html_from_text(text: str, parse_angle_brackets: bool = True,
 
 def build_html_tag(name: str, paired: bool = False, inner_html: str = "",
                    **kwargs) -> str:
-    attributes = " ".join(map(lambda k: f"{k}='{kwargs[k]}'", kwargs.keys()))
+    attributes = " ".join(map(lambda t: f"{t[0]}='{t[1]}'", kwargs.items()))
     if paired:
         return f"<{name} {attributes}>{inner_html}</{name}>"
     else:
