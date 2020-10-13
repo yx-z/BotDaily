@@ -24,4 +24,4 @@ class Movie(Feature):
         days = (self.current_date_time - self.start_date_time).days
         index = movie_list[days]
         html = open(get_resource(f"{MOVIE_PATH}/{index}.html"), "r").read()
-        return html_div(html, div_style=self.div_style)
+        return html_div(inner_html=html, style=self.div_style)

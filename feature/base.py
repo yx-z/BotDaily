@@ -30,12 +30,12 @@ class Feature(ABC):
 
         out_path = get_resource(f"feature_header_{self.title}.png")
         save_image(title_image, out_path)
-        return html_img(image_path=out_path, image_style=CSS_FULL_WIDTH)
+        return html_img(path=out_path, style=CSS_FULL_WIDTH)
 
     def generate_html(self) -> str:
         return html_div(
-                f"{self.generate_title()}{self.generate_content()}",
-                div_style=self.div_style)
+                inner_html=f"{self.generate_title()}{self.generate_content()}",
+                style=self.div_style)
 
     @abstractmethod
     def generate_content(self) -> str:

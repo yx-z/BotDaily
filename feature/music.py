@@ -45,11 +45,11 @@ class Music(Feature):
         netease_url = f"https://y.music.163.com/m/song?id={music_id}"
         youtube_url = f"https://youtube.com/results?search_query={music_name}, {music_author}"
         return html_from_text(
-                f"""{html_img(image_url=album_cover_url, image_style=self.image_style)}
+                f"""{html_img(url=album_cover_url, style=self.image_style)}
     曲名: {music_name}
     作者: {music_author}
-    {html_a("网易云", netease_url)}
-    {html_a("YouTube", youtube_url)}
+    {html_a(text="网易云", url=netease_url)}
+    {html_a(text="YouTube", url=youtube_url)}
     
     {music_today[-1]}
     """,

@@ -21,6 +21,6 @@ class AbsoluteKid(Feature):
                             i: f"https://raw.githubusercontent.com/yx-z/YunDaily/master/Yun/res/absolute-kids/{f'00{i}'[-3:]}.jpg",
                         indices))
         return f"""
-{html_img(image_url=urls[0], image_style=self.image_style)}
-{html_img(image_url=urls[1], image_style=self.image_style)}
+{html_img(url=urls[0], style=self.image_style)}
+{html_img(url=urls[1], style=self.image_style)}
 """

@@ -49,4 +49,4 @@ class Header(Feature):
 
         out_path = get_resource("header.png")
         image.save(out_path)
-        return html_img(image_path=out_path, image_style=self.image_style)
+        return html_img(path=out_path, style=self.image_style)

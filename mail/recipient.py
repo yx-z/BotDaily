@@ -35,8 +35,9 @@ class Recipient:
             return generated_html
 
         return html_div(
-                HTML_NEW_LINE.join(map(generate_feature, self.features)),
-                div_style=self.div_style)
+                inner_html=HTML_NEW_LINE.join(
+                        map(generate_feature, self.features)),
+                style=self.div_style)
 
     def on_email_sent(self):
         for feature in self.features:

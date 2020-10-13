@@ -17,7 +17,7 @@ class ExternalImage(Feature):
     def generate_content(self) -> str:
         if self.image_url == "":
             self.image_url = upload_image(self.file_name)  # cache
-        return html_img(self.image_url, image_style=self.image_style)
+        return html_img(url=self.image_url, style=self.image_style)
 
     def on_email_sent(self):
         if self.clear_after:

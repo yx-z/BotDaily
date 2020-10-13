@@ -61,7 +61,7 @@ class ZhihuStory(Feature):
         for fig in soup.find_all("figure"):
             fig.attrs.clear()
         str_soup = str(soup)
-        return f"""{html_img(image_url=response["author"]["avatar_url"], image_style=self.avatar_style)}
+        return f"""{html_img(url=response["author"]["avatar_url"], style=self.avatar_style)}
 作者: {response["author"]["name"]}
 <br>
 <div>{str_soup}</div>
