@@ -28,13 +28,11 @@ def html_img(image_url: str = None, image_path: str = "", image_style: str = "",
              **kwargs) -> str:
     if image_url is None:
         image_url = upload_image(image_path)
-    return html_tag("img", paired=False, src=image_url, style=image_style,
-                    **kwargs)
+    return html_tag("img", False, src=image_url, style=image_style, **kwargs)
 
 
 def html_div(div_text: str, div_style: str = "", **kwargs) -> str:
-    return html_tag("div", paired=True, inner_html=div_text,
-                    style=div_style, **kwargs)
+    return html_tag("div", True, div_text, style=div_style, **kwargs)
 
 
 def html_emphasis(text: str, bold: bool = True, italic: bool = True) -> str:
@@ -48,5 +46,5 @@ def html_emphasis(text: str, bold: bool = True, italic: bool = True) -> str:
 
 def html_a(link_text: str, link_url: str, link_style: str = "",
            **kwargs) -> str:
-    return html_tag("a", paired=True, inner_html=link_text, href=link_url,
-                    style=link_style, **kwargs)
+    return html_tag("a", True, link_text, href=link_url, style=link_style,
+                    **kwargs)
