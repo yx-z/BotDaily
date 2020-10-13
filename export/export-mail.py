@@ -7,7 +7,7 @@ from typing import Set, Dict
 
 from bs4 import BeautifulSoup
 
-from utility.constant import CSS_BIG
+from utility.constant import CSS_BIG, HTML_NEW_LINE
 from utility.image import is_image_file
 from utility.parse import date_to_string, month_to_string, html_to_pdf
 
@@ -94,7 +94,7 @@ def get_body(date: datetime,
             img["style"] = CSS_BIG
         if img.get("src").startswith("cid"):
             img.extract()
-    return str(soup) + "<br>"
+    return str(soup) + HTML_NEW_LINE
 
 
 def subject_to_date(subject: str, year: int) -> datetime:
