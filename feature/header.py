@@ -5,7 +5,7 @@ from typing import Optional, List
 from PIL import ImageFont
 
 from feature.base import Feature
-from utility.constant import FONT_NAME, RESOURCE_PATH
+from utility.file_io import get_resource, FONT_PATH
 from utility.image import search_unsplash, download_image, upload_image, \
     draw_text
 
@@ -39,15 +39,14 @@ class Header(Feature):
         position = (80, 100)
         text_color = (255, 255, 255)
         border_color = (0, 20, 20)
-        font = ImageFont.truetype(f"{RESOURCE_PATH}/{FONT_NAME}",
-                                  self.text_size)
+        font = ImageFont.truetype(FONT_PATH, self.text_size)
         text = f"{self.current_date_time.month}/{self.current_date_time.day} {self.text}"
         image = draw_text(image, position, text, font, text_color, border_color)
 
-        font2 = ImageFont.truetype(f"{RESOURCE_PATH}/{FONT_NAME}", 32)
+        font2 = ImageFont.truetype(FONT_PATH, 32)
         image = draw_text(image, (80, 320), topic, font2, text_color,
                           border_color)
 
-        out_path = f"{RESOURCE_PATH}/header.png"
+        out_path = get_resource("header.png")
         image.save(out_path)
         return f"<img src='{upload_image(out_path)}' style='{self.image_style}'/>"

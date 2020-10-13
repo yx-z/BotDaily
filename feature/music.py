@@ -5,7 +5,7 @@ from typing import Optional
 import requests
 
 from feature.base import Feature
-from utility.constant import RESOURCE_PATH
+from utility.file_io import get_resource
 from utility.parse import text_to_html
 
 
@@ -21,7 +21,7 @@ class Music(Feature):
         self.image_style = image_style
 
     def generate_content(self) -> str:
-        music_list = json.load(open(f"{RESOURCE_PATH}/{self.file_name}", "r"))
+        music_list = json.load(open(get_resource(self.file_name), "r"))
         days = (self.current_date_time - self.start_date_time).days
         music_today = music_list[len(music_list) - days - 2]
 

@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Optional
 
 from feature.base import Feature
-from utility.constant import RESOURCE_PATH
+from utility.file_io import get_resource
 from utility.image import upload_image
 
 
@@ -29,12 +29,11 @@ class Gif(Feature):
             id_string = str(gif_id)
         file = list(
                 filter(lambda f: f.startswith(f"frame_{id_string}_delay-"),
-                       os.listdir(
-                               f"{RESOURCE_PATH}/{FEATURE_PATH}/{self.directory_path}"))
-        )[0]
+                       os.listdir(get_resource(
+                               f"{FEATURE_PATH}/{self.directory_path}"))))[0]
         logging.info(f"Gif: {file}")
         image_url = upload_image(
-                f"{RESOURCE_PATH}/{FEATURE_PATH}/{self.directory_path}/{file}")
+                get_resource(f"{FEATURE_PATH}/{self.directory_path}/{file}"))
         return f"""<h3><i>第{days + 1}天</i></h3>
 <img src='{image_url}' style='{self.image_style}'>
 """

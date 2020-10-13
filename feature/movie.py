@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Optional
 
 from feature.base import Feature
-from utility.constant import RESOURCE_PATH
+from utility.file_io import get_resource
 
 MOVIE_PATH = "movie"
 
@@ -19,9 +19,9 @@ class Movie(Feature):
 
     def generate_content(self) -> str:
         movie_list = json.load(
-                open(f"{RESOURCE_PATH}/{MOVIE_PATH}/{self.order_file_name}",
+                open(get_resource(f"{MOVIE_PATH}/{self.order_file_name}"),
                      "r"))
         days = (self.current_date_time - self.start_date_time).days
         index = movie_list[days]
-        html = open(f"{RESOURCE_PATH}/{MOVIE_PATH}/{index}.html", "r").read()
+        html = open(get_resource(f"{MOVIE_PATH}/{index}.html"), "r").read()
         return f"<div style='{self.div_style}'>{html}</div>"

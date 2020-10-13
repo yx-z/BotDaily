@@ -4,6 +4,7 @@ from typing import Optional
 from PIL import ImageFont
 
 from utility.constant import RESOURCE_PATH, FONT_NAME, CSS_FULL_WIDTH
+from utility.file_io import get_resource, FONT_PATH
 from utility.image import open_image, draw_text, save_image, upload_image
 
 
@@ -22,12 +23,12 @@ class Feature(ABC):
         text_color = (0, 0, 0)
         shadow_color = (255, 255, 255)
 
-        background = open_image(f"{RESOURCE_PATH}/feature_background.png")
-        font = ImageFont.truetype(f"{RESOURCE_PATH}/{FONT_NAME}", text_size)
+        background = open_image(get_resource("feature_background.png"))
+        font = ImageFont.truetype(FONT_PATH, text_size)
         title_image = draw_text(background, position, self.title, font,
                                 text_color, shadow_color)
 
-        out_path = f"{RESOURCE_PATH}/feature_header_{self.title}.png"
+        out_path = get_resource(f"feature_header_{self.title}.png")
         save_image(title_image, out_path)
         return f"<img src='{upload_image(out_path)}' style='{CSS_FULL_WIDTH}'/>"
 
