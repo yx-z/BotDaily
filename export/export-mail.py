@@ -11,6 +11,9 @@ from utility.constant import CSS_BIG
 from utility.image import is_image_file
 from utility.parse import date_to_string, month_to_string, html_to_pdf
 
+# Legacy
+
+
 SRC_MBOX = "收件箱.mbox"
 
 # year-month to output, empty list for all dates
@@ -28,8 +31,8 @@ SINGLE_OUT_FILE = False
 HTML_FILE = "out.html"
 PDF_FILE = "out.pdf"
 
-REPLIER_EMAILS = ["harvard.edu", "wisc.edu"]
-FIX_DATES = ["2/26", "3/14"]
+REPLIER_EMAILS = [""]  # ["gmail.com"]
+FIX_DATES = [""]  # ["1/1"]
 
 
 def get_attach(date: datetime, message: mailbox.mboxMessage) -> Set[str]:
