@@ -63,7 +63,7 @@ class ZhihuStory(Feature):
         str_soup = str(soup)
         return f"""{build_html_img(image_url=response["author"]["avatar_url"], image_style=self.avatar_style)}
 作者: {response["author"]["name"]}
-
+<br>
 {str_soup}
 """
 
