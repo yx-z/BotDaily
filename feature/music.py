@@ -22,35 +22,22 @@ class Music(Feature):
     def generate_content(self) -> str:
         music_list = json.load(open(get_resource(self.file_name), "r"))
         days = (self.current_date_time - self.start_date_time).days
-        music_today = music_list[len(music_list) - days - 2]
-
-        has_id_only = len(music_today) == 2  # [music_id, comment]
-        if has_id_only:
-            music_id = music_today[0]
-        else:  # [music_name, music_author, comment]
-            music_name = music_today[0]
-            music_author = music_today[1]
-            search_data = requests.get(
-                    f"http://localhost:3000/search?keywords={music_name}, {music_author}").json()
-            music_id = search_data["result"]["songs"][0]["id"]
+        music_id, name, author, comment = music_list[len(music_list) - days - 2]
 
         music_data = requests.get(
                 f"http://localhost:3000/song/detail?ids={music_id}").json()[
             "songs"][0]
-        if has_id_only:
-            music_name = music_data["name"]
-            music_author = music_data["ar"][0]["name"]
         album_cover_url = music_data["al"]["picUrl"]
 
         netease_url = f"https://y.music.163.com/m/song?id={music_id}"
-        youtube_url = f"https://youtube.com/results?search_query={music_name}, {music_author}"
+        youtube_url = f"https://youtube.com/results?search_query={name}, {author}"
         return html_from_text(
                 f"""{html_img(url=album_cover_url, style=self.image_style)}
-    曲名: {music_name}
-    作者: {music_author}
+    曲名: {name}
+    作者: {author}
     {html_a(text="网易云", url=netease_url)}
     {html_a(text="YouTube", url=youtube_url)}
     
-    {music_today[-1]}
+    {comment}
     """,
                 parse_angle_brackets=False)  # don't parse angle brackets for having image tags
