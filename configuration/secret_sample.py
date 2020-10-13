@@ -6,8 +6,7 @@ IMGUR = pyimgur.Imgur("123")
 
 DARK_SKY_API_KEY = "123"
 
-UNSPLASH = Api(
-        Auth("123", "123", ""))
+UNSPLASH = Api(Auth("123", "123", ""))
 
 LOG_FILE = "bot_daily.log"
 

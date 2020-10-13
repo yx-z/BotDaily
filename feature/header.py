@@ -6,8 +6,8 @@ from PIL import ImageFont
 
 from feature.base import Feature
 from utility.file_io import get_resource, FONT_PATH
-from utility.image import search_unsplash, download_image, upload_image, \
-    draw_text
+from utility.html_builder import build_html_img
+from utility.image import search_unsplash, download_image, draw_text
 
 
 class Header(Feature):
@@ -49,4 +49,4 @@ class Header(Feature):
 
         out_path = get_resource("header.png")
         image.save(out_path)
-        return f"<img src='{upload_image(out_path)}' style='{self.image_style}'/>"
+        return build_html_img(image_path=out_path, image_style=self.image_style)

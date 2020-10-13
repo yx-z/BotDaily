@@ -3,9 +3,10 @@ from typing import Optional
 
 from PIL import ImageFont
 
-from utility.constant import RESOURCE_PATH, FONT_NAME, CSS_FULL_WIDTH
+from utility.constant import CSS_FULL_WIDTH
 from utility.file_io import get_resource, FONT_PATH
-from utility.image import open_image, draw_text, save_image, upload_image
+from utility.html_builder import build_html_img, build_html_div
+from utility.image import open_image, draw_text, save_image
 
 
 class Feature(ABC):
@@ -30,10 +31,12 @@ class Feature(ABC):
 
         out_path = get_resource(f"feature_header_{self.title}.png")
         save_image(title_image, out_path)
-        return f"<img src='{upload_image(out_path)}' style='{CSS_FULL_WIDTH}'/>"
+        return build_html_img(image_path=out_path, image_style=CSS_FULL_WIDTH)
 
     def generate_html(self) -> str:
-        return f"<div style='{self.div_style}'>{self.generate_title()}{self.generate_content()}</div>"
+        return build_html_div(
+                f"{self.generate_title()}{self.generate_content()}",
+                div_style=self.div_style)
 
     @abstractmethod
     def generate_content(self) -> str:

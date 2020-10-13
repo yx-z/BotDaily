@@ -5,6 +5,7 @@ from typing import List
 from feature.base import Feature
 from mail.subject import Subject
 from utility.constant import HTML_NEW_LINE, CSS_DEFAULT_DIV
+from utility.html_builder import build_html_div
 
 
 class Recipient:
@@ -33,7 +34,9 @@ class Recipient:
             logging.info(f"{type(feature).__name__} generated.")
             return generated_html
 
-        return f"<div style='{self.div_style}'>{HTML_NEW_LINE.join(map(generate_feature, self.features))}</div>"
+        return build_html_div(
+                HTML_NEW_LINE.join(map(generate_feature, self.features)),
+                div_style=self.div_style)
 
     def on_email_sent(self):
         for feature in self.features:

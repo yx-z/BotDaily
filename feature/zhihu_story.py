@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 
 from feature.base import Feature
 from utility.file_io import get_resource
+from utility.html_builder import build_html_img
 
 HEADER = {"Host": "www.zhihu.com",
           "Referer": "https://www.zhihu.com/",
@@ -60,12 +61,11 @@ class ZhihuStory(Feature):
         for fig in soup.find_all("figure"):
             fig.attrs.clear()
         str_soup = str(soup)
-        return f"""<div style='{self.div_style}'>
-<img src="{response["author"]["avatar_url"]}" style="{self.avatar_style}"/>
+        return f"""{build_html_img(image_url=response["author"]["avatar_url"], image_style=self.avatar_style)}
 作者: {response["author"]["name"]}
 
 {str_soup}
-</div>"""
+"""
 
     # ON HOLD, NOT IN USE
     @staticmethod
@@ -101,6 +101,8 @@ class ZhihuStory(Feature):
                             "</noscript>", "").replace(
                             "<img src=\"data:image/svg+xml",
                             "<meta src=\"")
+                    # further use title, author, content here
+                    # ...
             if res_json["paging"]["is_end"] or count >= res_json["paging"][
                 "totals"]:
                 break

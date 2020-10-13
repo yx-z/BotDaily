@@ -36,6 +36,7 @@ class OneCover(One):
 
 
 class OneQuote(One):
+
     def generate_content(self) -> str:
         return One.__get_home__().find("div", class_="fp-one-cita").text.strip()
 
@@ -59,6 +60,7 @@ class OneArticle(One):
 
 
 class OneQuestionAnser(One):
+
     def generate_content(self) -> str:
         p = One.__get_home__().find("p", class_="one-cuestion-titulo")
         qa_url = p.find("a")["href"]

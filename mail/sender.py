@@ -7,7 +7,8 @@ from email.mime.text import MIMEText
 from typing import Set
 
 from mail.recipient import Recipient
-from utility.parse import month_to_string, text_to_html
+from utility.html_builder import text_to_html
+from utility.parse import month_to_string
 from utility.timeout import timeout_limit
 
 

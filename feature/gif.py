@@ -5,7 +5,8 @@ from typing import Optional
 
 from feature.base import Feature
 from utility.file_io import get_resource
-from utility.image import upload_image
+from utility.html_builder import build_html_tag, build_html_img, \
+    build_html_emphasis
 
 
 class Gif(Feature):
@@ -32,8 +33,6 @@ class Gif(Feature):
                        os.listdir(get_resource(
                                f"{FEATURE_PATH}/{self.directory_path}"))))[0]
         logging.info(f"Gif: {file}")
-        image_url = upload_image(
-                get_resource(f"{FEATURE_PATH}/{self.directory_path}/{file}"))
-        return f"""<h3><i>第{days + 1}天</i></h3>
-<img src='{image_url}' style='{self.image_style}'>
+        return f"""{build_html_tag("h3", True, build_html_emphasis(f"第{days + 1}天"))}
+{build_html_img(image_path=get_resource(f"{FEATURE_PATH}/{self.directory_path}/{file}"), image_style=self.image_style)}
 """
