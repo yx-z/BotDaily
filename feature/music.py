@@ -6,8 +6,8 @@ import requests
 
 from feature.base import Feature
 from utility.file_io import get_resource
-from utility.html_builder import build_html_img, build_html_tag, \
-    build_html_from_text
+from utility.html_builder import html_img, html_tag, \
+    html_from_text, html_a
 
 
 class Music(Feature):
@@ -46,12 +46,12 @@ class Music(Feature):
 
         netease_url = f"https://y.music.163.com/m/song?id={music_id}"
         youtube_url = f"https://youtube.com/results?search_query={music_name}, {music_author}"
-        return build_html_from_text(
-                f"""{build_html_img(image_url=album_cover_url, image_style=self.image_style)}
+        return html_from_text(
+                f"""{html_img(image_url=album_cover_url, image_style=self.image_style)}
     曲名: {music_name}
     作者: {music_author}
-    {build_html_tag("a", href={netease_url}, inner_html="网易云")}
-    {build_html_tag("a", href={youtube_url}, inner_html="YouTube")}
+    {html_a("网易云", netease_url)}
+    {html_a("YouTube", youtube_url)}
     
     {music_today[-1]}
     """,

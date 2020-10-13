@@ -3,7 +3,7 @@ from typing import Optional
 
 from feature.base import Feature
 from utility.constant import CSS_FULL_WIDTH
-from utility.html_builder import build_html_tag, build_html_img
+from utility.html_builder import html_tag, html_img
 
 
 class AbsoluteKid(Feature):
@@ -23,6 +23,6 @@ class AbsoluteKid(Feature):
                             i: f"https://raw.githubusercontent.com/yx-z/YunDaily/master/Yun/res/absolute-kids/{f'00{i}'[-3:]}.jpg",
                         indices))
         return f"""
-{build_html_img(image_url=urls[0], image_style=self.image_style)}
-{build_html_img(image_url=urls[1], image_style=self.image_style)}
+{html_img(image_url=urls[0], image_style=self.image_style)}
+{html_img(image_url=urls[1], image_style=self.image_style)}
 """

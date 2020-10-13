@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 
 from feature.base import Feature
 from utility.file_io import get_resource
-from utility.html_builder import build_html_img
+from utility.html_builder import html_img
 
 HEADER = {"Host": "www.zhihu.com",
           "Referer": "https://www.zhihu.com/",
@@ -61,7 +61,7 @@ class ZhihuStory(Feature):
         for fig in soup.find_all("figure"):
             fig.attrs.clear()
         str_soup = str(soup)
-        return f"""{build_html_img(image_url=response["author"]["avatar_url"], image_style=self.avatar_style)}
+        return f"""{html_img(image_url=response["author"]["avatar_url"], image_style=self.avatar_style)}
 作者: {response["author"]["name"]}
 <br>
 <div>{str_soup}</div>

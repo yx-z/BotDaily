@@ -5,7 +5,7 @@ import requests
 
 from configuration.secret import DARK_SKY_API_KEY
 from feature.base import Feature
-from utility.html_builder import build_html_emphasis
+from utility.html_builder import html_emphasis
 
 
 class Weather(Feature):
@@ -26,11 +26,11 @@ class Weather(Feature):
 
         summary = weather["summary"]
         if any(w in summary for w in ["雨", "雪"]):
-            summary = build_html_emphasis(summary)
+            summary = html_emphasis(summary)
 
         min_temperature = int(weather['temperatureLow'])
         min_temperature_text = f"最低 {min_temperature}°C"
         if min_temperature <= 0:
-            min_temperature_text = build_html_emphasis(min_temperature_text)
+            min_temperature_text = html_emphasis(min_temperature_text)
 
         return f"{self.location_name} - {summary} 最高 {int(weather['temperatureHigh'])}°C, {min_temperature_text}。"

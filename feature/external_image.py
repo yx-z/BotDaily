@@ -1,7 +1,7 @@
 from typing import Optional
 
 from feature.base import Feature
-from utility.html_builder import build_html_img
+from utility.html_builder import html_img
 from utility.image import upload_image
 
 
@@ -19,7 +19,7 @@ class ExternalImage(Feature):
     def generate_content(self) -> str:
         if self.image_url == "":
             self.image_url = upload_image(self.file_name)  # cache
-        return build_html_img(self.image_url, image_style=self.image_style)
+        return html_img(self.image_url, image_style=self.image_style)
 
     def on_email_sent(self):
         if self.clear_after:

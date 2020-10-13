@@ -4,7 +4,7 @@ from typing import Optional
 
 from feature.base import Feature
 from utility.file_io import get_resource
-from utility.html_builder import build_html_div
+from utility.html_builder import html_div
 
 MOVIE_PATH = "movie"
 
@@ -25,4 +25,4 @@ class Movie(Feature):
         days = (self.current_date_time - self.start_date_time).days
         index = movie_list[days]
         html = open(get_resource(f"{MOVIE_PATH}/{index}.html"), "r").read()
-        return build_html_div(html, div_style=self.div_style)
+        return html_div(html, div_style=self.div_style)

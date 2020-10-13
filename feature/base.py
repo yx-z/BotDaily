@@ -5,7 +5,7 @@ from PIL import ImageFont
 
 from utility.constant import CSS_FULL_WIDTH
 from utility.file_io import get_resource, FONT_PATH
-from utility.html_builder import build_html_img, build_html_div
+from utility.html_builder import html_img, html_div
 from utility.image import open_image, draw_text, save_image
 
 
@@ -31,10 +31,10 @@ class Feature(ABC):
 
         out_path = get_resource(f"feature_header_{self.title}.png")
         save_image(title_image, out_path)
-        return build_html_img(image_path=out_path, image_style=CSS_FULL_WIDTH)
+        return html_img(image_path=out_path, image_style=CSS_FULL_WIDTH)
 
     def generate_html(self) -> str:
-        return build_html_div(
+        return html_div(
                 f"{self.generate_title()}{self.generate_content()}",
                 div_style=self.div_style)
 
