@@ -7,7 +7,7 @@ from email.mime.text import MIMEText
 from typing import Set
 
 from mail.recipient import Recipient
-from utility.html_builder import text_to_html
+from utility.html_builder import build_html_from_text
 from utility.parse import month_to_string
 from utility.timeout import timeout_limit
 
@@ -99,7 +99,8 @@ class Sender:
                        exception: Exception):
         logging.info(f"Sending exception")
         self.send_email(subject, {self.email_address},
-                        text_to_html(f"""Recipient: {recipient.email_address}
+                        build_html_from_text(
+                            f"""Recipient: {recipient.email_address}
 
 
 Exception: {exception}

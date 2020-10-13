@@ -6,8 +6,8 @@ import requests
 
 from feature.base import Feature
 from utility.file_io import get_resource
-from utility.html_builder import build_html_img, build_html_tag
-from utility.parse import text_to_html
+from utility.html_builder import build_html_img, build_html_tag, \
+    build_html_from_text
 
 
 class Music(Feature):
@@ -46,7 +46,7 @@ class Music(Feature):
 
         netease_url = f"https://y.music.163.com/m/song?id={music_id}"
         youtube_url = f"https://youtube.com/results?search_query={music_name}, {music_author}"
-        return text_to_html(
+        return build_html_from_text(
                 f"""{build_html_img(image_url=album_cover_url, image_style=self.image_style)}
     曲名: {music_name}
     作者: {music_author}

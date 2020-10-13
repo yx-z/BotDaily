@@ -22,7 +22,7 @@ if __name__ == '__main__':
         now = datetime.now()
         now_str = now.strftime("%H:%M")
         TIME_TO_RECIPIENTS = eval(
-            open("configuration/recipient.py", "r").read())
+                open("configuration/recipient.py", "r").read())
         if now_str in TIME_TO_RECIPIENTS.keys():
             for recipient in TIME_TO_RECIPIENTS[now_str]:
                 recipient.set_current_date_time(now)

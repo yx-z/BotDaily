@@ -1,14 +1,15 @@
-from utility.constant import HTML_LESS_THAN, HTML_GREATER_THAN, HTML_NEW_LINE
+from utility.constant import HTML_LESS_THAN_TEXT, HTML_GREATER_THAN_TEXT, \
+    HTML_NEW_LINE
 from utility.image import upload_image
 
 
-def text_to_html(text: str, parse_angle_brackets: bool = True,
-                 parse_new_line: bool = True) -> str:
+def build_html_from_text(text: str, parse_angle_brackets: bool = True,
+                         parse_new_line: bool = True) -> str:
     parsed = text
     # the following process order matters
     if parse_angle_brackets:
-        parsed = parsed.replace("<", HTML_LESS_THAN).replace(">",
-                                                             HTML_GREATER_THAN)
+        parsed = parsed.replace("<", HTML_LESS_THAN_TEXT).replace(">",
+                                                                  HTML_GREATER_THAN_TEXT)
     if parse_new_line:
         parsed = parsed.replace("\n", HTML_NEW_LINE)
     return parsed
