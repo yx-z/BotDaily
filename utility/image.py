@@ -48,4 +48,5 @@ def download_image(url: str) -> Image:
 
 def is_image_file(file: str) -> bool:
     f = file.lower()
-    return any(f.endswith(f".{suffix}") for suffix in ["jpg", "jpeg", "gif", "png])
+    return any(f.endswith(f".{suffix}") for suffix in
+               ["jpg", "jpeg", "gif", "png"])
