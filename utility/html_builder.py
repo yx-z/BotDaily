@@ -24,8 +24,8 @@ def html_tag(name: str, paired: bool = False, inner_html: str = "",
         return f"<{name} {attributes}>"
 
 
-def html_img(image_url: str = None, image_path: str = "",
-             image_style: str = "", **kwargs) -> str:
+def html_img(image_url: str = None, image_path: str = "", image_style: str = "",
+             **kwargs) -> str:
     if image_url is None:
         image_url = upload_image(image_path)
     return html_tag("img", paired=False, src=image_url, style=image_style,
@@ -37,8 +37,7 @@ def html_div(div_text: str, div_style: str = "", **kwargs) -> str:
                     style=div_style, **kwargs)
 
 
-def html_emphasis(text: str, bold: bool = True,
-                  italic: bool = True) -> str:
+def html_emphasis(text: str, bold: bool = True, italic: bool = True) -> str:
     html = text
     if bold:
         html = html_tag("b", True, html)
