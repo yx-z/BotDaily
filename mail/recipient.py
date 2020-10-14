@@ -31,15 +31,17 @@ class Recipient:
         return self.subject.to_complete_string()
 
     def generate_body(self, test_filter: bool = False) -> str:
-        def generate_feature(feature: Feature) -> str:
+        def generate_feature(index: int) -> str:
+            feature = self.features[index]
             generated_html = feature.generate_html()
             logging.info(f"{type(feature).__name__} generated.")
             return generated_html
 
-        return html_div(inner_html=HTML_NEW_LINE.join(
-                map(lambda i: generate_feature(self.features[i]),
-                    self.test_next_day_feature_indices if test_filter else list(
-                            range(len(self.features))))), style=self.div_style)
+        return html_div(inner_html=HTML_NEW_LINE.join(map(generate_feature,
+                                                          self.test_next_day_feature_indices if test_filter else list(
+                                                                  range(len(
+                                                                          self.features))))),
+                        style=self.div_style)
 
     def on_email_sent(self):
         for feature in self.features:
