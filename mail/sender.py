@@ -4,7 +4,7 @@ import traceback
 from datetime import timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from typing import Set
+from typing import Set, List
 
 from mail.recipient import Recipient
 from utility.html_builder import html_from_text
@@ -21,25 +21,10 @@ class Sender:
         self.email_address = email_address
         self.password = password
 
-    def send_email(self, subject: str, recipients: Set[str], body_html: str):
-        logging.info(f"Sending from {self.email_address} to {recipients}")
-        message = MIMEMultipart("alternative")
-        message["Subject"] = subject
-        message["From"] = self.email_address
-        message["To"] = ", ".join(recipients)
-        message.attach(MIMEText(body_html, "html"))
-
-        server = smtplib.SMTP_SSL(self.smtp_server, self.port)
-        server.ehlo()
-        server.login(self.email_address, self.password)
-        server.sendmail(self.email_address, list(recipients),
-                        message.as_string())
-        server.close()
-
     def send_recipient_email(self, recipient: Recipient, retry: int = 0,
                              timeout_seconds: int = 60,
                              send_self: bool = False,
-                             test_next_day: bool = False):
+                             test_next_day_feature_indices: List[int] = None):
         destination_email_address = {recipient.email_address}
         if send_self:
             destination_email_address.add(self.email_address)
@@ -58,7 +43,8 @@ class Sender:
             if retry > 0:
                 logging.info(f"Retrying with remaining tries of {retry}")
                 self.send_recipient_email(recipient, retry - 1, timeout_seconds,
-                                          send_self, test_next_day)
+                                          send_self,
+                                          test_next_day_feature_indices)
             else:
                 logging.info("No more retires")
                 self.send_exception(
@@ -66,11 +52,13 @@ class Sender:
                         recipient, exception)
                 logging.info("Exception Email sent to sender.")
 
-        if test_next_day:
-            self.test_recipient_next_day(recipient, timeout_seconds, send_self)
+        if test_next_day_feature_indices is not None:
+            self.test_recipient_next_day(recipient, timeout_seconds, send_self,
+                                         test_next_day_feature_indices)
 
     def test_recipient_next_day(self, recipient: Recipient,
-                                timeout_seconds: int, send_self: bool):
+                                timeout_seconds: int, send_self: bool,
+                                feature_indices: List[int]):
         current_date_time = recipient.current_date_time
         next_day_date_time = current_date_time + timedelta(days=1)
         next_day_date_time_string = month_to_string(next_day_date_time)
@@ -80,7 +68,7 @@ class Sender:
         try:
             with timeout_limit(timeout_seconds):
                 subject = recipient.generate_subject()
-                body_html = recipient.generate_body()
+                body_html = recipient.generate_body(feature_indices)
                 logging.info(
                         f"Checked for {recipient.email_address} on {next_day_date_time_string}")
                 if send_self:
@@ -108,6 +96,21 @@ Exception: {exception}
 
 Traceback: {traceback.format_exc()}
 """))
+
+    def send_email(self, subject: str, recipients: Set[str], body_html: str):
+        logging.info(f"Sending from {self.email_address} to {recipients}")
+        message = MIMEMultipart("alternative")
+        message["Subject"] = subject
+        message["From"] = self.email_address
+        message["To"] = ", ".join(recipients)
+        message.attach(MIMEText(body_html, "html"))
+
+        server = smtplib.SMTP_SSL(self.smtp_server, self.port)
+        server.ehlo()
+        server.login(self.email_address, self.password)
+        server.sendmail(self.email_address, list(recipients),
+                        message.as_string())
+        server.close()
 
 
 class GmailSender(Sender):

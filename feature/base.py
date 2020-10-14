@@ -32,14 +32,14 @@ class Feature(ABC):
         save_image(title_image, out_path)
         return html_img(path=out_path, style=CSS_FULL_WIDTH)
 
+    @abstractmethod
+    def generate_content(self) -> str:
+        pass
+
     def generate_html(self) -> str:
         return html_div(
                 inner_html=f"{self.generate_title()}{self.generate_content()}",
                 style=self.div_style)
-
-    @abstractmethod
-    def generate_content(self) -> str:
-        pass
 
     def on_email_sent(self):
         pass

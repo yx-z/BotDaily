@@ -28,15 +28,18 @@ class Recipient:
     def generate_subject(self) -> str:
         return self.subject.to_complete_string()
 
-    def generate_body(self) -> str:
+    def generate_body(self, feature_indices: List[int] = None) -> str:
         def generate_feature(feature: Feature) -> str:
             generated_html = feature.generate_html()
             logging.info(f"{type(feature).__name__} generated.")
             return generated_html
 
-        return html_div(
-                inner_html=HTML_NEW_LINE.join(
-                        map(generate_feature, self.features)),
+        if feature_indices is None:
+            feature_indices = list(range(len(self.features)))
+
+        return html_div(inner_html=HTML_NEW_LINE.join(
+                map(lambda i: generate_feature(self.features[i]),
+                    feature_indices)),
                 style=self.div_style)
 
     def on_email_sent(self):
