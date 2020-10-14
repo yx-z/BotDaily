@@ -23,8 +23,7 @@ class Sender:
 
     def send_recipient_email(self, recipient: Recipient, retry: int = 0,
                              timeout_seconds: int = 60,
-                             send_self: bool = False,
-                             test_next_day_feature_indices: List[int] = None):
+                             send_self: bool = False):
         destination_email_address = {recipient.email_address}
         if send_self:
             destination_email_address.add(self.email_address)
@@ -43,8 +42,7 @@ class Sender:
             if retry > 0:
                 logging.info(f"Retrying with remaining tries of {retry}")
                 self.send_recipient_email(recipient, retry - 1, timeout_seconds,
-                                          send_self,
-                                          test_next_day_feature_indices)
+                                          send_self)
             else:
                 logging.info("No more retires")
                 self.send_exception(
@@ -52,13 +50,11 @@ class Sender:
                         recipient, exception)
                 logging.info("Exception Email sent to sender.")
 
-        if test_next_day_feature_indices is not None:
-            self.test_recipient_next_day(recipient, timeout_seconds, send_self,
-                                         test_next_day_feature_indices)
+        if recipient.test_next_day_feature_indices is not None:
+            self.test_recipient_next_day(recipient, timeout_seconds, send_self)
 
     def test_recipient_next_day(self, recipient: Recipient,
-                                timeout_seconds: int, send_self: bool,
-                                feature_indices: List[int]):
+                                timeout_seconds: int, send_self: bool):
         current_date_time = recipient.current_date_time
         next_day_date_time = current_date_time + timedelta(days=1)
         next_day_date_time_string = month_to_string(next_day_date_time)
@@ -68,7 +64,7 @@ class Sender:
         try:
             with timeout_limit(timeout_seconds):
                 subject = recipient.generate_subject()
-                body_html = recipient.generate_body(feature_indices)
+                body_html = recipient.generate_body(test_filter=True)
                 logging.info(
                         f"Checked for {recipient.email_address} on {next_day_date_time_string}")
                 if send_self:

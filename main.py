@@ -27,8 +27,7 @@ if __name__ == '__main__':
             for recipient in TIME_TO_RECIPIENTS[now_str]:
                 recipient.set_current_date_time(now)
                 sender.send_recipient_email(recipient, timeout_seconds=60,
-                                            send_self=True, retry=0,
-                                            test_next_day=True)
+                                            send_self=True, retry=0)
         elif now.minute == 0:
             logging.info("Sleeping.")
         time.sleep(SECONDS_IN_MINUTE)

@@ -12,11 +12,13 @@ class Recipient:
 
     def __init__(self, email_address: str,
                  subject: Subject, features: List[Feature],
-                 div_style: str = CSS_DEFAULT_DIV):
+                 div_style: str = CSS_DEFAULT_DIV,
+                 test_next_day_feature_indices: List[int] = None):
         self.email_address = email_address
         self.subject = subject
         self.div_style = div_style
         self.features = features
+        self.test_next_day_feature_indices = test_next_day_feature_indices
         self.current_date_time = None  # lazy initialization by set_current_date_time
 
     def set_current_date_time(self, current_date_time: datetime):
@@ -28,19 +30,17 @@ class Recipient:
     def generate_subject(self) -> str:
         return self.subject.to_complete_string()
 
-    def generate_body(self, feature_indices: List[int] = None) -> str:
+    def generate_body(self, test_filter: bool = False) -> str:
         def generate_feature(feature: Feature) -> str:
             generated_html = feature.generate_html()
             logging.info(f"{type(feature).__name__} generated.")
             return generated_html
 
-        if feature_indices is None:
-            feature_indices = list(range(len(self.features)))
-
         return html_div(inner_html=HTML_NEW_LINE.join(
                 map(lambda i: generate_feature(self.features[i]),
-                    feature_indices)),
-                style=self.div_style)
+                    self.test_next_day_feature_indices if test_filter else list(
+                            range(len(self.features)))),
+                style=self.div_style))
 
     def on_email_sent(self):
         for feature in self.features:
