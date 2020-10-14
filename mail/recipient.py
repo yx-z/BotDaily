@@ -39,8 +39,7 @@ class Recipient:
         return html_div(inner_html=HTML_NEW_LINE.join(
                 map(lambda i: generate_feature(self.features[i]),
                     self.test_next_day_feature_indices if test_filter else list(
-                            range(len(self.features)))),
-                style=self.div_style))
+                            range(len(self.features))))), style=self.div_style)
 
     def on_email_sent(self):
         for feature in self.features:
