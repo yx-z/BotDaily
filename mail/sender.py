@@ -4,7 +4,7 @@ import traceback
 from datetime import timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from typing import Set, List
+from typing import Set
 
 from mail.recipient import Recipient
 from utility.html_builder import html_from_text
@@ -30,7 +30,7 @@ class Sender:
         try:
             with timeout_limit(timeout_seconds):
                 subject = recipient.generate_subject()
-                body_html = recipient.generate_body()
+                body_html = recipient.generate_body(test_filter=False)
                 logging.info(body_html)
                 self.send_email(subject, destination_email_address, body_html)
                 logging.info(f"Email sent to {destination_email_address}")
