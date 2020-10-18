@@ -22,9 +22,12 @@ class ExternalImage(Feature):
     def generate_content(self) -> str:
         if self.image_url is None:
             self.file_path = get_resource_path(self.file_name)
-            self.image_url = upload_image(self.file_path)  # cache
+            if os.path.exists(self.file_path):
+                self.image_url = upload_image(self.file_path)  # cache
+            else:
+                return ""  # empty div, return early
         return html_img(url=self.image_url, style=self.image_style)
 
     def on_email_sent(self):
-        if self.clear_after and self.file_path is not None:
+        if self.clear_after and os.path.exists(self.file_path):
             os.system(f"rm -f {self.file_path}")
