@@ -44,5 +44,8 @@ def html_emphasis(text: str, bold: bool = True, italic: bool = True) -> str:
 
 
 def html_a(text: str, url: str, style: str = "", **kwargs) -> str:
-    return html_tag("a", True, text, href=url, style=style,
-                    **kwargs)
+    return html_tag("a", True, text, href=url, style=style, **kwargs)
+
+
+def css_build(*styles: str) -> str:
+    return "; ".join(styles)
