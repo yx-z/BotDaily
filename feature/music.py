@@ -4,7 +4,7 @@ from datetime import datetime
 import requests
 
 from feature.base import Feature
-from utility.file_io import get_resource
+from utility.file_io import get_resource_path
 from utility.html_builder import html_img, html_from_text, html_a
 
 
@@ -20,7 +20,7 @@ class Music(Feature):
         self.image_style = image_style
 
     def generate_content(self) -> str:
-        music_list = json.load(open(get_resource(self.file_name), "r"))
+        music_list = json.load(open(get_resource_path(self.file_name), "r"))
         days = (self.current_date_time - self.start_date_time).days
         music_id, name, author, comment = music_list[len(music_list) - days - 2]
 

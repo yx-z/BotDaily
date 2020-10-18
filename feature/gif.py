@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 
 from feature.base import Feature
-from utility.file_io import get_resource
+from utility.file_io import get_resource_path
 from utility.html_builder import html_tag, html_img, \
     html_emphasis
 
@@ -29,9 +29,9 @@ class Gif(Feature):
             id_string = str(gif_id)
         file = list(
                 filter(lambda f: f.startswith(f"frame_{id_string}_delay-"),
-                       os.listdir(get_resource(
+                       os.listdir(get_resource_path(
                                f"{FEATURE_PATH}/{self.directory_path}"))))[0]
         logging.info(f"Gif: {file}")
         return f"""{html_tag("h3", paired=True, inner_html=html_emphasis(f"第{days + 1}天"))}
-{html_img(path=get_resource(f"{FEATURE_PATH}/{self.directory_path}/{file}"), style=self.image_style)}
+{html_img(path=get_resource_path(f"{FEATURE_PATH}/{self.directory_path}/{file}"), style=self.image_style)}
 """

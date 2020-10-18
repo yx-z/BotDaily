@@ -5,7 +5,7 @@ from typing import List
 from PIL import ImageFont
 
 from feature.base import Feature
-from utility.file_io import get_resource, FONT_PATH
+from utility.file_io import get_resource_path, FONT_PATH
 from utility.html_builder import html_img
 from utility.image import search_unsplash, download_image, draw_text
 
@@ -47,6 +47,6 @@ class Header(Feature):
         image = draw_text(image, (80, 320), topic, font2, text_color,
                           border_color)
 
-        out_path = get_resource("header.png")
+        out_path = get_resource_path("header.png")
         image.save(out_path)
         return html_img(path=out_path, style=self.image_style)

@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from PIL import ImageFont
 
 from utility.constant import CSS_FULL_WIDTH
-from utility.file_io import get_resource, FONT_PATH
+from utility.file_io import get_resource_path, FONT_PATH
 from utility.html_builder import html_img, html_div
 from utility.image import open_image, draw_text, save_image
 
@@ -23,12 +23,12 @@ class Feature(ABC):
         text_color = (0, 0, 0)
         shadow_color = (255, 255, 255)
 
-        background = open_image(get_resource("feature_background.png"))
+        background = open_image(get_resource_path("feature_background.png"))
         font = ImageFont.truetype(FONT_PATH, text_size)
         title_image = draw_text(background, position, self.title, font,
                                 text_color, shadow_color)
 
-        out_path = get_resource(f"feature_header_{self.title}.png")
+        out_path = get_resource_path(f"feature_header_{self.title}.png")
         save_image(title_image, out_path)
         return html_img(path=out_path, style=CSS_FULL_WIDTH)
 

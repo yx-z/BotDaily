@@ -7,7 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from feature.base import Feature
-from utility.file_io import get_resource
+from utility.file_io import get_resource_path
 from utility.html_builder import html_img
 
 HEADER = {"Host": "www.zhihu.com",
@@ -31,7 +31,8 @@ class ZhihuStory(Feature):
 
     def generate_content(self) -> str:
         index = max(1, (self.current_date_time - self.start_date_time).days + 1)
-        answer_url = linecache.getline(get_resource(self.answer_file), index)
+        answer_url = linecache.getline(get_resource_path(self.answer_file),
+                                       index)
         answer_id = answer_url[answer_url.rfind("/") + 1:]
         return self.__request_answer__(answer_id)
 

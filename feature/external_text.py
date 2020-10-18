@@ -1,5 +1,5 @@
 from feature.text import Text
-from utility.file_io import get_resource
+from utility.file_io import get_resource_path
 
 
 class ExternalText(Text):
@@ -10,10 +10,10 @@ class ExternalText(Text):
         self.clear_after = clear_after
 
     def generate_content(self) -> str:
-        with open(get_resource(self.text_file), "r+") as file:
+        with open(get_resource_path(self.text_file), "r+") as file:
             self.text = file.read()
             return super().generate_content()
 
     def on_email_sent(self):
         if self.clear_after:
-            open(get_resource(self.text_file), "w+").truncate(0)
+            open(get_resource_path(self.text_file), "w+").truncate(0)

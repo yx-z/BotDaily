@@ -2,7 +2,7 @@ import os
 
 from feature.base import Feature
 from utility.constant import CSS_MEDIUM
-from utility.file_io import get_resource
+from utility.file_io import get_resource_path
 from utility.html_builder import html_img
 from utility.image import upload_image
 
@@ -21,7 +21,7 @@ class ExternalImage(Feature):
 
     def generate_content(self) -> str:
         if self.image_url is None:
-            self.file_path = get_resource(self.file_name)
+            self.file_path = get_resource_path(self.file_name)
             self.image_url = upload_image(self.file_path)  # cache
         return html_img(url=self.image_url, style=self.image_style)
 
