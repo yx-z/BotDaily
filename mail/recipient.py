@@ -13,12 +13,12 @@ class Recipient:
     def __init__(self, email_address: str,
                  subject: Subject, features: List[Feature],
                  div_style: str = CSS_DEFAULT_DIV,
-                 test_next_day_feature_indices: List[int] = None):
+                 test_next_day_feature: List[str] = None):
         self.email_address = email_address
         self.subject = subject
         self.div_style = div_style
         self.features = features
-        self.test_next_day_feature_indices = test_next_day_feature_indices
+        self.test_next_day = test_next_day_feature
         self.current_date_time = None  # lazy initialization by set_current_date_time
 
     def set_current_date_time(self, current_date_time: datetime):
@@ -31,17 +31,25 @@ class Recipient:
         return self.subject.to_complete_string()
 
     def generate_body(self, test_filter: bool = False) -> str:
-        def generate_feature(index: int) -> str:
-            feature = self.features[index]
+
+        def get_name(feature: Feature) -> str:
+            return type(feature).__name__
+
+        def generate_feature(feature: Feature) -> str:
             generated_html = feature.generate_html()
-            logging.info(f"{type(feature).__name__} generated.")
+            logging.info(f"{get_name(feature)} generated.")
             return generated_html
 
-        return html_div(inner_html=HTML_NEW_LINE.join(map(generate_feature,
-                                                          self.test_next_day_feature_indices if test_filter else list(
-                                                                  range(len(
-                                                                          self.features))))),
-                        style=self.div_style)
+        if test_filter:
+            return html_div(inner_html=HTML_NEW_LINE.join(
+                    map(generate_feature,
+                        filter(lambda f: get_name(f) in self.test_next_day,
+                               self.features))),
+                    style=self.div_style)
+        else:
+            return html_div(inner_html=HTML_NEW_LINE.join(
+                    map(generate_feature, self.features)),
+                    style=self.div_style)
 
     def on_email_sent(self):
         for feature in self.features:
