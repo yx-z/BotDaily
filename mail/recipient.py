@@ -35,21 +35,18 @@ class Recipient:
         def get_name(feature: Feature) -> str:
             return type(feature).__name__
 
-        def generate_feature(feature: Feature) -> str:
+        def gen_feature(feature: Feature) -> str:
             generated_html = feature.generate_html()
             logging.info(f"{get_name(feature)} generated.")
             return generated_html
 
-        if test_filter:
-            return html_div(inner_html=HTML_NEW_LINE.join(
-                    map(generate_feature,
-                        filter(lambda f: get_name(f) in self.test_next_day,
-                               self.features))),
-                    style=self.div_style)
-        else:
-            return html_div(inner_html=HTML_NEW_LINE.join(
-                    map(generate_feature, self.features)),
-                    style=self.div_style)
+        return html_div(
+                inner_html=HTML_NEW_LINE.join(
+                        map(gen_feature,
+                            filter(lambda f: get_name(f) in self.test_next_day,
+                                   self.features) if test_filter
+                            else self.features)),
+                style=self.div_style)
 
     def on_email_sent(self):
         for feature in self.features:
