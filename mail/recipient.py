@@ -44,7 +44,8 @@ class Recipient:
             return html_div(inner_html=HTML_NEW_LINE.join(
                     map(generate_feature,
                         filter(lambda f: get_name(f) in self.test_next_day,
-                               self.features))), style=self.div_style)
+                               self.features))),
+                    style=self.div_style)
         else:
             return html_div(inner_html=HTML_NEW_LINE.join(
                     map(generate_feature, self.features)),
