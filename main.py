@@ -5,7 +5,7 @@ import time
 from configuration.secret import LOG_FILE, SENDER_EMAIL, SENDER_PASSWORD
 from mail.sender import GmailSender
 from utility.constant import *
-from datetime import datetime
+from datetime import datetime, timedelta
 from mail.recipient import Recipient
 from mail.subject import Subject
 from feature import *
@@ -30,4 +30,6 @@ if __name__ == '__main__':
                                             send_self=True, retry=0)
         elif now.minute == 0:
             logging.info("Sleeping.")
-        time.sleep(SECONDS_IN_MINUTE)
+        next_minute = datetime(now.year, now.month, now.day, now.hour,
+                               now.minute) + timedelta(minutes=1)
+        time.sleep((next_minute - now).total_seconds())
