@@ -32,4 +32,4 @@ if __name__ == '__main__':
             logging.info("Sleeping.")
         next_minute = datetime(now.year, now.month, now.day, now.hour,
                                now.minute) + timedelta(minutes=1)
-        time.sleep((next_minute - now).total_seconds())
+        time.sleep(max(0, (next_minute - datetime.now()).total_seconds()))
