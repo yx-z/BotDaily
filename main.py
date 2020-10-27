@@ -26,7 +26,8 @@ if __name__ == '__main__':
                 recipient.email_address = SENDER_EMAIL
                 recipient.set_current_date_time(datetime.now())
                 sender.send_recipient_email(recipient, timeout_seconds=60,
-                                            send_self=True, retry=0)
+                                            send_self=True, retry=0,
+                                            test_next_day=False)
     else:
         logging.basicConfig(level=logging.INFO,
                             format="%(asctime)s %(levelname)-8s %(message)s",
@@ -43,7 +44,8 @@ if __name__ == '__main__':
                 for recipient in TIME_TO_RECIPIENTS[now_str]:
                     recipient.set_current_date_time(now)
                     sender.send_recipient_email(recipient, timeout_seconds=60,
-                                                send_self=True, retry=0)
+                                                send_self=True, retry=0,
+                                                test_next_day=True)
             elif now.minute == 0:
                 logging.info("Sleeping.")
             next_minute = datetime(now.year, now.month, now.day, now.hour,
