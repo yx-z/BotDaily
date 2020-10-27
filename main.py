@@ -60,5 +60,4 @@ if __name__ == '__main__':
                                    now.minute) + timedelta(minutes=1)
             sleep_time = max(0, ceil(
                 (next_minute - datetime.now()).total_seconds()))
-            logging.info(f"Sleep for {sleep_time} second(s).")
             time.sleep(sleep_time)
