@@ -36,7 +36,8 @@ if __name__ == '__main__':
                 sender.send_recipient_email(recipient,
                                             timeout_seconds=SECONDS_IN_MINUTE,
                                             send_self=True, retry=0,
-                                            test_next_day=False)
+                                            test_next_day=len(sys.argv) > 2 and
+                                                          sys.argv[2] == "next")
     else:
         logging.basicConfig(level=logging.INFO,
                             format="%(asctime)s %(levelname)-8s %(message)s",
