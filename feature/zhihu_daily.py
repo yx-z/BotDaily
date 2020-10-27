@@ -14,7 +14,7 @@ class ZhihuDaily(Feature):
         super().__init__(div_style, title)
 
     @staticmethod
-    def __request_id__() -> Optional[int]:
+    def _request_id() -> Optional[int]:
         stories_url = "https://news-at.zhihu.com/api/3/stories/latest"
         stories = \
             requests.get(stories_url, headers=USER_AGENT).json()[
@@ -25,7 +25,7 @@ class ZhihuDaily(Feature):
         return None
 
     @staticmethod
-    def __request_joke__(joke_id: int) -> str:
+    def _request_joke(joke_id: int) -> str:
         story_url = f"https://news-at.zhihu.com/api/4/news/{joke_id}"
         res = requests.get(story_url, headers=USER_AGENT).json()
         body = res["body"]
@@ -37,8 +37,8 @@ class ZhihuDaily(Feature):
         return joke_str
 
     def generate_content(self) -> str:
-        joke_id = self.__request_id__()
+        joke_id = self._request_id()
         if joke_id is None:
             return ""
         else:
-            return self.__request_joke__(joke_id)
+            return self._request_joke(joke_id)

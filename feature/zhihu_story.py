@@ -30,13 +30,13 @@ class ZhihuStory(Feature):
         self.current_date_time = None  # lazy initialization by Recipient class
 
     def generate_content(self) -> str:
-        index = max(1, (self.current_date_time - self.start_date_time).days + 1)
-        answer_url = linecache.getline(get_resource_path(self.answer_file),
-                                       index)
+        index = max(0, (self.current_date_time - self.start_date_time).days)
+        answer_url = open(get_resource_path(self.answer_file), "r").readlines()[
+            index]
         answer_id = answer_url[answer_url.rfind("/") + 1:]
-        return self.__request_answer__(answer_id)
+        return self._request_answer(answer_id)
 
-    def __request_answer__(self, answer_id: str) -> str:
+    def _request_answer(self, answer_id: str) -> str:
         url = f"https://www.zhihu.com/api/v4/answers/{answer_id}?include=content"
         response = requests.get(url, headers=HEADER).json()
 
@@ -70,19 +70,19 @@ class ZhihuStory(Feature):
 
     # ON HOLD, NOT IN USE
     @staticmethod
-    def __request_answer_by_question__(qid, total=10, page_num=0,
-                                       limit=10) -> List:
+    def _request_answer_by_question(qid, total=10, page_num=0,
+                                    limit=10) -> List:
         answers = []
         count = 0
         while True:
             url = "https://www.zhihu.com/api/v4/questions/" + str(
-                    qid) + "/answers?include=data%5B%2A%5D.is_normal%2Cadmin_closedsfd_comment%2Creward_info" \
-                           "%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason" \
-                           "%2Cis_sticky%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment" \
-                           "%2Ccontent%2Ceditable_content%2Cvoteup_count%2Creshipment_settings" \
-                           "%2Ccomment_permission%2Ccreated_time%2Cupdated_time%2Creview_info" \
-                           "%2Crelevant_info%2Cquestion%2Cexcerpt%2Crelationship.is_authorized" \
-                           "%2Cis_author%2Cvoting%2Cis_thanked%2Cis_nothelp%2Cis_labeled%3Bdata%5B%2A%5D" \
+                qid) + "/answers?include=data%5B%2A%5D.is_normal%2Cadmin_closedsfd_comment%2Creward_info" \
+                       "%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason" \
+                       "%2Cis_sticky%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment" \
+                       "%2Ccontent%2Ceditable_content%2Cvoteup_count%2Creshipment_settings" \
+                       "%2Ccomment_permission%2Ccreated_time%2Cupdated_time%2Creview_info" \
+                       "%2Crelevant_info%2Cquestion%2Cexcerpt%2Crelationship.is_authorized" \
+                       "%2Cis_author%2Cvoting%2Cis_thanked%2Cis_nothelp%2Cis_labeled%3Bdata%5B%2A%5D" \
                            ".mark_infos%5B%2A%5D.url%3Bdata%5B%2A%5D.author.follower_count%2Cbadge%5B%2A" \
                            "%5D.topics&limit=" + str(
                     limit) + "&offset=" + str(

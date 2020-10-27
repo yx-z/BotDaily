@@ -32,7 +32,7 @@ class Sender:
                 subject = recipient.generate_subject()
                 body_html = recipient.generate_body(test_filter=False)
                 logging.info(body_html)
-                self.send_email(subject, destination_email_address, body_html)
+                self._send_email(subject, destination_email_address, body_html)
                 logging.info(f"Email sent to {destination_email_address}")
                 recipient.on_email_sent()
         except Exception as exception:
@@ -68,9 +68,9 @@ class Sender:
                 logging.info(
                         f"Checked for {recipient.email_address} on {next_day_date_time_string}")
                 if send_self:
-                    self.send_email(
-                            f"NextDay {subject} for {recipient.email_address} on {next_day_date_time_string}",
-                            {self.email_address}, body_html)
+                    self._send_email(
+                        f"NextDay {subject} for {recipient.email_address} on {next_day_date_time_string}",
+                        {self.email_address}, body_html)
         except Exception as exception:
             logging.info(exception)
             self.send_exception(
@@ -82,9 +82,9 @@ class Sender:
     def send_exception(self, subject: str, recipient: Recipient,
                        exception: Exception):
         logging.info(f"Sending exception")
-        self.send_email(subject, {self.email_address},
-                        html_from_text(
-                                f"""Recipient: {recipient.email_address}
+        self._send_email(subject, {self.email_address},
+                         html_from_text(
+                             f"""Recipient: {recipient.email_address}
 
 
 Exception: {exception}
@@ -93,7 +93,7 @@ Exception: {exception}
 Traceback: {traceback.format_exc()}
 """))
 
-    def send_email(self, subject: str, recipients: Set[str], body_html: str):
+    def _send_email(self, subject: str, recipients: Set[str], body_html: str):
         logging.info(f"Sending from {self.email_address} to {recipients}")
         message = MIMEMultipart("alternative")
         message["Subject"] = subject
