@@ -14,7 +14,7 @@ from feature import *
 if __name__ == '__main__':
     os.system("node netease-api/app.js &")
     sender = GmailSender(SENDER_EMAIL, SENDER_PASSWORD)
-    if sys.argv[1] == "test":
+    if len(sys.argv) > 1 and sys.argv[1] == "test":
         logging.basicConfig(level=logging.INFO,
                             format="%(asctime)s %(levelname)-8s %(message)s",
                             datefmt="%Y-%m-%d %H:%M:%S")
