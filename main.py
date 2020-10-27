@@ -2,6 +2,7 @@ import logging
 import os
 import sys
 import time
+from math import ceil
 
 from configuration.secret import LOG_FILE, SENDER_EMAIL, SENDER_PASSWORD
 from mail.sender import GmailSender
@@ -57,5 +58,7 @@ if __name__ == '__main__':
                 logging.info("Sleeping.")
             next_minute = datetime(now.year, now.month, now.day, now.hour,
                                    now.minute) + timedelta(minutes=1)
-            time.sleep(
-                max(0, int((next_minute - datetime.now()).total_seconds())))
+            sleep_time = max(0, ceil(
+                (next_minute - datetime.now()).total_seconds()))
+            logging.info(f"Sleep for {sleep_time} second(s).")
+            time.sleep(sleep_time)
