@@ -23,6 +23,7 @@ if __name__ == '__main__':
             open("configuration/recipient.py", "r").read())
         for _, recipients in TIME_TO_RECIPIENTS.items():
             for recipient in recipients:
+                recipient.email_address = SENDER_EMAIL
                 recipient.set_current_date_time(datetime.now())
                 sender.send_recipient_email(recipient, timeout_seconds=60,
                                             send_self=True, retry=0)
