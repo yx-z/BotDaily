@@ -20,9 +20,9 @@ if __name__ == '__main__':
                             format="%(asctime)s %(levelname)-8s %(message)s",
                             datefmt="%Y-%m-%d %H:%M:%S")
 
-        TIME_TO_RECIPIENTS = eval(
+        time_to_recipients = eval(
             open("configuration/recipient.py", "r").read())
-        for _, recipients in TIME_TO_RECIPIENTS.items():
+        for _, recipients in time_to_recipients.items():
             for recipient in recipients:
                 recipient.email_address = SENDER_EMAIL
 
@@ -33,7 +33,8 @@ if __name__ == '__main__':
 
                 recipient.on_email_sent = no_op
                 recipient.set_current_date_time(datetime.now())
-                sender.send_recipient_email(recipient, timeout_seconds=60,
+                sender.send_recipient_email(recipient,
+                                            timeout_seconds=SECONDS_IN_MINUTE,
                                             send_self=True, retry=0,
                                             test_next_day=False)
     else:
@@ -46,12 +47,13 @@ if __name__ == '__main__':
         while True:
             now = datetime.now()
             now_str = now.strftime("%H:%M")
-            TIME_TO_RECIPIENTS = eval(
+            time_to_recipients = eval(
                 open("configuration/recipient.py", "r").read())
-            if now_str in TIME_TO_RECIPIENTS.keys():
-                for recipient in TIME_TO_RECIPIENTS[now_str]:
+            if now_str in time_to_recipients.keys():
+                for recipient in time_to_recipients[now_str]:
                     recipient.set_current_date_time(now)
-                    sender.send_recipient_email(recipient, timeout_seconds=60,
+                    sender.send_recipient_email(recipient,
+                                                timeout_seconds=SECONDS_IN_MINUTE,
                                                 send_self=True, retry=0,
                                                 test_next_day=True)
             elif now.minute == 0:
