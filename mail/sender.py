@@ -7,6 +7,7 @@ from email.mime.text import MIMEText
 from typing import Set
 
 from mail.recipient import Recipient
+from utility.constant import SECONDS_IN_MINUTE
 from utility.html_builder import html_from_text
 from utility.parse import date_to_string
 from utility.timeout import timeout_limit
@@ -22,7 +23,7 @@ class Sender:
         self.password = password
 
     def send_recipient_email(self, recipient: Recipient, retry: int = 0,
-                             timeout_seconds: int = 60,
+                             timeout_seconds: int = SECONDS_IN_MINUTE,
                              send_self: bool = False,
                              test_next_day: bool = False):
         destination_email_address = {recipient.email_address}
@@ -38,7 +39,7 @@ class Sender:
                 recipient.on_email_sent()
         except Exception as exception:
             logging.info(
-                    f"Exception occured during body generation: {exception}")
+                f"Exception occured during body generation: {exception}")
             logging.info(traceback.format_exc())
             if retry > 0:
                 logging.info(f"Retrying with remaining tries of {retry}")
@@ -47,27 +48,28 @@ class Sender:
             else:
                 logging.info("No more retires")
                 self.send_exception(
-                        f"BotDaily - CURRENT_DAY EXCEPTION for {date_to_string(recipient.current_date_time)}",
-                        recipient, exception)
+                    f"BotDaily - CURRENT_DAY EXCEPTION for {date_to_string(recipient.current_date_time)}",
+                    recipient, exception)
                 logging.info("Exception Email sent to sender.")
 
         if test_next_day:
             self.test_recipient_next_day(recipient, timeout_seconds, send_self)
 
     def test_recipient_next_day(self, recipient: Recipient,
-                                timeout_seconds: int, send_self: bool):
+                                timeout_seconds: int = SECONDS_IN_MINUTE,
+                                send_self: bool = False):
         current_date_time = recipient.current_date_time
         next_day_date_time = current_date_time + timedelta(days=1)
         next_day_date_time_string = date_to_string(next_day_date_time)
         logging.info(
-                f"Checking for {recipient.email_address} on {next_day_date_time_string}")
+            f"Checking for {recipient.email_address} on {next_day_date_time_string}")
         recipient.set_current_date_time(next_day_date_time)
         try:
             with timeout_limit(timeout_seconds):
                 subject = recipient.generate_subject()
                 body_html = recipient.generate_body(test_filter=True)
                 logging.info(
-                        f"Checked for {recipient.email_address} on {next_day_date_time_string}")
+                    f"Checked for {recipient.email_address} on {next_day_date_time_string}")
                 if send_self:
                     self._send_email(
                         f"NextDay {subject} for {recipient.email_address} on {next_day_date_time_string}",
@@ -75,8 +77,8 @@ class Sender:
         except Exception as exception:
             logging.info(exception)
             self.send_exception(
-                    f"BotDaily - NextDay Exception for {next_day_date_time_string}",
-                    recipient, exception)
+                f"BotDaily - NextDay Exception for {next_day_date_time_string}",
+                recipient, exception)
         finally:
             recipient.set_current_date_time(current_date_time)
 

@@ -15,7 +15,7 @@ from feature import *
 if __name__ == '__main__':
     os.system("node netease-api/app.js &")
     sender = GmailSender(SENDER_EMAIL, SENDER_PASSWORD)
-    if len(sys.argv) > 1 and sys.argv[1] == "test":
+    if len(sys.argv) > 1 and sys.argv[1].startswith("test"):
         logging.basicConfig(level=logging.INFO,
                             format="%(asctime)s %(levelname)-8s %(message)s",
                             datefmt="%Y-%m-%d %H:%M:%S")
@@ -26,14 +26,20 @@ if __name__ == '__main__':
             for recipient in recipients:
                 recipient.email_address = SENDER_EMAIL
                 recipient.on_email_sent = lambda: None
-                test_next_day = len(sys.argv) > 2
-                if test_next_day:
-                    recipient.test_next_day = sys.argv[2:]
                 recipient.set_current_date_time(datetime.now())
-                sender.send_recipient_email(recipient,
-                                            timeout_seconds=SECONDS_IN_MINUTE,
-                                            send_self=True, retry=0,
-                                            test_next_day=test_next_day)
+                if sys.argv[1] == "test":
+                    test_next_day = len(sys.argv) > 2
+                    if test_next_day:
+                        recipient.test_next_day = sys.argv[2:]
+                    sender.send_recipient_email(recipient,
+                                                timeout_seconds=SECONDS_IN_MINUTE,
+                                                send_self=True, retry=0,
+                                                test_next_day=test_next_day)
+                elif sys.argv[1] == "testNext":
+                    recipient.test_next_day = sys.argv[2:]
+                    sender.test_recipient_next_day(recipient,
+                                                   timeout_seconds=SECONDS_IN_MINUTE,
+                                                   send_self=True)
     else:
         logging.basicConfig(level=logging.INFO,
                             format="%(asctime)s %(levelname)-8s %(message)s",
