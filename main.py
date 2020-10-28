@@ -25,13 +25,7 @@ if __name__ == '__main__':
         for _, recipients in time_to_recipients.items():
             for recipient in recipients:
                 recipient.email_address = SENDER_EMAIL
-
-
-                def no_op():
-                    pass
-
-
-                recipient.on_email_sent = no_op
+                recipient.on_email_sent = lambda: None
                 test_next_day = len(sys.argv) > 2
                 if test_next_day:
                     recipient.test_next_day = sys.argv[2:]
