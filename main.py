@@ -32,12 +32,15 @@ if __name__ == '__main__':
 
 
                 recipient.on_email_sent = no_op
+                test_next_day = False
+                if len(sys.argv) > 2:
+                    test_next_day = True
+                    recipient.test_next_day = sys.argv[2:]
                 recipient.set_current_date_time(datetime.now())
                 sender.send_recipient_email(recipient,
                                             timeout_seconds=SECONDS_IN_MINUTE,
                                             send_self=True, retry=0,
-                                            test_next_day=len(sys.argv) > 2 and
-                                                          sys.argv[2] == "next")
+                                            test_next_day=test_next_day)
     else:
         logging.basicConfig(level=logging.INFO,
                             format="%(asctime)s %(levelname)-8s %(message)s",
