@@ -32,9 +32,8 @@ if __name__ == '__main__':
 
 
                 recipient.on_email_sent = no_op
-                test_next_day = False
-                if len(sys.argv) > 2:
-                    test_next_day = True
+                test_next_day = len(sys.argv) > 2
+                if test_next_day:
                     recipient.test_next_day = sys.argv[2:]
                 recipient.set_current_date_time(datetime.now())
                 sender.send_recipient_email(recipient,
