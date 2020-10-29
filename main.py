@@ -32,14 +32,10 @@ if __name__ == '__main__':
                     if test_next_day:
                         recipient.test_next_day = sys.argv[2:]
                     sender.send_recipient_email(recipient,
-                                                timeout_seconds=SECONDS_IN_MINUTE,
-                                                send_self=True, retry=0,
                                                 test_next_day=test_next_day)
                 elif sys.argv[1] == "testNext":
                     recipient.test_next_day = sys.argv[2:]
-                    sender.test_recipient_next_day(recipient,
-                                                   timeout_seconds=SECONDS_IN_MINUTE,
-                                                   send_self=True)
+                    sender.test_recipient_next_day(recipient)
     else:
         logging.basicConfig(level=logging.INFO,
                             format="%(asctime)s %(levelname)-8s %(message)s",
@@ -55,10 +51,7 @@ if __name__ == '__main__':
             if now_str in time_to_recipients.keys():
                 for recipient in time_to_recipients[now_str]:
                     recipient.set_current_date_time(now)
-                    sender.send_recipient_email(recipient,
-                                                timeout_seconds=SECONDS_IN_MINUTE,
-                                                send_self=True, retry=0,
-                                                test_next_day=True)
+                    sender.send_recipient_email(recipient, test_next_day=True)
             elif now.minute == 0:
                 logging.info("Sleeping.")
             next_minute = datetime(now.year, now.month, now.day, now.hour,
