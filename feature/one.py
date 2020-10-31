@@ -1,4 +1,5 @@
 from abc import abstractmethod
+from typing import Optional
 
 import requests
 from bs4 import BeautifulSoup
@@ -9,7 +10,7 @@ from feature.base import Feature
 class One(Feature):
 
     def __init__(self, image_style: str = "", div_style: str = "",
-                 title: str = "ONE·一个"):
+                 title: Optional[str] = "ONE·一个"):
         super().__init__(div_style, title)
         self.image_style = image_style
 

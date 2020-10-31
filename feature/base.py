@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Optional
 
 from PIL import ImageFont
 
@@ -10,12 +11,12 @@ from utility.image import open_image, draw_text, save_image
 
 class Feature(ABC):
 
-    def __init__(self, div_style: str = "", title: str = None):
+    def __init__(self, div_style: str = "", title: Optional[str] = None):
         self.div_style = div_style
         self.title = title
 
     def generate_title(self) -> str:
-        if self.title is None:
+        if self.title is None or len(self.title.strip()) == 0:
             return ""
 
         position = (120, 25)
@@ -38,8 +39,8 @@ class Feature(ABC):
 
     def generate_html(self) -> str:
         return html_div(
-                inner_html=f"{self.generate_title()}{self.generate_content()}",
-                style=self.div_style)
+            inner_html=f"{self.generate_title()}{self.generate_content()}",
+            style=self.div_style)
 
     def on_email_sent(self):
         pass

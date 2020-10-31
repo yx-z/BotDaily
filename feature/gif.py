@@ -1,6 +1,7 @@
 import logging
 import os
 from datetime import datetime
+from typing import Optional
 
 from feature.base import Feature
 from utility.file_io import get_resource_path
@@ -11,7 +12,7 @@ from utility.html_builder import html_tag, html_img, \
 class Gif(Feature):
     def __init__(self, directory_path: str, start_date_time: datetime,
                  id_multiplier: int = 1, div_style: str = "",
-                 image_style: str = "", title: str = "云·养花"):
+                 image_style: str = "", title: Optional[str] = None):
         super().__init__(div_style, title)
         self.directory_path = directory_path
         self.start_date_time = start_date_time

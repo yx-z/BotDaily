@@ -1,7 +1,7 @@
 import json
 import linecache
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 
 import requests
 from bs4 import BeautifulSoup
@@ -22,7 +22,7 @@ class ZhihuStory(Feature):
     def __init__(self, answer_file: str,
                  start_date_time: datetime,
                  avatar_style: str = "border-radius: 50%; width: 64px;",
-                 div_style: str = "", title: str = "知乎故事"):
+                 div_style: str = "", title: Optional[str] = "知乎故事"):
         super().__init__(div_style, title)
         self.answer_file = answer_file
         self.start_date_time = start_date_time

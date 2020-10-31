@@ -1,4 +1,5 @@
 import os
+from typing import Optional
 
 from feature.base import Feature
 from utility.constant import CSS_MEDIUM
@@ -11,7 +12,7 @@ class ExternalImage(Feature):
 
     def __init__(self, file_name: str = None,
                  clear_after: bool = False, image_style: str = CSS_MEDIUM,
-                 div_style: str = "", title: str = None):
+                 div_style: str = "", title: Optional[str] = None):
         super().__init__(div_style, title)
         self.file_name = file_name
         self.image_style = image_style

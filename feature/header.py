@@ -1,6 +1,6 @@
 import random
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 
 from PIL import ImageFont
 
@@ -14,7 +14,7 @@ class Header(Feature):
 
     def __init__(self, topic: List[str], text: str, start_date_time: datetime,
                  text_size: int = 42, image_style: str = "",
-                 div_style: str = "", title: str = None):
+                 div_style: str = "", title: Optional[str] = None):
         super().__init__(div_style, title)
         self.text = text
         self.topics = topic

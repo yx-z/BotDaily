@@ -1,3 +1,5 @@
+from typing import Optional
+
 import requests
 
 from feature.base import Feature
@@ -5,7 +7,7 @@ from feature.base import Feature
 
 class Poem(Feature):
 
-    def __init__(self, div_style: str = "", title: str = "今日诗词"):
+    def __init__(self, div_style: str = "", title: Optional[str] = "今日诗词"):
         super().__init__(div_style, title)
         self.token = None
 
