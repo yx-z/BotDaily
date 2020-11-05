@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Optional
 
 from feature.base import Feature
-from utility.file_io import get_resource_path
+from utility.system import get_resource_path
 from utility.html_builder import html_tag, html_img, \
     html_emphasis
 

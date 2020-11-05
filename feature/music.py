@@ -5,7 +5,7 @@ from typing import Optional
 import requests
 
 from feature.base import Feature
-from utility.file_io import get_resource_path
+from utility.system import get_resource_path
 from utility.html_builder import html_img, html_from_text, html_a
 
 

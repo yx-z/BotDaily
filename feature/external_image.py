@@ -3,7 +3,7 @@ from typing import Optional
 
 from feature.base import Feature
 from utility.constant import CSS_MEDIUM
-from utility.file_io import get_resource_path
+from utility.system import get_resource_path
 from utility.html_builder import html_img
 from utility.image import upload_image
 

@@ -1,7 +1,7 @@
 from typing import Optional
 
 from feature.text import Text
-from utility.file_io import get_resource_path
+from utility.system import get_resource_path
 
 
 class ExternalText(Text):

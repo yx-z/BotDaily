@@ -5,7 +5,7 @@ from typing import List, Optional
 from PIL import ImageFont
 
 from feature.base import Feature
-from utility.file_io import get_resource_path, FONT_PATH
+from utility.system import get_resource_path, FONT_PATH
 from utility.html_builder import html_img
 from utility.image import search_unsplash, download_image, draw_text
 

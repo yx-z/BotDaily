@@ -11,9 +11,11 @@ from datetime import datetime, timedelta
 from mail.recipient import Recipient
 from mail.subject import Subject
 from feature import *
+from utility.system import process_exists
 
 if __name__ == '__main__':
-    os.system("node netease-api/app.js &")
+    if not process_exists("node"):
+        os.system("node netease-api/app.js &")
     sender = GmailSender(SENDER_EMAIL, SENDER_PASSWORD)
     if len(sys.argv) > 1 and sys.argv[1].startswith("test"):
         logging.basicConfig(level=logging.INFO,

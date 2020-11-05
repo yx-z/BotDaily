@@ -4,7 +4,7 @@ from typing import Optional
 from PIL import ImageFont
 
 from utility.constant import CSS_FULL_WIDTH
-from utility.file_io import get_resource_path, FONT_PATH
+from utility.system import get_resource_path, FONT_PATH
 from utility.html_builder import html_img, html_div
 from utility.image import open_image, draw_text, save_image
 

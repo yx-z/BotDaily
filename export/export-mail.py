@@ -1,3 +1,5 @@
+import re
+from email import policy
 import email
 import mailbox
 import os
@@ -11,11 +13,7 @@ from utility.constant import CSS_BIG, HTML_NEW_LINE
 from utility.image import is_image_file
 from utility.parse import date_to_string, month_to_string, html_to_pdf
 
-# Legacy
-# NOT IN USE
-
-
-SRC_MBOX = "收件箱.mbox"
+SRC_MBOX = "mail.mbox"
 
 # year-month to output, empty list for all dates
 YEAR_MONTHS = []
@@ -27,13 +25,13 @@ ATTACH_DIR = "attach/"  # assume as a subdir of HTML_DIR
 OUT_PDF = False
 PDF_DIR = "pdf/"
 
-SINGLE_OUT_FILE = False
+SINGLE_OUT_FILE = True
 # name for single out files
 HTML_FILE = "out.html"
 PDF_FILE = "out.pdf"
 
-REPLIER_EMAILS = [""]  # ["gmail.com"]
-FIX_DATES = [""]  # ["1/1"]
+REPLIER_EMAILS = [""]  # ["abc@gmail.com"]
+MUST_INCLUDE_DATES = [""]  # ["1/1"]
 
 
 def get_attach(date: datetime, message: mailbox.mboxMessage) -> Set[str]:
@@ -56,24 +54,20 @@ def get_body(date: datetime,
     parser = email.parser.BytesFeedParser(policy=email.policy.default)
     parser.feed(message.as_bytes())
     html = parser.close().get_body(
-            preferencelist=["html", "plain"]).get_content()
-    if not add_share:
-        for mark in ["今日天气:", "[今日诗词]", "[云·养花]",
-                     '<img src="https://github.com/yx-z/YunDaily/blob/master'
-                     '/Yun/res/title/flower.png?raw=true"',
-                     '<img src="https://raw.githubusercontent.com/yx-z'
-                     '/YunDaily/master/Yun/res/title/flower.png"']:
-            if mark in html:
-                html = html[:html.index(mark)]
+        preferencelist=["html", "plain"]).get_content()
     soup = BeautifulSoup(html, "html.parser")
-
-    for quote in soup.find_all("blockquote"):
-        quote.extract()
-
     if not add_share:
-        share_div = soup.find(id="bot_email_share")
-        if share_div is not None:
-            share_div.extract()
+        netease = soup.find("a", text=re.compile(".*网易.*"))
+        if netease is not None:
+            parent = netease.parent
+            if parent is not None:
+                next = parent.next_siblings
+                for e in next:
+                    try:
+                        e.attrs["style"] = "display:none; !important"
+                    except BaseException as e:
+                        pass
+        return str(soup) + HTML_NEW_LINE
 
     if add_attach:
         file_names = get_attach(date, message)
@@ -112,8 +106,8 @@ def subject_to_date(subject: str, year: int) -> datetime:
 
 def decode_mime_words(s) -> str:
     return "".join(
-            word.decode(encoding or "utf8") if isinstance(word, bytes) else word
-            for word, encoding in email.header.decode_header(s))
+        word.decode(encoding or "utf8") if isinstance(word, bytes) else word
+        for word, encoding in email.header.decode_header(s))
 
 
 if __name__ == '__main__':
@@ -122,27 +116,27 @@ if __name__ == '__main__':
     replier = {}
 
     for msg in mailbox.mbox(SRC_MBOX):  # type: mailbox.mboxMessage
-        subject = decode_mime_words(msg["subject"])
+        try:
+            subject = decode_mime_words(msg["subject"])
+        except BaseException as e:
+            subject = "pass"
         # match subject and sender/receiver
-        if any(keyword in subject for keyword in ["☁️", "☀️"]) and (any(
-                addr in msg["from"] or addr in msg["to"] for addr in
-                REPLIER_EMAILS) or any(
-                keyword in subject for keyword in FIX_DATES)):
+        if any(keyword in subject for keyword in ["Bot 早报"]) and \
+                any(addr in msg["to"] for addr in REPLIER_EMAILS):
             exact_date = datetime.fromtimestamp(
-                    email.utils.mktime_tz(
-                            email.utils.parsedate_tz(msg["date"])))
+                email.utils.mktime_tz(
+                    email.utils.parsedate_tz(msg["date"])))
             date = subject_to_date(subject, year=exact_date.year)
+            if date < datetime(2020, 8, 17):
+                continue
+            print(subject)
             if len(YEAR_MONTHS) == 0 or month_to_string(date) in YEAR_MONTHS:
                 dates.add(date)
                 if any(src in msg["from"] for src in REPLIER_EMAILS) or any(
-                        keyword in subject for keyword in FIX_DATES):
+                        keyword in subject for keyword in MUST_INCLUDE_DATES):
                     if date not in replier:
                         replier[date] = []
                     replier[date].append((subject, msg, exact_date))
-                elif any(keyword in subject for keyword in ["记日的云", "云的日志"]):
-                    if date not in initiator:
-                        initiator[date] = []
-                    initiator[date].append((subject, msg, exact_date))
 
 
     def write_date(f, date: datetime):
@@ -150,11 +144,11 @@ if __name__ == '__main__':
             if date in src_dict:
                 cur_msgs = src_dict[date]
                 cur_msgs.sort(key=lambda t: t[2])
-                f.write(f"<h3>{cur_msgs[0][0]}</h3>")
                 for _, msg, time in cur_msgs:
-                    f.write(f"<div>At {time.strftime('%H:%M:%S')}</div>")
-                    f.write(get_body(date, msg, add_share=False,
-                                     add_attach=msg == src_dict[date][-1][1]))
+                    f.write(
+                        f"<div>Sent at {time.strftime('%Y-%m-%d %H:%M:%S')}</div>")
+                    f.write(
+                        get_body(date, msg, add_share=False, add_attach=False))
 
         f.write("<div style=\"font-family:'PingFang SC' !important\">")
         write_from_src(initiator)
