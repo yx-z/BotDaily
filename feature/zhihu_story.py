@@ -1,5 +1,6 @@
 import json
 import linecache
+import logging
 from datetime import datetime
 from typing import List, Optional
 
@@ -31,8 +32,10 @@ class ZhihuStory(Feature):
 
     def generate_content(self) -> str:
         index = max(0, (self.current_date_time - self.start_date_time).days)
+        logging.info(f"Zhihu Index: {index}")
         answer_url = open(get_resource_path(self.answer_file), "r").readlines()[
             index]
+        logging.info(f"Zhihu Answer URL: {answer_url}")
         answer_id = answer_url[answer_url.rfind("/") + 1:]
         return self._request_answer(answer_id)
 
