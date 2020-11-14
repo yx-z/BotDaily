@@ -41,7 +41,7 @@ if __name__ == '__main__':
                     if len(args) > 2:
                         recipient.is_test = args[2:]
                     sender.test_recipient_next_day(recipient)
-    elif len(args) == 0:
+    elif len(args) == 1:
         logging.basicConfig(level=logging.INFO,
                             format="%(asctime)s %(levelname)-8s %(message)s",
                             datefmt="%Y-%m-%d %H:%M:%S",
