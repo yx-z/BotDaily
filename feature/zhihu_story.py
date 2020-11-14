@@ -36,12 +36,12 @@ class ZhihuStory(Feature):
         answer_url = open(get_resource_path(self.answer_file), "r").readlines()[
             index]
         logging.info(f"Zhihu Answer URL: {answer_url}")
-        answer_id = answer_url[answer_url.rfind("/") + 1:]
-        return self._request_answer(answer_id)
+        return self._request_answer(answer_url)
 
-    def _request_answer(self, answer_id: str) -> str:
-        url = f"https://www.zhihu.com/api/v4/answers/{answer_id}?include=content"
-        response = requests.get(url, headers=HEADER).json()
+    def _request_answer(self, answer_url: str) -> str:
+        answer_id = answer_url[answer_url.rfind("/") + 1:]
+        api_url = f"https://www.zhihu.com/api/v4/answers/{answer_id}?include=content"
+        response = requests.get(api_url, headers=HEADER).json()
         print(response)
 
         content = response["content"]
@@ -71,7 +71,7 @@ class ZhihuStory(Feature):
 作者: {response["author"]["name"]}
 <br>
 {html_div(inner_html=str_soup)}
-{html_a(text="知乎原文", url=url)}
+{html_a(text="知乎原文", url=answer_url)}
 """
 
     # ON HOLD, NOT IN USE
