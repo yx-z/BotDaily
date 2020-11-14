@@ -42,6 +42,7 @@ class ZhihuStory(Feature):
     def _request_answer(self, answer_id: str) -> str:
         url = f"https://www.zhihu.com/api/v4/answers/{answer_id}?include=content"
         response = requests.get(url, headers=HEADER).json()
+        print(response)
 
         content = response["content"]
         content = content.replace("<noscript>", "").replace("</noscript>", "")
@@ -65,7 +66,8 @@ class ZhihuStory(Feature):
         for fig in soup.find_all("figure"):
             fig.attrs.clear()
         str_soup = str(soup)
-        return f"""{html_img(url=response["author"]["avatar_url"], style=self.avatar_style)}
+        return f"""<h3>{response["question"]["title"]}</h3>
+{html_img(url=response["author"]["avatar_url"], style=self.avatar_style)}
 作者: {response["author"]["name"]}
 <br>
 <div>{str_soup}</div>
@@ -86,10 +88,10 @@ class ZhihuStory(Feature):
                        "%2Ccomment_permission%2Ccreated_time%2Cupdated_time%2Creview_info" \
                        "%2Crelevant_info%2Cquestion%2Cexcerpt%2Crelationship.is_authorized" \
                        "%2Cis_author%2Cvoting%2Cis_thanked%2Cis_nothelp%2Cis_labeled%3Bdata%5B%2A%5D" \
-                           ".mark_infos%5B%2A%5D.url%3Bdata%5B%2A%5D.author.follower_count%2Cbadge%5B%2A" \
-                           "%5D.topics&limit=" + str(
-                    limit) + "&offset=" + str(
-                    page_num * limit) + "&platform=desktop&sort_by=default"
+                       ".mark_infos%5B%2A%5D.url%3Bdata%5B%2A%5D.author.follower_count%2Cbadge%5B%2A" \
+                       "%5D.topics&limit=" + str(
+                limit) + "&offset=" + str(
+                page_num * limit) + "&platform=desktop&sort_by=default"
             req = requests.get(url, headers=HEADER)
             res_json = json.loads(req.text)
             data = res_json["data"]
@@ -102,9 +104,9 @@ class ZhihuStory(Feature):
                     title = item["question"]["title"]
                     author = item["author"]["name"]
                     content = item["content"].replace("<noscript>", "").replace(
-                            "</noscript>", "").replace(
-                            "<img src=\"data:image/svg+xml",
-                            "<meta src=\"")
+                        "</noscript>", "").replace(
+                        "<img src=\"data:image/svg+xml",
+                        "<meta src=\"")
                     # further use title, author, content here
                     # ...
             if res_json["paging"]["is_end"] or count >= res_json["paging"][

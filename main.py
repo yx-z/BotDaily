@@ -17,7 +17,8 @@ if __name__ == '__main__':
     if not process_exists("node"):
         os.system("node netease-api/app.js &")
     sender = GmailSender(SENDER_EMAIL, SENDER_PASSWORD)
-    if len(sys.argv) > 1 and sys.argv[1].startswith("test"):
+    args = sys.argv
+    if len(args) > 1 and args[1].startswith("test"):
         logging.basicConfig(level=logging.INFO,
                             format="%(asctime)s %(levelname)-8s %(message)s",
                             datefmt="%Y-%m-%d %H:%M:%S")
@@ -29,16 +30,18 @@ if __name__ == '__main__':
                 recipient.email_address = SENDER_EMAIL
                 recipient.on_email_sent = lambda: None
                 recipient.set_current_date_time(datetime.now())
-                if sys.argv[1] == "test":
-                    test_next_day = len(sys.argv) > 2
-                    if test_next_day:
-                        recipient.test_next_day = sys.argv[2:]
+
+                if args[1] == "test":
+                    is_test = len(args) > 2
+                    if is_test:
+                        recipient.is_test = args[2:]
                     sender.send_recipient_email(recipient,
-                                                test_next_day=test_next_day)
-                elif sys.argv[1] == "testNext":
-                    recipient.test_next_day = sys.argv[2:]
+                                                test_next_day=is_test)
+                elif args[1] == "testNext":
+                    if len(args) > 2:
+                        recipient.is_test = args[2:]
                     sender.test_recipient_next_day(recipient)
-    else:
+    elif len(args) == 0:
         logging.basicConfig(level=logging.INFO,
                             format="%(asctime)s %(levelname)-8s %(message)s",
                             datefmt="%Y-%m-%d %H:%M:%S",
