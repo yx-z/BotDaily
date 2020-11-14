@@ -56,7 +56,8 @@ if __name__ == '__main__':
             if now_str in time_to_recipients.keys():
                 for recipient in time_to_recipients[now_str]:
                     recipient.set_current_date_time(now)
-                    sender.send_recipient_email(recipient, test_next_day=True)
+                    sender.send_recipient_email(recipient, send_self=True,
+                                                test_next_day=True)
             elif now.minute == 0:
                 logging.info("Sleeping.")
             next_minute = datetime(now.year, now.month, now.day, now.hour,
