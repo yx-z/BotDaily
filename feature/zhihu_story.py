@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 
 from feature.base import Feature
 from utility.system import get_resource_path
-from utility.html_builder import html_img
+from utility.html_builder import html_img, html_div, html_a, html_tag
 
 HEADER = {"Host": "www.zhihu.com",
           "Referer": "https://www.zhihu.com/",
@@ -66,11 +66,12 @@ class ZhihuStory(Feature):
         for fig in soup.find_all("figure"):
             fig.attrs.clear()
         str_soup = str(soup)
-        return f"""<h3>{response["question"]["title"]}</h3>
+        return f"""{html_tag(paired=True, inner_html=response["question"]["title"])}
 {html_img(url=response["author"]["avatar_url"], style=self.avatar_style)}
 作者: {response["author"]["name"]}
 <br>
-<div>{str_soup}</div>
+{html_div(inner_html=str_soup)}
+{html_a(text="知乎原文", url=url)}
 """
 
     # ON HOLD, NOT IN USE
