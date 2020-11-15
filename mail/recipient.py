@@ -9,16 +9,19 @@ from utility.html_builder import html_div
 
 
 class Recipient:
-
-    def __init__(self, email_address: str,
-                 subject: Subject, features: List[Feature],
-                 div_style: str = CSS_DEFAULT_DIV,
-                 test_next_day_feature: List[str] = None):
+    def __init__(
+            self,
+            email_address: str,
+            subject: Subject,
+            features: List[Feature],
+            div_style: str = CSS_DEFAULT_DIV,
+            test_next_day_feature: List[str] = None,
+    ):
         self.email_address = email_address
         self.subject = subject
         self.div_style = div_style
         self.features = features
-        self.test_next_day = test_next_day_feature
+        self.test_next_day_feature = test_next_day_feature
         self.current_date_time = None  # lazy initialization by set_current_date_time
 
     def set_current_date_time(self, current_date_time: datetime):
@@ -31,7 +34,6 @@ class Recipient:
         return self.subject.to_complete_string()
 
     def generate_body(self, test_filter: bool = False) -> str:
-
         def get_name(feature: Feature) -> str:
             return type(feature).__name__
 
@@ -41,12 +43,19 @@ class Recipient:
             return generated_html
 
         return html_div(
-                inner_html=HTML_NEW_LINE.join(
-                        map(gen_feature,
-                            filter(lambda f: get_name(f) in self.test_next_day,
-                                   self.features) if test_filter
-                            else self.features)),
-                style=self.div_style)
+            inner_html=HTML_NEW_LINE.join(
+                map(
+                    gen_feature,
+                    filter(
+                        lambda f: get_name(f) in self.test_next_day_feature,
+                        self.features,
+                    )
+                    if test_filter
+                    else self.features,
+                )
+            ),
+            style=self.div_style,
+        )
 
     def on_email_sent(self):
         for feature in self.features:

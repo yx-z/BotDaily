@@ -13,7 +13,7 @@ from mail.subject import Subject
 from feature import *
 from utility.system import process_exists
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     if not process_exists("node"):
         os.system("node netease-api/app.js &")
 
@@ -22,9 +22,11 @@ if __name__ == '__main__':
     args = sys.argv
     more_args = len(args) > 1
     if more_args:
-        logging.basicConfig(level=logging.INFO,
-                            format="%(asctime)s %(levelname)-8s %(message)s",
-                            datefmt="%Y-%m-%d %H:%M:%S")
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(asctime)s %(levelname)-8s %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
+        )
 
         if args[1].startswith("test"):
             time_to_recipients = eval(
@@ -40,7 +42,7 @@ if __name__ == '__main__':
                         recipient.test_next_day_feature = args[2:]
                     if args[1] == "test":
                         sender.send_recipient_email(recipient,
-                                                    test_next_day=True)
+                                                    is_also_test_next=True)
                     elif args[1] == "testNext":
                         sender.test_recipient_next_day(recipient)
         elif args[1].startswith("now"):
@@ -51,13 +53,17 @@ if __name__ == '__main__':
             for _, recipients in time_to_recipients.items():
                 for recipient in recipients:
                     recipient.set_current_date_time(now)
-                    sender.send_recipient_email(recipient, send_self=True,
-                                                retry=2, test_next_day=True)
+                    sender.send_recipient_email(
+                        recipient, send_self=True, num_retry=2,
+                        is_also_test_next=True
+                    )
     else:
-        logging.basicConfig(level=logging.INFO,
-                            format="%(asctime)s %(levelname)-8s %(message)s",
-                            datefmt="%Y-%m-%d %H:%M:%S",
-                            filename=LOG_FILE)
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(asctime)s %(levelname)-8s %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
+            filename=LOG_FILE,
+        )
         logging.info(f"PID - {os.getpid()}")
 
         while True:
@@ -68,12 +74,15 @@ if __name__ == '__main__':
             if now_str in time_to_recipients.keys():
                 for recipient in time_to_recipients[now_str]:
                     recipient.set_current_date_time(now)
-                    sender.send_recipient_email(recipient, send_self=True,
-                                                retry=2, test_next_day=True)
+                    sender.send_recipient_email(
+                        recipient, send_self=True, num_retry=2,
+                        is_also_test_next=True
+                    )
             elif now.minute == 0:
                 logging.info("Sleeping.")
-            next_minute = datetime(now.year, now.month, now.day, now.hour,
-                                   now.minute) + timedelta(minutes=1)
+            next_minute = datetime(
+                now.year, now.month, now.day, now.hour, now.minute
+            ) + timedelta(minutes=1)
             sleep_time = max(0, ceil(
                 (next_minute - datetime.now()).total_seconds()))
             time.sleep(sleep_time)

@@ -38,8 +38,11 @@ def get_attach(date: datetime, message: mailbox.mboxMessage) -> Set[str]:
     file_names = set()
     if message.get_content_maintype() == "multipart":
         for m in message.walk():
-            if m.get_content_maintype() != "multipart" and m.get(
-                    "Content-Disposition") is not None and m.get_filename() is not None:
+            if (
+                    m.get_content_maintype() != "multipart"
+                    and m.get("Content-Disposition") is not None
+                    and m.get_filename() is not None
+            ):
                 file_name = f"{date_to_string(date)}-{m.get_filename()}"
                 with open(f"{HTML_DIR}{ATTACH_DIR}{file_name}", "wb") as f:
                     f.write(m.get_payload(decode=True))
@@ -47,10 +50,12 @@ def get_attach(date: datetime, message: mailbox.mboxMessage) -> Set[str]:
     return file_names
 
 
-def get_body(date: datetime,
-             message: mailbox.mboxMessage,
-             add_attach: bool = False,
-             add_share: bool = False) -> str:
+def get_body(
+        date: datetime,
+        message: mailbox.mboxMessage,
+        add_attach: bool = False,
+        add_share: bool = False,
+) -> str:
     parser = email.parser.BytesFeedParser(policy=email.policy.default)
     parser.feed(message.as_bytes())
     html = parser.close().get_body(
@@ -80,9 +85,14 @@ def get_body(date: datetime,
                     soup.append(div)
                     first_see = False
                 soup.append(soup.new_tag("br"))
-                soup.append(soup.new_tag("img", src=f"{ATTACH_DIR}{file}",
-                                         style=CSS_BIG,
-                                         alt="missing picture and u"))
+                soup.append(
+                    soup.new_tag(
+                        "img",
+                        src=f"{ATTACH_DIR}{file}",
+                        style=CSS_BIG,
+                        alt="missing picture and u",
+                    )
+                )
 
     for img in soup.find_all("img"):
         if not img.has_attr("style") and img.get("alt") != "发发":
@@ -107,10 +117,11 @@ def subject_to_date(subject: str, year: int) -> datetime:
 def decode_mime_words(s) -> str:
     return "".join(
         word.decode(encoding or "utf8") if isinstance(word, bytes) else word
-        for word, encoding in email.header.decode_header(s))
+        for word, encoding in email.header.decode_header(s)
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     dates = set()
     initiator = {}
     replier = {}
@@ -121,11 +132,12 @@ if __name__ == '__main__':
         except BaseException as e:
             subject = "pass"
         # match subject and sender/receiver
-        if any(keyword in subject for keyword in ["Bot 早报"]) and \
-                any(addr in msg["to"] for addr in REPLIER_EMAILS):
+        if any(keyword in subject for keyword in ["Bot 早报"]) and any(
+                addr in msg["to"] for addr in REPLIER_EMAILS
+        ):
             exact_date = datetime.fromtimestamp(
-                email.utils.mktime_tz(
-                    email.utils.parsedate_tz(msg["date"])))
+                email.utils.mktime_tz(email.utils.parsedate_tz(msg["date"]))
+            )
             date = subject_to_date(subject, year=exact_date.year)
             if date < datetime(2020, 8, 17):
                 continue
@@ -133,11 +145,11 @@ if __name__ == '__main__':
             if len(YEAR_MONTHS) == 0 or month_to_string(date) in YEAR_MONTHS:
                 dates.add(date)
                 if any(src in msg["from"] for src in REPLIER_EMAILS) or any(
-                        keyword in subject for keyword in MUST_INCLUDE_DATES):
+                        keyword in subject for keyword in MUST_INCLUDE_DATES
+                ):
                     if date not in replier:
                         replier[date] = []
                     replier[date].append((subject, msg, exact_date))
-
 
     def write_date(f, date: datetime):
         def write_from_src(src_dict: Dict):
@@ -154,7 +166,6 @@ if __name__ == '__main__':
         write_from_src(initiator)
         write_from_src(replier)
         f.write("</div>")
-
 
     # clean dirs
     if os.path.exists(HTML_DIR):

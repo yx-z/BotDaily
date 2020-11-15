@@ -11,19 +11,23 @@ from feature.base import Feature
 from utility.system import get_resource_path
 from utility.html_builder import html_img, html_div, html_a, html_tag
 
-HEADER = {"Host": "www.zhihu.com",
-          "Referer": "https://www.zhihu.com/",
-          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36'
-                        ' (KHTML, like Gecko) Chrome/56.0.2924.87',
-          }
+HEADER = {
+    "Host": "www.zhihu.com",
+    "Referer": "https://www.zhihu.com/",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36"
+                  " (KHTML, like Gecko) Chrome/56.0.2924.87",
+}
 
 
 class ZhihuStory(Feature):
-
-    def __init__(self, answer_file: str,
-                 start_date_time: datetime,
-                 avatar_style: str = "border-radius: 50%; width: 64px;",
-                 div_style: str = "", title: Optional[str] = "知乎故事"):
+    def __init__(
+            self,
+            answer_file: str,
+            start_date_time: datetime,
+            avatar_style: str = "border-radius: 50%; width: 64px;",
+            div_style: str = "",
+            title: Optional[str] = "知乎故事",
+    ):
         super().__init__(div_style, title)
         self.answer_file = answer_file
         self.start_date_time = start_date_time
@@ -81,18 +85,23 @@ class ZhihuStory(Feature):
         answers = []
         count = 0
         while True:
-            url = "https://www.zhihu.com/api/v4/questions/" + str(
-                qid) + "/answers?include=data%5B%2A%5D.is_normal%2Cadmin_closedsfd_comment%2Creward_info" \
-                       "%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason" \
-                       "%2Cis_sticky%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment" \
-                       "%2Ccontent%2Ceditable_content%2Cvoteup_count%2Creshipment_settings" \
-                       "%2Ccomment_permission%2Ccreated_time%2Cupdated_time%2Creview_info" \
-                       "%2Crelevant_info%2Cquestion%2Cexcerpt%2Crelationship.is_authorized" \
-                       "%2Cis_author%2Cvoting%2Cis_thanked%2Cis_nothelp%2Cis_labeled%3Bdata%5B%2A%5D" \
-                       ".mark_infos%5B%2A%5D.url%3Bdata%5B%2A%5D.author.follower_count%2Cbadge%5B%2A" \
-                       "%5D.topics&limit=" + str(
-                limit) + "&offset=" + str(
-                page_num * limit) + "&platform=desktop&sort_by=default"
+            url = (
+                    "https://www.zhihu.com/api/v4/questions/"
+                    + str(qid)
+                    + "/answers?include=data%5B%2A%5D.is_normal%2Cadmin_closedsfd_comment%2Creward_info"
+                      "%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason"
+                      "%2Cis_sticky%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment"
+                      "%2Ccontent%2Ceditable_content%2Cvoteup_count%2Creshipment_settings"
+                      "%2Ccomment_permission%2Ccreated_time%2Cupdated_time%2Creview_info"
+                      "%2Crelevant_info%2Cquestion%2Cexcerpt%2Crelationship.is_authorized"
+                      "%2Cis_author%2Cvoting%2Cis_thanked%2Cis_nothelp%2Cis_labeled%3Bdata%5B%2A%5D"
+                      ".mark_infos%5B%2A%5D.url%3Bdata%5B%2A%5D.author.follower_count%2Cbadge%5B%2A"
+                      "%5D.topics&limit="
+                    + str(limit)
+                    + "&offset="
+                    + str(page_num * limit)
+                    + "&platform=desktop&sort_by=default"
+            )
             req = requests.get(url, headers=HEADER)
             res_json = json.loads(req.text)
             data = res_json["data"]
@@ -104,10 +113,13 @@ class ZhihuStory(Feature):
                 else:
                     title = item["question"]["title"]
                     author = item["author"]["name"]
-                    content = item["content"].replace("<noscript>", "").replace(
-                        "</noscript>", "").replace(
-                        "<img src=\"data:image/svg+xml",
-                        "<meta src=\"")
+                    content = (
+                        item["content"]
+                            .replace("<noscript>", "")
+                            .replace("</noscript>", "")
+                            .replace('<img src="data:image/svg+xml',
+                                     '<meta src="')
+                    )
                     # further use title, author, content here
                     # ...
             if res_json["paging"]["is_end"] or count >= res_json["paging"][

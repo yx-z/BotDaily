@@ -10,7 +10,6 @@ from utility.image import open_image, draw_text, save_image
 
 
 class Feature(ABC):
-
     def __init__(self, div_style: str = "", title: Optional[str] = None):
         self.div_style = div_style
         self.title = title
@@ -26,8 +25,9 @@ class Feature(ABC):
 
         background = open_image(get_resource_path("feature_background.png"))
         font = ImageFont.truetype(FONT_PATH, text_size)
-        title_image = draw_text(background, position, self.title, font,
-                                text_color, shadow_color)
+        title_image = draw_text(
+            background, position, self.title, font, text_color, shadow_color
+        )
 
         out_path = get_resource_path(f"feature_header_{self.title}.png")
         save_image(title_image, out_path)
@@ -40,7 +40,8 @@ class Feature(ABC):
     def generate_html(self) -> str:
         return html_div(
             inner_html=f"{self.generate_title()}{self.generate_content()}",
-            style=self.div_style)
+            style=self.div_style,
+        )
 
     def on_email_sent(self):
         pass

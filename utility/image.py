@@ -15,12 +15,14 @@ def upload_image(path: str) -> str:
     return IMGUR.upload_image(path).link
 
 
-def draw_text(image: Image,
-              position: Tuple[int, int],
-              text: str,
-              font: str,
-              color: Tuple[int, int, int],
-              shadow_color: Tuple[int, int, int]) -> Image:
+def draw_text(
+        image: Image,
+        position: Tuple[int, int],
+        text: str,
+        font: str,
+        color: Tuple[int, int, int],
+        shadow_color: Tuple[int, int, int],
+) -> Image:
     x, y = position
     shadow = Image.new("RGBA", image.size, (0, 0, 0, 0))
     ImageDraw.Draw(shadow).text((x + 1, y + 1), text, font=font,
@@ -48,5 +50,5 @@ def download_image(url: str) -> Image:
 
 def is_image_file(file: str) -> bool:
     f = file.lower()
-    return any(f.endswith(f".{suffix}") for suffix in
-               ["jpg", "jpeg", "gif", "png"])
+    return any(
+        f.endswith(f".{suffix}") for suffix in ["jpg", "jpeg", "gif", "png"])

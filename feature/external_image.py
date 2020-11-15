@@ -9,10 +9,14 @@ from utility.image import upload_image
 
 
 class ExternalImage(Feature):
-
-    def __init__(self, file_name: str = None,
-                 clear_after: bool = False, image_style: str = CSS_MEDIUM,
-                 div_style: str = "", title: Optional[str] = None):
+    def __init__(
+            self,
+            file_name: str = None,
+            clear_after: bool = False,
+            image_style: str = CSS_MEDIUM,
+            div_style: str = "",
+            title: Optional[str] = None,
+    ):
         super().__init__(div_style, title)
         self.file_name = file_name
         self.image_style = image_style

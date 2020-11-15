@@ -5,14 +5,19 @@ from typing import Optional
 
 from feature.base import Feature
 from utility.system import get_resource_path
-from utility.html_builder import html_tag, html_img, \
-    html_emphasis
+from utility.html_builder import html_tag, html_img, html_emphasis
 
 
 class Gif(Feature):
-    def __init__(self, directory_path: str, start_date_time: datetime,
-                 id_multiplier: int = 1, div_style: str = "",
-                 image_style: str = "", title: Optional[str] = None):
+    def __init__(
+            self,
+            directory_path: str,
+            start_date_time: datetime,
+            id_multiplier: int = 1,
+            div_style: str = "",
+            image_style: str = "",
+            title: Optional[str] = None,
+    ):
         super().__init__(div_style, title)
         self.directory_path = directory_path
         self.start_date_time = start_date_time
@@ -29,9 +34,12 @@ class Gif(Feature):
         else:
             id_string = str(gif_id)
         file = list(
-                filter(lambda f: f.startswith(f"frame_{id_string}_delay-"),
-                       os.listdir(get_resource_path(
-                               f"{FEATURE_PATH}/{self.directory_path}"))))[0]
+            filter(
+                lambda f: f.startswith(f"frame_{id_string}_delay-"),
+                os.listdir(
+                    get_resource_path(f"{FEATURE_PATH}/{self.directory_path}")),
+            )
+        )[0]
         logging.info(f"Gif: {file}")
         return f"""{html_tag("h3", paired=True, inner_html=html_emphasis(f"第{days + 1}天"))}
 {html_img(path=get_resource_path(f"{FEATURE_PATH}/{self.directory_path}/{file}"), style=self.image_style)}

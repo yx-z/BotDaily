@@ -5,10 +5,13 @@ from feature.text import Text
 
 
 class Greet(Text):
-
-    def __init__(self, recipient_name: str,
-                 start_date_time: datetime = None, div_style: str = "",
-                 title: Optional[str] = None):
+    def __init__(
+            self,
+            recipient_name: str,
+            start_date_time: datetime = None,
+            div_style: str = "",
+            title: Optional[str] = None,
+    ):
         super().__init__("", div_style, title)
         self.recipient_name = recipient_name
         self.know_date_time = start_date_time

@@ -9,16 +9,14 @@ USER_AGENT = {"User-agent": "Mozilla/5.0"}
 
 
 class ZhihuDaily(Feature):
-
     def __init__(self, div_style: str = "", title: Optional[str] = "知乎日报"):
         super().__init__(div_style, title)
 
     @staticmethod
     def _request_id() -> Optional[int]:
         stories_url = "https://news-at.zhihu.com/api/3/stories/latest"
-        stories = \
-            requests.get(stories_url, headers=USER_AGENT).json()[
-                "stories"]
+        stories = requests.get(stories_url, headers=USER_AGENT).json()[
+            "stories"]
         for story in stories:
             if "瞎扯" in story["title"]:
                 return story["id"]

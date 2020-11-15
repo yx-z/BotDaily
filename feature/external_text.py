@@ -5,8 +5,13 @@ from utility.system import get_resource_path
 
 
 class ExternalText(Text):
-    def __init__(self, text_file: str, clear_after: bool = False,
-                 div_style: str = "", title: Optional[str] = None):
+    def __init__(
+            self,
+            text_file: str,
+            clear_after: bool = False,
+            div_style: str = "",
+            title: Optional[str] = None,
+    ):
         super().__init__("", div_style, title)
         self.text_file = text_file
         self.clear_after = clear_after
