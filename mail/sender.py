@@ -24,23 +24,21 @@ class Sender:
     def send_recipient_email(
             self,
             recipient: Recipient,
-            num_retry: int = 0, a
-        timeout_seconds: int = SECONDS_IN_MINUTE,
-                               send_self
-
-    : bool = False,
-             is_also_test_next: bool = False,
+            num_retry: int = 0,
+            timeout_seconds: int = SECONDS_IN_MINUTE,
+            send_self: bool = False,
+            is_also_test_next: bool = False,
     ):
-    destination_email_address = {recipient.email_address}
-    if send_self:
-        destination_email_address.add(self.email_address)
-    try:
-        with timeout_limit(timeout_seconds):
-            subject = recipient.generate_subject()
-            body_html = recipient.generate_body(test_filter=False)
-            logging.info(body_html)
-            self._send_email(subject, destination_email_address, body_html)
-            logging.info(f"Email sent to {destination_email_address}")
+        destination_email_address = {recipient.email_address}
+        if send_self:
+            destination_email_address.add(self.email_address)
+        try:
+            with timeout_limit(timeout_seconds):
+                subject = recipient.generate_subject()
+                body_html = recipient.generate_body(test_filter=False)
+                logging.info(body_html)
+                self._send_email(subject, destination_email_address, body_html)
+                logging.info(f"Email sent to {destination_email_address}")
                 recipient.on_email_sent()
         except Exception as exception:
             logging.info(
@@ -60,23 +58,22 @@ class Sender:
                 )
                 logging.info("Exception Email sent to sender.")
 
-    if is_also_test_next and len(recipient.test_next_day_feature) > 0:
-        self.test_recipient_next_day(recipient, timeout_seconds)
+        if is_also_test_next and len(recipient.test_next_day_feature) > 0:
+            self.test_recipient_next_day(recipient, timeout_seconds)
 
-
-def test_recipient_next_day(
-        self, recipient: Recipient, timeout_seconds: int = SECONDS_IN_MINUTE
-):
-    current_date_time = recipient.current_date_time
-    next_day_date_time = current_date_time + timedelta(days=1)
-    next_day_date_time_string = date_to_string(next_day_date_time)
-    logging.info(
-        f"Checking for {recipient.email_address} on {next_day_date_time_string}"
-    )
-    recipient.set_current_date_time(next_day_date_time)
-    try:
-        with timeout_limit(timeout_seconds):
-            subject = recipient.generate_subject()
+    def test_recipient_next_day(
+            self, recipient: Recipient, timeout_seconds: int = SECONDS_IN_MINUTE
+    ):
+        current_date_time = recipient.current_date_time
+        next_day_date_time = current_date_time + timedelta(days=1)
+        next_day_date_time_string = date_to_string(next_day_date_time)
+        logging.info(
+            f"Checking for {recipient.email_address} on {next_day_date_time_string}"
+        )
+        recipient.set_current_date_time(next_day_date_time)
+        try:
+            with timeout_limit(timeout_seconds):
+                subject = recipient.generate_subject()
                 body_html = recipient.generate_body(test_filter=True)
                 logging.info(
                     f"Checked for {recipient.email_address} on {next_day_date_time_string}"
@@ -96,15 +93,14 @@ def test_recipient_next_day(
         finally:
             recipient.set_current_date_time(current_date_time)
 
-
-def send_exception(self, subject: str, recipient: Recipient,
-                   exception: Exception):
-    logging.info(f"Sending exception")
-    self._send_email(
-        subject,
-        {self.email_address},
-        html_from_text(
-            f"""Recipient: {recipient.email_address}
+    def send_exception(self, subject: str, recipient: Recipient,
+                       exception: Exception):
+        logging.info(f"Sending exception")
+        self._send_email(
+            subject,
+            {self.email_address},
+            html_from_text(
+                f"""Recipient: {recipient.email_address}
 
 
 Exception: {exception}
@@ -112,8 +108,8 @@ Exception: {exception}
 
 Traceback: {traceback.format_exc()}
 """
-        ),
-    )
+            ),
+        )
 
     def _send_email(self, subject: str, recipients: Set[str], body_html: str):
         logging.info(f"Sending from {self.email_address} to {recipients}")
