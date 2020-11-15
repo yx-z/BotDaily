@@ -16,32 +16,46 @@ from utility.system import process_exists
 if __name__ == '__main__':
     if not process_exists("node"):
         os.system("node netease-api/app.js &")
+
     sender = GmailSender(SENDER_EMAIL, SENDER_PASSWORD)
+
     args = sys.argv
-    if len(args) > 1 and args[1].startswith("test"):
+    more_args = len(args) > 1
+    if more_args:
         logging.basicConfig(level=logging.INFO,
                             format="%(asctime)s %(levelname)-8s %(message)s",
                             datefmt="%Y-%m-%d %H:%M:%S")
 
-        time_to_recipients = eval(
-            open("configuration/recipient.py", "r").read())
-        for _, recipients in time_to_recipients.items():
-            for recipient in recipients:
-                recipient.email_address = SENDER_EMAIL
-                recipient.on_email_sent = lambda: None
-                recipient.set_current_date_time(datetime.now())
+        if args[1].startswith("test"):
+            time_to_recipients = eval(
+                open("configuration/recipient.py", "r").read())
+            for _, recipients in time_to_recipients.items():
+                for recipient in recipients:
+                    recipient.email_address = SENDER_EMAIL
+                    recipient.on_email_sent = lambda: None
+                    recipient.set_current_date_time(datetime.now())
 
-                if args[1] == "test":
-                    is_test = len(args) > 2
-                    if is_test:
-                        recipient.is_test = args[2:]
-                    sender.send_recipient_email(recipient,
-                                                test_next_day=is_test)
-                elif args[1] == "testNext":
-                    if len(args) > 2:
-                        recipient.is_test = args[2:]
-                    sender.test_recipient_next_day(recipient)
-    elif len(args) == 1:
+                    if args[1] == "test":
+                        is_test = len(args) > 2
+                        if is_test:
+                            recipient.is_test = args[2:]
+                        sender.send_recipient_email(recipient,
+                                                    test_next_day=is_test)
+                    elif args[1] == "testNext":
+                        if len(args) > 2:
+                            recipient.is_test = args[2:]
+                        sender.test_recipient_next_day(recipient)
+        elif args[1].startswith("now"):
+            time_to_recipients = eval(
+                open("configuration/recipient.py", "r").read())
+            now = datetime.now()
+            now_str = now.strftime("%H:%M")
+            for _, recipients in time_to_recipients.items():
+                for recipient in recipients:
+                    recipient.set_current_date_time(now)
+                    sender.send_recipient_email(recipient, send_self=True,
+                                                retry=2, test_next_day=True)
+    else:
         logging.basicConfig(level=logging.INFO,
                             format="%(asctime)s %(levelname)-8s %(message)s",
                             datefmt="%Y-%m-%d %H:%M:%S",
@@ -57,7 +71,7 @@ if __name__ == '__main__':
                 for recipient in time_to_recipients[now_str]:
                     recipient.set_current_date_time(now)
                     sender.send_recipient_email(recipient, send_self=True,
-                                                test_next_day=True)
+                                                retry=2, test_next_day=True)
             elif now.minute == 0:
                 logging.info("Sleeping.")
             next_minute = datetime(now.year, now.month, now.day, now.hour,
