@@ -52,7 +52,7 @@ class Sender:
                     recipient, exception)
                 logging.info("Exception Email sent to sender.")
 
-        if test_next_day:
+        if test_next_day and len(recipient.test_next_day) > 0:
             self.test_recipient_next_day(recipient, timeout_seconds)
 
     def test_recipient_next_day(self, recipient: Recipient,

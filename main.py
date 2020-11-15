@@ -35,15 +35,13 @@ if __name__ == '__main__':
                     recipient.on_email_sent = lambda: None
                     recipient.set_current_date_time(datetime.now())
 
+                    custom_test = len(args) > 2
+                    if custom_test:
+                        recipient.test_next_day_feature = args[2:]
                     if args[1] == "test":
-                        is_test = len(args) > 2
-                        if is_test:
-                            recipient.is_test = args[2:]
                         sender.send_recipient_email(recipient,
-                                                    test_next_day=is_test)
+                                                    test_next_day=True)
                     elif args[1] == "testNext":
-                        if len(args) > 2:
-                            recipient.is_test = args[2:]
                         sender.test_recipient_next_day(recipient)
         elif args[1].startswith("now"):
             time_to_recipients = eval(
