@@ -75,6 +75,7 @@ class ZhihuStory(Feature):
 作者: {response["author"]["name"]}
 <br>
 {html_div(inner_html=str_soup)}
+<br>
 {html_a(text="知乎原文", url=answer_url)}
 """
 
