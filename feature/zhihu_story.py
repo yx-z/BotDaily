@@ -46,8 +46,6 @@ class ZhihuStory(Feature):
         answer_id = answer_url[answer_url.rfind("/") + 1:]
         api_url = f"https://www.zhihu.com/api/v4/answers/{answer_id}?include=content"
         response = requests.get(api_url, headers=HEADER).json()
-        print(response)
-
         content = response["content"]
         content = content.replace("<noscript>", "").replace("</noscript>", "")
         soup = BeautifulSoup(content, "html.parser")
