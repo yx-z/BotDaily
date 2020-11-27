@@ -1,7 +1,7 @@
 from utility.constant import HTML_LESS_THAN_TEXT, HTML_GREATER_THAN_TEXT, \
     HTML_NEW_LINE
 from utility.image import upload_image
-from typing import Optional, Dict
+from typing import Optional
 
 
 def html_from_text(
@@ -51,7 +51,3 @@ def html_emphasis(text: str, bold: bool = True, italic: bool = True) -> str:
 
 def html_a(text: str, url: str, style: str = "", **kwargs) -> str:
     return html_tag("a", True, text, href=url, style=style, **kwargs)
-
-
-def css_build(style_dict: Dict[str, str]) -> str:
-    return ";".join(map(lambda p: f"{p[0]}: {p[1]}", style_dict.items()))
