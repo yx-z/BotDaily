@@ -24,7 +24,7 @@ class ExternalText(Text):
         with open(get_resource_path(self.text_file), "r+") as file:
             self.text = file.read()
             if self.as_python:
-                self.text = eval(self.text)
+                return eval(self.text)
             return super().generate_content()
 
     def on_email_sent(self):
