@@ -38,7 +38,6 @@ class ExternalText(Text):
 # html_div(inner_html: str, style: str = "", **kwargs)
 # html_emphasis(text: str, bold: bool = True, italic: bool = True)
 # html_a(text: str, url: str, style: str = "", **kwargs)
-# css_build(style_dict: Dict[str, str], *styles: str)
 # HTML_NEW_LINE = "<br>"
 # HTML_LESS_THAN_TEXT = "&lt;"
 # HTML_GREATER_THAN_TEXT = "&gt;"
