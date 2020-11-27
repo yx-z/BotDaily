@@ -21,7 +21,7 @@ def html_from_text(
 
 def html_tag(name: str, paired: bool = False, inner_html: str = "",
              **kwargs) -> str:
-    attributes = " ".join(map(lambda t: f"{t[0]}='{t[1]}'", kwargs.items()))
+    attributes = " ".join(map(lambda p: f"{p[0]}='{p[1]}'", kwargs.items()))
     if paired:
         return f"<{name} {attributes}>{inner_html}</{name}>"
     else:
@@ -53,5 +53,6 @@ def html_a(text: str, url: str, style: str = "", **kwargs) -> str:
     return html_tag("a", True, text, href=url, style=style, **kwargs)
 
 
-def css_build(*styles: str) -> str:
-    return "; ".join(styles)
+def css_build(*styles: str, **kw_styles) -> str:
+    kw_style_list = list(map(lambda p: f"{p[0]}: {p[1]}", kw_styles.items()))
+    return "; ".join(list(styles) + kw_style_list)

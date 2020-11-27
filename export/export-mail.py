@@ -30,7 +30,7 @@ SINGLE_OUT_FILE = True
 HTML_FILE = "out.html"
 PDF_FILE = "out.pdf"
 
-REPLIER_EMAILS = [""]  # ["abc@gmail.com"]
+REPLIER_EMAILS = ["huiwenz@mit.edu"]  # ["abc@gmail.com"]
 MUST_INCLUDE_DATES = [""]  # ["1/1"]
 
 
@@ -158,7 +158,8 @@ if __name__ == "__main__":
                 cur_msgs.sort(key=lambda t: t[2])
                 for _, msg, time in cur_msgs:
                     f.write(
-                        f"<div>Sent at {time.strftime('%Y-%m-%d %H:%M:%S')}</div>")
+                        f"<div id='{time.strftime('%Y%m%d')}'>Sent at {time.strftime('%Y-%m-%d %H:%M:%S')}</div>"
+                    )
                     f.write(
                         get_body(date, msg, add_share=False, add_attach=False))
 
@@ -179,6 +180,10 @@ if __name__ == "__main__":
     date_sorted = sorted(list(dates))
     if SINGLE_OUT_FILE:
         with open(f"{HTML_DIR}{HTML_FILE}", "a") as f:
+            for date in date_sorted:
+                f.write(
+                    f"<li><a href='#{date.strftime('%Y%m%d')}'>{date.strftime('%Y-%m-%d')}</a></li>"
+                )
             for date in date_sorted:
                 write_date(f, date)
         if OUT_PDF:

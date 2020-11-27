@@ -27,8 +27,11 @@ class Music(Feature):
     def generate_content(self) -> str:
         music_list = json.load(open(get_resource_path(self.file_name), "r"))
         days = (self.current_date_time - self.start_date_time).days
-        music_id, name, author, comment = music_list[len(music_list) - days - 2]
+        content = music_list[len(music_list) - days - 2]
+        if len(content) == 1:
+            return html_from_text(content[0], parse_angle_brackets=False)
 
+        music_id, name, author, comment = content
         music_data = requests.get(
             f"http://localhost:3000/song/detail?ids={music_id}"
         ).json()["songs"][0]
@@ -46,4 +49,4 @@ class Music(Feature):
     {comment}
     """,
             parse_angle_brackets=False,
-        )  # don't parse angle brackets for having image tags
+        )

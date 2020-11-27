@@ -1,5 +1,4 @@
 import json
-import linecache
 import logging
 from datetime import datetime
 from typing import List, Optional
@@ -26,7 +25,7 @@ class ZhihuStory(Feature):
             start_date_time: datetime,
             avatar_style: str = "border-radius: 50%; width: 64px;",
             div_style: str = "",
-            title: Optional[str] = "知乎故事",
+            title: Optional[str] = "知乎收录",
     ):
         super().__init__(div_style, title)
         self.answer_file = answer_file

@@ -38,11 +38,23 @@ class OneCover(One):
 
 
 class OneQuote(One):
+    def __init__(
+            self, image_style: str = "", div_style: str = "",
+            title: Optional[str] = None
+    ):
+        super().__init__(image_style, div_style, title)
+
     def generate_content(self) -> str:
         return One._get_home().find("div", class_="fp-one-cita").text.strip()
 
 
 class OneArticle(One):
+    def __init__(
+            self, image_style: str = "", div_style: str = "",
+            title: Optional[str] = None
+    ):
+        super().__init__(image_style, div_style, title)
+
     def generate_content(self) -> str:
         p = One._get_home().find("p", class_="one-articulo-titulo")
         article_url = p.find("a")["href"]
@@ -59,7 +71,7 @@ class OneArticle(One):
 """
 
 
-class OneQuestionAnser(One):
+class OneQuestionAnswer(One):
     def generate_content(self) -> str:
         p = One._get_home().find("p", class_="one-cuestion-titulo")
         qa_url = p.find("a")["href"]
