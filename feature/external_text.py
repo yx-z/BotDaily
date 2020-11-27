@@ -49,6 +49,8 @@ class ExternalText(Text):
 # CSS_MEDIUM = "display: block; width: 60%; margin: auto;"
 # CSS_SMALL = "display: block; width: 40%; margin: auto;"
 
+# get_resource_path(path: str)
+
 f"""
 
 
