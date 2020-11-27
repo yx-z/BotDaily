@@ -10,12 +10,12 @@ from utility.html_builder import html_div
 
 class Recipient:
     def __init__(
-            self,
-            email_address: str,
-            subject: Subject,
-            features: List[Feature],
-            div_style: str = CSS_DEFAULT_DIV,
-            test_next_day_feature: List[str] = None,
+        self,
+        email_address: str,
+        subject: Subject,
+        features: List[Feature],
+        div_style: str = CSS_DEFAULT_DIV,
+        test_next_day_feature: List[str] = None,
     ):
         self.email_address = email_address
         self.subject = subject

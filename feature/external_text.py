@@ -8,12 +8,12 @@ from utility.constant import *
 
 class ExternalText(Text):
     def __init__(
-            self,
-            text_file: str,
-            as_python: bool = False,
-            clear_after: bool = False,
-            div_style: str = "",
-            title: Optional[str] = None,
+        self,
+        text_file: str,
+        as_python: bool = False,
+        clear_after: bool = False,
+        div_style: str = "",
+        title: Optional[str] = None,
     ):
         super().__init__("", div_style, title)
         self.text_file = text_file
@@ -24,8 +24,7 @@ class ExternalText(Text):
         with open(get_resource_path(self.text_file), "r+") as file:
             self.text = file.read()
             if self.as_python:
-                return html_from_text(eval(self.text),
-                                      parse_angle_brackets=False)
+                return html_from_text(eval(self.text), parse_angle_brackets=False)
             return super().generate_content()
 
     def on_email_sent(self):
@@ -39,6 +38,7 @@ class ExternalText(Text):
 # html_div(inner_html: str, style: str = "", **kwargs)
 # html_emphasis(text: str, bold: bool = True, italic: bool = True)
 # html_a(text: str, url: str, style: str = "", **kwargs)
+
 # HTML_NEW_LINE = "<br>"
 # HTML_LESS_THAN_TEXT = "&lt;"
 # HTML_GREATER_THAN_TEXT = "&gt;"

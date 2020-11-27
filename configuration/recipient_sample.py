@@ -27,8 +27,7 @@
                 ),
                 OneCover(image_style=CSS_MEDIUM),
                 OneQuote(div_style=CSS_CENTER, title=None),
-                ZhihuStory("answer_id.txt",
-                           start_date_time=datetime(2020, 8, 4)),
+                ZhihuStory("answer_id.txt", start_date_time=datetime(2020, 8, 4)),
             ],
             div_style=CSS_DEFAULT_DIV,
         )

@@ -12,12 +12,10 @@ class Poem(Feature):
 
     def generate_content(self) -> str:
         if self.token is None:
-            self.token = requests.get("https://v2.jinrishici.com/token").json()[
-                "data"]
+            self.token = requests.get("https://v2.jinrishici.com/token").json()["data"]
 
         url = "https://v2.jinrishici.com/sentence"
-        data = requests.get(url, headers={"X-User-Token": self.token}).json()[
-            "data"]
+        data = requests.get(url, headers={"X-User-Token": self.token}).json()["data"]
         poem = data["origin"]
         return f"""{data["content"]}
 —— {poem["dynasty"]}·{poem["author"]} 《{poem["title"]}》

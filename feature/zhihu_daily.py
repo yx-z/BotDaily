@@ -15,8 +15,7 @@ class ZhihuDaily(Feature):
     @staticmethod
     def _request_id() -> Optional[int]:
         stories_url = "https://news-at.zhihu.com/api/3/stories/latest"
-        stories = requests.get(stories_url, headers=USER_AGENT).json()[
-            "stories"]
+        stories = requests.get(stories_url, headers=USER_AGENT).json()["stories"]
         for story in stories:
             if "瞎扯" in story["title"]:
                 return story["id"]

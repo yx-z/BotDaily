@@ -39,9 +39,9 @@ def get_attach(date: datetime, message: mailbox.mboxMessage) -> Set[str]:
     if message.get_content_maintype() == "multipart":
         for m in message.walk():
             if (
-                    m.get_content_maintype() != "multipart"
-                    and m.get("Content-Disposition") is not None
-                    and m.get_filename() is not None
+                m.get_content_maintype() != "multipart"
+                and m.get("Content-Disposition") is not None
+                and m.get_filename() is not None
             ):
                 file_name = f"{date_to_string(date)}-{m.get_filename()}"
                 with open(f"{HTML_DIR}{ATTACH_DIR}{file_name}", "wb") as f:
@@ -51,15 +51,14 @@ def get_attach(date: datetime, message: mailbox.mboxMessage) -> Set[str]:
 
 
 def get_body(
-        date: datetime,
-        message: mailbox.mboxMessage,
-        add_attach: bool = False,
-        add_share: bool = False,
+    date: datetime,
+    message: mailbox.mboxMessage,
+    add_attach: bool = False,
+    add_share: bool = False,
 ) -> str:
     parser = email.parser.BytesFeedParser(policy=email.policy.default)
     parser.feed(message.as_bytes())
-    html = parser.close().get_body(
-        preferencelist=["html", "plain"]).get_content()
+    html = parser.close().get_body(preferencelist=["html", "plain"]).get_content()
     soup = BeautifulSoup(html, "html.parser")
     if not add_share:
         netease = soup.find("a", text=re.compile(".*网易.*"))
@@ -133,7 +132,7 @@ if __name__ == "__main__":
             subject = "pass"
         # match subject and sender/receiver
         if any(keyword in subject for keyword in ["Bot 早报"]) and any(
-                addr in msg["to"] for addr in REPLIER_EMAILS
+            addr in msg["to"] for addr in REPLIER_EMAILS
         ):
             exact_date = datetime.fromtimestamp(
                 email.utils.mktime_tz(email.utils.parsedate_tz(msg["date"]))
@@ -145,7 +144,7 @@ if __name__ == "__main__":
             if len(YEAR_MONTHS) == 0 or month_to_string(date) in YEAR_MONTHS:
                 dates.add(date)
                 if any(src in msg["from"] for src in REPLIER_EMAILS) or any(
-                        keyword in subject for keyword in MUST_INCLUDE_DATES
+                    keyword in subject for keyword in MUST_INCLUDE_DATES
                 ):
                     if date not in replier:
                         replier[date] = []
@@ -160,8 +159,7 @@ if __name__ == "__main__":
                     f.write(
                         f"<div id='{time.strftime('%Y%m%d')}'>Sent at {time.strftime('%Y-%m-%d %H:%M:%S')}</div>"
                     )
-                    f.write(
-                        get_body(date, msg, add_share=False, add_attach=False))
+                    f.write(get_body(date, msg, add_share=False, add_attach=False))
 
         f.write("<div style=\"font-family:'PingFang SC' !important\">")
         write_from_src(initiator)
@@ -197,5 +195,4 @@ if __name__ == "__main__":
                 write_date(f, date)
         if OUT_PDF:
             for file_name in file_names:
-                html_to_pdf(f"{HTML_DIR}{file_name}.html",
-                            f"{PDF_DIR}{file_name}.pdf")
+                html_to_pdf(f"{HTML_DIR}{file_name}.html", f"{PDF_DIR}{file_name}.pdf")

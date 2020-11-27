@@ -8,11 +8,11 @@ from utility.html_builder import html_img
 
 class AbsoluteKid(Feature):
     def __init__(
-            self,
-            start_date_time: datetime,
-            div_style: str = "",
-            image_style: str = CSS_FULL_WIDTH,
-            title: Optional[str] = "绝对小孩",
+        self,
+        start_date_time: datetime,
+        div_style: str = "",
+        image_style: str = CSS_FULL_WIDTH,
+        title: Optional[str] = "绝对小孩",
     ):
         super().__init__(div_style, title)
         self.start_date_time = start_date_time
@@ -24,8 +24,7 @@ class AbsoluteKid(Feature):
         indices = [days * 2 - 1, days * 2]
         urls = list(
             map(
-                lambda
-                    i: f"https://raw.githubusercontent.com/yx-z/YunDaily/master/Yun/res/absolute-kids/{f'00{i}'[-3:]}.jpg",
+                lambda i: f"https://raw.githubusercontent.com/yx-z/YunDaily/master/Yun/res/absolute-kids/{f'00{i}'[-3:]}.jpg",
                 indices,
             )
         )

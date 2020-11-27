@@ -9,10 +9,10 @@ from feature.base import Feature
 
 class One(Feature):
     def __init__(
-            self,
-            image_style: str = "",
-            div_style: str = "",
-            title: Optional[str] = "ONE·一个",
+        self,
+        image_style: str = "",
+        div_style: str = "",
+        title: Optional[str] = "ONE·一个",
     ):
         super().__init__(div_style, title)
         self.image_style = image_style
@@ -39,8 +39,7 @@ class OneCover(One):
 
 class OneQuote(One):
     def __init__(
-            self, image_style: str = "", div_style: str = "",
-            title: Optional[str] = None
+        self, image_style: str = "", div_style: str = "", title: Optional[str] = None
     ):
         super().__init__(image_style, div_style, title)
 
@@ -50,8 +49,7 @@ class OneQuote(One):
 
 class OneArticle(One):
     def __init__(
-            self, image_style: str = "", div_style: str = "",
-            title: Optional[str] = None
+        self, image_style: str = "", div_style: str = "", title: Optional[str] = None
     ):
         super().__init__(image_style, div_style, title)
 
@@ -62,8 +60,7 @@ class OneArticle(One):
         quote = soup.find("div", class_="comilla-cerrar").text.strip()
         title = soup.find("h2", class_="articulo-titulo").text.strip()
         author = soup.find("p", class_="articulo-autor").text.strip()[3:]
-        text = soup.find("div", class_="articulo-contenido").get_text(
-            separator="\n")
+        text = soup.find("div", class_="articulo-contenido").get_text(separator="\n")
         return f"""{title} - {author}
 {quote}
 {text}
@@ -79,8 +76,8 @@ class OneQuestionAnswer(One):
         q = soup.find("div", class_="cuestion-contenido").text.strip()
         a = (
             soup.find_all("div", class_="cuestion-contenido")[-1]
-                .get_text(separator="\n")
-                .strip()
+            .get_text(separator="\n")
+            .strip()
         )
         return f"""问: {q}
 答:

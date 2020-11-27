@@ -5,8 +5,7 @@ from feature.text import Text
 
 class End(Text):
     def __init__(
-            self, sender_name: str = "Bot", div_style: str = "",
-            title: Optional[str] = None
+        self, sender_name: str = "Bot", div_style: str = "", title: Optional[str] = None
     ):
         super().__init__(
             f"""

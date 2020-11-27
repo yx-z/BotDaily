@@ -29,8 +29,7 @@ if __name__ == "__main__":
         )
 
         if args[1].startswith("test"):
-            time_to_recipients = eval(
-                open("configuration/recipient.py", "r").read())
+            time_to_recipients = eval(open("configuration/recipient.py", "r").read())
             for _, recipients in time_to_recipients.items():
                 for recipient in recipients:
                     recipient.email_address = SENDER_EMAIL
@@ -41,21 +40,18 @@ if __name__ == "__main__":
                     if custom_test:
                         recipient.test_next_day_feature = args[2:]
                     if args[1] == "test":
-                        sender.send_recipient_email(recipient,
-                                                    is_also_test_next=True)
+                        sender.send_recipient_email(recipient, is_also_test_next=True)
                     elif args[1] == "testNext":
                         sender.test_recipient_next_day(recipient)
         elif args[1].startswith("now"):
-            time_to_recipients = eval(
-                open("configuration/recipient.py", "r").read())
+            time_to_recipients = eval(open("configuration/recipient.py", "r").read())
             now = datetime.now()
             now_str = now.strftime("%H:%M")
             for _, recipients in time_to_recipients.items():
                 for recipient in recipients:
                     recipient.set_current_date_time(now)
                     sender.send_recipient_email(
-                        recipient, send_self=True, num_retry=2,
-                        is_also_test_next=True
+                        recipient, send_self=True, num_retry=2, is_also_test_next=True
                     )
     else:
         logging.basicConfig(
@@ -69,20 +65,17 @@ if __name__ == "__main__":
         while True:
             now = datetime.now()
             now_str = now.strftime("%H:%M")
-            time_to_recipients = eval(
-                open("configuration/recipient.py", "r").read())
+            time_to_recipients = eval(open("configuration/recipient.py", "r").read())
             if now_str in time_to_recipients.keys():
                 for recipient in time_to_recipients[now_str]:
                     recipient.set_current_date_time(now)
                     sender.send_recipient_email(
-                        recipient, send_self=True, num_retry=2,
-                        is_also_test_next=True
+                        recipient, send_self=True, num_retry=2, is_also_test_next=True
                     )
             elif now.minute == 0:
                 logging.info("Sleeping.")
             next_minute = datetime(
                 now.year, now.month, now.day, now.hour, now.minute
             ) + timedelta(minutes=1)
-            sleep_time = max(0, ceil(
-                (next_minute - datetime.now()).total_seconds()))
+            sleep_time = max(0, ceil((next_minute - datetime.now()).total_seconds()))
             time.sleep(sleep_time)

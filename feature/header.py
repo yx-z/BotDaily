@@ -12,14 +12,14 @@ from utility.image import search_unsplash, download_image, draw_text
 
 class Header(Feature):
     def __init__(
-            self,
-            topic: List[str],
-            text: str,
-            start_date_time: datetime,
-            text_size: int = 42,
-            image_style: str = "",
-            div_style: str = "",
-            title: Optional[str] = None,
+        self,
+        topic: List[str],
+        text: str,
+        start_date_time: datetime,
+        text_size: int = 42,
+        image_style: str = "",
+        div_style: str = "",
+        title: Optional[str] = None,
     ):
         super().__init__(div_style, title)
         self.text = text
@@ -53,8 +53,7 @@ class Header(Feature):
         image = draw_text(image, position, text, font, text_color, border_color)
 
         font2 = ImageFont.truetype(FONT_PATH, 32)
-        image = draw_text(image, (80, 320), topic, font2, text_color,
-                          border_color)
+        image = draw_text(image, (80, 320), topic, font2, text_color, border_color)
 
         out_path = get_resource_path("header.png")
         image.save(out_path)

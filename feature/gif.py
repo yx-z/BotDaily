@@ -10,13 +10,13 @@ from utility.html_builder import html_tag, html_img, html_emphasis
 
 class Gif(Feature):
     def __init__(
-            self,
-            directory_path: str,
-            start_date_time: datetime,
-            id_multiplier: int = 1,
-            div_style: str = "",
-            image_style: str = "",
-            title: Optional[str] = None,
+        self,
+        directory_path: str,
+        start_date_time: datetime,
+        id_multiplier: int = 1,
+        div_style: str = "",
+        image_style: str = "",
+        title: Optional[str] = None,
     ):
         super().__init__(div_style, title)
         self.directory_path = directory_path
@@ -36,8 +36,7 @@ class Gif(Feature):
         file = list(
             filter(
                 lambda f: f.startswith(f"frame_{id_string}_delay-"),
-                os.listdir(
-                    get_resource_path(f"{FEATURE_PATH}/{self.directory_path}")),
+                os.listdir(get_resource_path(f"{FEATURE_PATH}/{self.directory_path}")),
             )
         )[0]
         logging.info(f"Gif: {file}")

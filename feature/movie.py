@@ -11,11 +11,11 @@ MOVIE_PATH = "movie"
 
 class Movie(Feature):
     def __init__(
-            self,
-            order_file_name: str,
-            start_date_time: datetime,
-            div_style: str = "",
-            title: Optional[str] = "云·电影",
+        self,
+        order_file_name: str,
+        start_date_time: datetime,
+        div_style: str = "",
+        title: Optional[str] = "云·电影",
     ):
         super().__init__(div_style, title)
         self.order_file_name = order_file_name
