@@ -24,7 +24,8 @@ class ExternalText(Text):
         with open(get_resource_path(self.text_file), "r+") as file:
             self.text = file.read()
             if self.as_python:
-                return html_from_text(eval(self.text), parse_new_line=True)
+                return html_from_text(eval(self.text),
+                                      parse_angle_brackets=False)
             return super().generate_content()
 
     def on_email_sent(self):
