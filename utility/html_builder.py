@@ -53,6 +53,5 @@ def html_a(text: str, url: str, style: str = "", **kwargs) -> str:
     return html_tag("a", True, text, href=url, style=style, **kwargs)
 
 
-def css_build(style_dict: Dict[str, str], *styles: str) -> str:
-    style_list = list(map(lambda p: f"{p[0]}: {p[1]}", style_dict.items()))
-    return "; ".join(list(styles) + style_list)
+def css_build(style_dict: Dict[str, str]) -> str:
+    return ";".join(map(lambda p: f"{p[0]}: {p[1]}", style_dict.items()))
