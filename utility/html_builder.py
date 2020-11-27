@@ -1,7 +1,7 @@
 from utility.constant import HTML_LESS_THAN_TEXT, HTML_GREATER_THAN_TEXT, \
     HTML_NEW_LINE
 from utility.image import upload_image
-from typing import Optional
+from typing import Optional, Dict
 
 
 def html_from_text(
@@ -53,6 +53,6 @@ def html_a(text: str, url: str, style: str = "", **kwargs) -> str:
     return html_tag("a", True, text, href=url, style=style, **kwargs)
 
 
-def css_build(*styles: str, **kw_styles) -> str:
-    kw_style_list = list(map(lambda p: f"{p[0]}: {p[1]}", kw_styles.items()))
-    return "; ".join(list(styles) + kw_style_list)
+def css_build(style_dict: Dict[str, str], *styles: str) -> str:
+    style_list = list(map(lambda p: f"{p[0]}: {p[1]}", style_dict.items()))
+    return "; ".join(list(styles) + style_list)
