@@ -2,6 +2,7 @@ from typing import Optional
 
 from feature.text import Text
 from utility.system import get_resource_path
+from utility.html_builder import *
 from utility.constant import *
 
 
