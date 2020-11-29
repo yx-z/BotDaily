@@ -2,6 +2,8 @@ from utility.constant import HTML_LESS_THAN_TEXT, HTML_GREATER_THAN_TEXT, HTML_N
 from utility.image import upload_image
 from typing import Optional
 
+from utility.system import get_resource_path
+
 
 def html_from_text(
     text: str, parse_angle_brackets: bool = True, parse_new_line: bool = True
@@ -29,7 +31,7 @@ def html_img(
     url: Optional[str] = None, path: str = "", style: str = "", **kwargs
 ) -> str:
     if url is None:
-        url = upload_image(path)
+        url = upload_image(get_resource_path(path))
     return html_tag("img", False, src=url, style=style, **kwargs)
 
 

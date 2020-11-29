@@ -34,5 +34,5 @@ class ExternalImage(Feature):
         return html_img(url=self.image_url, style=self.image_style)
 
     def on_email_sent(self):
-        if self.clear_after and os.path.exists(self.file_path):
-            os.system(f"rm -f {self.file_path}")
+        if self.clear_after:
+            self.image_style = "display: none; !important"
