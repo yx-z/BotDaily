@@ -5,6 +5,7 @@ configuration/recipient.py
 **/.DS_Store
 *.pem
 export/export-douban.py
+resource/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
