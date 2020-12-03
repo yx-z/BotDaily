@@ -1,9 +1,9 @@
 import random
 from typing import Optional, List
-from feature.base import Feature
+from feature.text import Text
 
 
-class End(Feature):
+class End(Text):
     def __init__(
         self, sender_name: str, days: List[str], div_style: str = "", title: Optional[str] = None
     ):
@@ -12,9 +12,10 @@ class End(Feature):
         self.days = days
 
     def generate_content(self) -> str:
-        return f"""
+        self.text = f"""
 -----
 祝{random.choice(self.days)}的一天。
 
 你的 {self.sender_name}
 """
+        return super().generate_content()

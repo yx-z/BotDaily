@@ -31,7 +31,7 @@ def html_img(
     url: Optional[str] = None, path: str = "", style: str = "", **kwargs
 ) -> str:
     if url is None:
-        url = upload_image(get_resource_path(path))
+        url = upload_image(path)
     return html_tag("img", False, src=url, style=style, **kwargs)
 
 
