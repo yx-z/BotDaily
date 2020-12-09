@@ -22,7 +22,23 @@ def main(args):
 
     sender = GmailSender(SENDER_EMAIL, SENDER_PASSWORD)
 
-    if len(args) > 1:
+    if len(args) == 1:
+        setup_prod_logger()
+        while True:
+            now = datetime.now()
+            now_str = now.strftime("%H:%M")
+            time_to_recipients = get_recipients()
+            if now_str in time_to_recipients:
+                for recipient in time_to_recipients[now_str]:
+                    recipient.set_current_date_time(now)
+                    sender.send_recipient_email(
+                        recipient, send_self=True, num_retry=2, also_test_next=True
+                    )
+            elif now.minute == 0:
+                logging.info("Sleeping.")
+
+            sleep_until_next_minute(now)
+    else:
         setup_test_logger()
         mode = args[1]
         if mode.startswith("test"):
@@ -44,22 +60,6 @@ def main(args):
                 )
 
             for_all_recipients(send_recipient_now)
-    else:
-        setup_prod_logger()
-        while True:
-            now = datetime.now()
-            now_str = now.strftime("%H:%M")
-            time_to_recipients = get_recipients()
-            if now_str in time_to_recipients:
-                for recipient in time_to_recipients[now_str]:
-                    recipient.set_current_date_time(now)
-                    sender.send_recipient_email(
-                        recipient, send_self=True, num_retry=2, also_test_next=True
-                    )
-            elif now.minute == 0:
-                logging.info("Sleeping.")
-
-            sleep_until_next_minute(now)
 
 
 def setup_recipient_test_mode(recipient: Recipient, args: List[str]):
