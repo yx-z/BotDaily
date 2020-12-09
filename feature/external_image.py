@@ -18,7 +18,7 @@ class ExternalImage(Feature):
         title: Optional[str] = None,
     ):
         super().__init__(div_style, title)
-        self.file_name = file_name
+        self.file_path = get_resource_path(file_name)
         self.image_style = image_style
         self.clear_after = clear_after
         self.image_url = None  # lazy
@@ -26,7 +26,6 @@ class ExternalImage(Feature):
 
     def generate_content(self) -> str:
         if self.image_url is None:
-            self.file_path = get_resource_path(self.file_name)
             if os.path.exists(self.file_path):
                 self.image_url = upload_image(self.file_path)  # cache
             else:

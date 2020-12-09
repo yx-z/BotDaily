@@ -7,7 +7,7 @@ class End(Text):
     def __init__(
         self, sender_name: str, days: List[str], div_style: str = "", title: Optional[str] = None
     ):
-        super().__init__( div_style, title, )
+        super().__init__("", div_style, title, )
         self.sender_name = sender_name
         self.days = days
 

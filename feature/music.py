@@ -19,13 +19,13 @@ class Music(Feature):
         title: Optional[str] = "云·音乐",
     ):
         super().__init__(div_style, title)
-        self.file_name = file_name
+        self.file_path = get_resource_path(file_name)
         self.start_date_time = start_date_time
         self.current_date_time = None
         self.image_style = image_style
 
     def generate_content(self) -> str:
-        music_list = json.load(open(get_resource_path(self.file_name), "r"))
+        music_list = json.load(open(self.file_path, "r"))
         days = (self.current_date_time - self.start_date_time).days
         content = music_list[len(music_list) - days - 2]
         if len(content) == 1:

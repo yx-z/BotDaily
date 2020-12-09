@@ -21,14 +21,14 @@ HEADER = {
 class ZhihuStory(Feature):
     def __init__(
         self,
-        answer_file: str,
+        file_name: str,
         start_date_time: datetime,
         avatar_style: str = "border-radius: 50%; width: 64px;",
         div_style: str = "",
         title: Optional[str] = "知乎收录",
     ):
         super().__init__(div_style, title)
-        self.answer_file = answer_file
+        self.file_path = get_resource_path(file_name)
         self.start_date_time = start_date_time
         self.avatar_style = avatar_style
         self.current_date_time = None  # lazy initialization by Recipient class
@@ -36,7 +36,7 @@ class ZhihuStory(Feature):
     def generate_content(self) -> str:
         index = max(0, (self.current_date_time - self.start_date_time).days)
         logging.info(f"Zhihu Index: {index}")
-        answer_url = open(get_resource_path(self.answer_file), "r").readlines()[index]
+        answer_url = open(self.file_path, "r").readlines()[index]
         logging.info(f"Zhihu Answer URL: {answer_url}")
         return self._request_answer(answer_url)
 
