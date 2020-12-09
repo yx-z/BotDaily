@@ -19,7 +19,7 @@ class ExternalRandomizer(Text):
         self.end_of_cycle_line = end_of_cycle_line
 
     def generate_content(self) -> str:
-        self.text = open(self.file_path, "r").readline()
+        self.text = open(self.file_path, "r").readline()[:-1]
         return super().generate_content()
 
     def on_email_sent(self):
