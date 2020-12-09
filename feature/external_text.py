@@ -8,12 +8,12 @@ from utility.constant import *
 
 class ExternalText(Text):
     def __init__(
-            self,
-            file_name: str,
-            as_python: bool = False,
-            clear_after: bool = False,
-            div_style: str = "",
-            title: Optional[str] = None,
+        self,
+        file_name: str,
+        as_python: bool = False,
+        clear_after: bool = False,
+        div_style: str = "",
+        title: Optional[str] = None,
     ):
         super().__init__("", div_style, title)
         self.file_path = get_resource_path(file_name)

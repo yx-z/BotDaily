@@ -26,6 +26,7 @@ def main(args):
         setup_test_logger()
         mode = args[1]
         if mode.startswith("test"):
+
             def test_recipient(recipient: Recipient):
                 setup_recipient_test_mode(recipient, args)
                 if mode == "test":
@@ -35,6 +36,7 @@ def main(args):
 
             for_all_recipients(test_recipient)
         elif mode.startswith("now"):
+
             def send_recipient_now(recipient: Recipient):
                 recipient.set_current_date_time(datetime.now())
                 sender.send_recipient_email(

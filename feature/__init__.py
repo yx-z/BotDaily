@@ -14,3 +14,5 @@ from feature.text import *
 from feature.weather import *
 from feature.zhihu_daily import *
 from feature.zhihu_story import *
+from feature.external_randomizer import *
+
