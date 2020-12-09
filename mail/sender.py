@@ -26,7 +26,7 @@ class Sender:
         num_retry: int = 0,
         timeout_seconds: int = SECONDS_IN_MINUTE,
         send_self: bool = False,
-        is_also_test_next: bool = False,
+        also_test_next: bool = False,
     ):
         destination_email_address = {recipient.email_address}
         if send_self:
@@ -56,7 +56,7 @@ class Sender:
                 )
                 logging.info("Exception Email sent to sender.")
 
-        if is_also_test_next and len(recipient.test_next_day_feature) > 0:
+        if also_test_next and len(recipient.test_next_day_feature) > 0:
             self.test_recipient_next_day(recipient, timeout_seconds)
 
     def test_recipient_next_day(
