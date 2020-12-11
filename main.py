@@ -22,7 +22,11 @@ def main(args):
 
     sender = GmailSender(SENDER_EMAIL, SENDER_PASSWORD)
 
-    if len(args) == 1:
+    is_prod = len(args) == 1
+    if is_prod:
+        if process_exists("python3 main.py"):
+            logging.warning("BotDaily process already exists.")
+            return
         setup_prod_logger()
         while True:
             now = datetime.now()
