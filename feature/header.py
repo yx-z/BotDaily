@@ -6,21 +6,24 @@ from PIL import ImageFont
 from feature import ExternalRandomizer
 from feature.base import Feature
 from utility.constant import DATE_FORMAT
-from utility.system import FONT_PATH
+from utility.system import FONT_PATH, get_resource_path
 from utility.html_builder import html_img
 from utility.image import search_unsplash, download_image, draw_text
 
+HEADER_FILE = "header.png"
+
 
 class Header(Feature):
+
     def __init__(
-        self,
-        topic: str,
-        text: str,
-        start_date: str,
-        text_size: int = 42,
-        image_style: str = "",
-        div_style: str = "",
-        title: Optional[str] = None,
+            self,
+            topic: str,
+            text: str,
+            start_date: str,
+            text_size: int = 42,
+            image_style: str = "",
+            div_style: str = "",
+            title: Optional[str] = None,
     ):
         super().__init__(div_style, title)
         self.text = text
@@ -55,22 +58,21 @@ class Header(Feature):
         font2 = ImageFont.truetype(FONT_PATH, 32)
         image = draw_text(image, (80, 320), self.topic, font2, text_color, border_color)
 
-        header_file = "header.png"
-        image.save(header_file)
-        return html_img(file_name="header.png", style=self.image_style)
+        image.save(get_resource_path(HEADER_FILE))
+        return html_img(file_name=HEADER_FILE, style=self.image_style)
 
 
 class RandomHeader(Header):
     def __init__(
-        self,
-        file_name: str,
-        text: str,
-        start_date: str,
-        end_of_cycle_line: str = "=====\n",
-        text_size: int = 42,
-        image_style: str = "",
-        div_style: str = "",
-        title: Optional[str] = None,
+            self,
+            file_name: str,
+            text: str,
+            start_date: str,
+            end_of_cycle_line: str = "=====",
+            text_size: int = 42,
+            image_style: str = "",
+            div_style: str = "",
+            title: Optional[str] = None,
     ):
         super().__init__("", text, start_date, text_size, image_style, div_style, title)
         self.randomizer = ExternalRandomizer(file_name, end_of_cycle_line)
