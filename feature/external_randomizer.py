@@ -37,7 +37,7 @@ class ExternalRandomizer(Text):
 
     @staticmethod
     def ignore_new_line(string: str) -> str:
-        return string.removesuffix("\n")
+        return string.replace("\n", "")
 
     @staticmethod
     def append_new_line(string: str) -> str:
