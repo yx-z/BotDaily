@@ -29,9 +29,9 @@ class Feature(ABC):
             background, position, self.title, font, text_color, shadow_color
         )
 
-        out_path = get_resource_path(f"feature_header_{self.title}.png")
-        save_image(title_image, out_path)
-        return html_img(path=out_path, style=CSS_FULL_WIDTH)
+        header_file = f"feature_header_{self.title}.png"
+        save_image(title_image, get_resource_path(header_file))
+        return html_img(header_file=header_file, style=CSS_FULL_WIDTH)
 
     @abstractmethod
     def generate_content(self) -> str:

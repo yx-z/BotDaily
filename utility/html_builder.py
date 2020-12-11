@@ -28,10 +28,10 @@ def html_tag(name: str, paired: bool = False, inner_html: str = "", **kwargs) ->
 
 
 def html_img(
-    url: Optional[str] = None, path: str = "", style: str = "", **kwargs
+    url: Optional[str] = None, file_name: str = "", style: str = "", **kwargs
 ) -> str:
     if url is None:
-        url = upload_image(path)
+        url = upload_image(get_resource_path(file_name))
     return html_tag("img", False, src=url, style=style, **kwargs)
 
 

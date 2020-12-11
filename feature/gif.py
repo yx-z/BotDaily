@@ -41,5 +41,5 @@ class Gif(Feature):
         )[0]
         logging.info(f"Gif: {file}")
         return f"""{html_tag("h3", paired=True, inner_html=html_emphasis(f"第{days + 1}天"))}
-{html_img(path=get_resource_path(f"{FEATURE_PATH}/{self.directory_path}/{file}"), style=self.image_style)}
+{html_img(file_name=f"{FEATURE_PATH}/{self.directory_path}/{file}", style=self.image_style)}
 """

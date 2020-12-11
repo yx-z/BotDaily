@@ -55,6 +55,6 @@ class Header(Feature):
         font2 = ImageFont.truetype(FONT_PATH, 32)
         image = draw_text(image, (80, 320), topic, font2, text_color, border_color)
 
-        out_path = get_resource_path("header.png")
-        image.save(out_path)
-        return html_img(path=out_path, style=self.image_style)
+        header_file = "header.png"
+        image.save(header_file)
+        return html_img(file_name="header.png", style=self.image_style)
