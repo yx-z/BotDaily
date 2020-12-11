@@ -19,21 +19,21 @@ class ExternalRandomizer(Text):
 
     def generate_content(self) -> str:
         with open(self.file_path, "r") as file:
-            self.text = file.readline()[:-1]  # ignore \n
+            self.text = ExternalRandomizer.ignore_new_line(file.readline())
         return super().generate_content()
 
     def on_email_sent(self):
         # cannot clear_file() when file is opened, needs to open separate for read and write
         with open(self.file_path, "r") as file:
             lines = list(map(ExternalRandomizer.ignore_new_line, file.readlines()))
-            lines.append(lines.pop(0))
-            if lines[0] == self.end_of_cycle_line:
-                lines = lines[1:]
+        lines.append(lines.pop(0))
+        if lines[0] == self.end_of_cycle_line:
+            lines = lines[1:]
             random.shuffle(lines)
             lines.append(self.end_of_cycle_line)
-            clear_file(self.file_path)
-            with open(self.file_path, "w") as file:
-                file.writelines(list(map(ExternalRandomizer.append_new_line, lines)))
+        clear_file(self.file_path)
+        with open(self.file_path, "w") as file:
+            file.writelines(list(map(ExternalRandomizer.append_new_line, lines)))
 
     @staticmethod
     def ignore_new_line(string: str) -> str:
