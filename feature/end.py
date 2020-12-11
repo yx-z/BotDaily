@@ -2,7 +2,7 @@ from typing import Optional
 
 from feature import ExternalRandomizer
 from feature.text import Text
-
+from utility.html_builder import html_from_text
 
 class End(Text):
     def __init__(
@@ -38,12 +38,11 @@ class RandomEnd(End):
         self.randomizer = ExternalRandomizer(file_name, end_of_cycle_line, div_style)
 
     def generate_content(self) -> str:
-        return f"""
+        return html_from_text(f"""
 =====
 祝{self.randomizer.generate_content()}的一天.
 
 你的 {self.sender_name}
-"""
-
+""")
     def on_email_sent(self):
         self.randomizer.on_email_sent()
