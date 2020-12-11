@@ -2,20 +2,20 @@ from datetime import datetime
 from typing import Optional
 
 from feature.base import Feature
-from utility.constant import CSS_FULL_WIDTH
+from utility.constant import CSS_FULL_WIDTH, DATE_FORMAT
 from utility.html_builder import html_img
 
 
 class AbsoluteKid(Feature):
     def __init__(
         self,
-        start_date_time: datetime,
+        start_date_time: str,
         div_style: str = "",
         image_style: str = CSS_FULL_WIDTH,
         title: Optional[str] = "绝对小孩",
     ):
         super().__init__(div_style, title)
-        self.start_date_time = start_date_time
+        self.start_date_time = datetime.strptime(start_date_time, DATE_FORMAT)
         self.image_style = image_style
         self.current_date_time = None
 

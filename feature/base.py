@@ -31,7 +31,7 @@ class Feature(ABC):
 
         header_file = f"feature_header_{self.title}.png"
         save_image(title_image, get_resource_path(header_file))
-        return html_img(header_file=header_file, style=CSS_FULL_WIDTH)
+        return html_img(file_name=header_file, style=CSS_FULL_WIDTH)
 
     @abstractmethod
     def generate_content(self) -> str:

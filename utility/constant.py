@@ -2,6 +2,9 @@ RESOURCE_PATH = "resource"
 
 FONT_NAME = "Hiragino Sans GB.ttc"
 
+DATE_FORMAT = "%Y-%m-%d"
+TIME_FORMAT = "%H:%M:%S"
+
 HTML_NEW_LINE = "<br>"
 HTML_LESS_THAN_TEXT = "&lt;"
 HTML_GREATER_THAN_TEXT = "&gt;"

@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import Optional
 
 from feature.base import Feature
+from utility.constant import DATE_FORMAT
 from utility.system import get_resource_path
 from utility.html_builder import html_div
 
@@ -13,14 +14,14 @@ class Movie(Feature):
     def __init__(
         self,
         order_file_name: str,
-        start_date_time: datetime,
+        start_date_time: str,
         div_style: str = "",
         title: Optional[str] = "云·电影",
     ):
         super().__init__(div_style, title)
         self.order_file_name = order_file_name
-        self.start_date_time = start_date_time
-        self.current_date_time = datetime.now()
+        self.start_date_time = datetime.strptime(start_date_time, DATE_FORMAT)
+        self.current_date_time = None
 
     def generate_content(self) -> str:
         movie_list = json.load(

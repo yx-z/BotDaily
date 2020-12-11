@@ -5,6 +5,7 @@ from typing import Optional
 import requests
 
 from feature.base import Feature
+from utility.constant import DATE_FORMAT
 from utility.system import get_resource_path
 from utility.html_builder import html_img, html_from_text, html_a
 
@@ -13,14 +14,14 @@ class Music(Feature):
     def __init__(
         self,
         file_name: str,
-        start_date_time: datetime,
+        start_date_time: str,
         div_style: str = "",
         image_style: str = "",
         title: Optional[str] = "云·音乐",
     ):
         super().__init__(div_style, title)
         self.file_path = get_resource_path(file_name)
-        self.start_date_time = start_date_time
+        self.start_date_time = datetime.strptime(start_date_time, DATE_FORMAT)
         self.current_date_time = None
         self.image_style = image_style
 

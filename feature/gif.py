@@ -6,13 +6,14 @@ from typing import Optional
 from feature.base import Feature
 from utility.system import get_resource_path
 from utility.html_builder import html_tag, html_img, html_emphasis
+from utility.constant import DATE_FORMAT
 
 
 class Gif(Feature):
     def __init__(
         self,
         directory_path: str,
-        start_date_time: datetime,
+        start_date_time: str,
         id_multiplier: int = 1,
         div_style: str = "",
         image_style: str = "",
@@ -20,7 +21,7 @@ class Gif(Feature):
     ):
         super().__init__(div_style, title)
         self.directory_path = directory_path
-        self.start_date_time = start_date_time
+        self.start_date_time = datetime.strptime(start_date_time, DATE_FORMAT)
         self.current_date_time = None  # lazy initialization by Recipient class
         self.id_multiplier = id_multiplier
         self.image_style = image_style

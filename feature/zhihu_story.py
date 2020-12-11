@@ -7,6 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from feature.base import Feature
+from utility.constant import DATE_FORMAT
 from utility.system import get_resource_path
 from utility.html_builder import html_img, html_div, html_a, html_tag
 
@@ -22,14 +23,14 @@ class ZhihuStory(Feature):
     def __init__(
         self,
         file_name: str,
-        start_date_time: datetime,
+        start_date_time: str,
         avatar_style: str = "border-radius: 50%; width: 64px;",
         div_style: str = "",
         title: Optional[str] = "知乎收录",
     ):
         super().__init__(div_style, title)
         self.file_path = get_resource_path(file_name)
-        self.start_date_time = start_date_time
+        self.start_date_time = datetime.strptime(start_date_time, DATE_FORMAT)
         self.avatar_style = avatar_style
         self.current_date_time = None  # lazy initialization by Recipient class
 
