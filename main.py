@@ -40,7 +40,10 @@ def main(args):
                 for recipient in time_to_recipients[now_str]:
                     recipient.set_current_date_time(now)
                     sender.send_recipient_email(
-                        recipient, send_self=SEND_SELF, num_retry=NUM_RETRY, also_test_next=ALSO_TEST_NEXT
+                        recipient,
+                        send_self=SEND_SELF,
+                        num_retry=NUM_RETRY,
+                        also_test_next=ALSO_TEST_NEXT,
                     )
             elif now.minute == 0:
                 logging.info("Sleeping.")
@@ -54,7 +57,9 @@ def main(args):
             def test_recipient(recipient: Recipient):
                 set_recipient_test_mode(recipient, args)
                 if mode == "test":
-                    sender.send_recipient_email(recipient, also_test_next=ALSO_TEST_NEXT)
+                    sender.send_recipient_email(
+                        recipient, also_test_next=ALSO_TEST_NEXT
+                    )
                 elif mode == "testNext":
                     sender.test_recipient_next_day(recipient)
 
@@ -64,7 +69,10 @@ def main(args):
             def send_recipient_now(recipient: Recipient):
                 recipient.set_current_date_time(datetime.now())
                 sender.send_recipient_email(
-                    recipient, send_self=SEND_SELF, num_retry=NUM_RETRY, also_test_next=ALSO_TEST_NEXT
+                    recipient,
+                    send_self=SEND_SELF,
+                    num_retry=NUM_RETRY,
+                    also_test_next=ALSO_TEST_NEXT,
                 )
 
             for_all_recipients(send_recipient_now)

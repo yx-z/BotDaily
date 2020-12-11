@@ -9,18 +9,18 @@ from utility.html_builder import html_img
 class AbsoluteKid(Feature):
     def __init__(
         self,
-        start_date_time: str,
+        start_date: str,
         div_style: str = "",
         image_style: str = CSS_FULL_WIDTH,
         title: Optional[str] = "绝对小孩",
     ):
         super().__init__(div_style, title)
-        self.start_date_time = datetime.strptime(start_date_time, DATE_FORMAT)
+        self.start_date = datetime.strptime(start_date, DATE_FORMAT)
         self.image_style = image_style
         self.current_date_time = None
 
     def generate_content(self) -> str:
-        days = (self.current_date_time - self.start_date_time).days
+        days = (self.current_date_time - self.start_date).days
         indices = [days * 2 - 1, days * 2]
         urls = list(
             map(

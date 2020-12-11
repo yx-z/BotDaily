@@ -14,20 +14,20 @@ class Music(Feature):
     def __init__(
         self,
         file_name: str,
-        start_date_time: str,
+        start_date: str,
         div_style: str = "",
         image_style: str = "",
         title: Optional[str] = "云·音乐",
     ):
         super().__init__(div_style, title)
         self.file_path = get_resource_path(file_name)
-        self.start_date_time = datetime.strptime(start_date_time, DATE_FORMAT)
+        self.start_date = datetime.strptime(start_date, DATE_FORMAT)
         self.current_date_time = None
         self.image_style = image_style
 
     def generate_content(self) -> str:
         music_list = json.load(open(self.file_path, "r"))
-        days = (self.current_date_time - self.start_date_time).days
+        days = (self.current_date_time - self.start_date).days
         content = music_list[len(music_list) - days - 2]
         if len(content) == 1:
             return html_from_text(content[0], parse_angle_brackets=False)

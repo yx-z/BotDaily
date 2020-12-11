@@ -13,7 +13,7 @@ class Gif(Feature):
     def __init__(
         self,
         directory_path: str,
-        start_date_time: str,
+        start_date: str,
         id_multiplier: int = 1,
         div_style: str = "",
         image_style: str = "",
@@ -21,14 +21,14 @@ class Gif(Feature):
     ):
         super().__init__(div_style, title)
         self.directory_path = directory_path
-        self.start_date_time = datetime.strptime(start_date_time, DATE_FORMAT)
+        self.start_date = datetime.strptime(start_date, DATE_FORMAT)
         self.current_date_time = None  # lazy initialization by Recipient class
         self.id_multiplier = id_multiplier
         self.image_style = image_style
 
     def generate_content(self) -> str:
         FEATURE_PATH = "gif"
-        days = (self.current_date_time - self.start_date_time).days
+        days = (self.current_date_time - self.start_date).days
         gif_id = days * self.id_multiplier
         if gif_id < 10:
             id_string = f"0{gif_id}"

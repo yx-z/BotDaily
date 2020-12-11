@@ -16,7 +16,7 @@ class Header(Feature):
         self,
         topic: List[str],
         text: str,
-        start_date_time: str,
+        start_date: str,
         text_size: int = 42,
         image_style: str = "",
         div_style: str = "",
@@ -26,14 +26,14 @@ class Header(Feature):
         self.text = text
         self.topics = topic
         self.text_size = text_size
-        self.start_date_time = datetime.strptime(start_date_time, DATE_FORMAT)
+        self.start_date = datetime.strptime(start_date, DATE_FORMAT)
         self.image_style = image_style
         self.current_date_time = None  # lazy initialization by Recipient class
 
     def generate_content(self) -> str:
         topic = random.choice(self.topics)
         image_url = search_unsplash(
-            topic, (self.current_date_time - self.start_date_time).days
+            topic, (self.current_date_time - self.start_date).days
         )
         image = download_image(image_url)
 

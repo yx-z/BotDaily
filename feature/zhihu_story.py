@@ -23,19 +23,19 @@ class ZhihuStory(Feature):
     def __init__(
         self,
         file_name: str,
-        start_date_time: str,
+        start_date: str,
         avatar_style: str = "border-radius: 50%; width: 64px;",
         div_style: str = "",
         title: Optional[str] = "知乎收录",
     ):
         super().__init__(div_style, title)
         self.file_path = get_resource_path(file_name)
-        self.start_date_time = datetime.strptime(start_date_time, DATE_FORMAT)
+        self.start_date = datetime.strptime(start_date, DATE_FORMAT)
         self.avatar_style = avatar_style
         self.current_date_time = None  # lazy initialization by Recipient class
 
     def generate_content(self) -> str:
-        index = max(0, (self.current_date_time - self.start_date_time).days)
+        index = max(0, (self.current_date_time - self.start_date).days)
         logging.info(f"Zhihu Index: {index}")
         answer_url = open(self.file_path, "r").readlines()[index]
         logging.info(f"Zhihu Answer URL: {answer_url}")
