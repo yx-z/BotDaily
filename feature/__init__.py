@@ -1,3 +1,4 @@
+from feature.external_randomizer import *
 from feature.absolute_kid import *
 from feature.base import *
 from feature.end import *
@@ -14,4 +15,3 @@ from feature.text import *
 from feature.weather import *
 from feature.zhihu_daily import *
 from feature.zhihu_story import *
-from feature.external_randomizer import *
