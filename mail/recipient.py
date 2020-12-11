@@ -38,8 +38,8 @@ class Recipient:
             return type(feature).__name__
 
         def gen_feature(feature: Feature) -> str:
+            logging.info(f"{get_name(feature)} generating.")
             generated_html = feature.generate_html()
-            logging.info(f"{get_name(feature)} generated.")
             return generated_html
 
         return html_div(

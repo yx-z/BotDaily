@@ -12,8 +12,12 @@ from mail.recipient import Recipient
 from mail.subject import Subject
 from feature import *
 from utility.logger import setup_prod_logger, setup_test_logger
-from utility.system import process_exists
+from utility.system import process_exists, sleep_until_next_minute
 from typing import List, Dict
+
+NUM_RETRY = 2
+SEND_SELF = True
+ALSO_TEST_NEXT = True
 
 
 def main(args):
@@ -36,7 +40,7 @@ def main(args):
                 for recipient in time_to_recipients[now_str]:
                     recipient.set_current_date_time(now)
                     sender.send_recipient_email(
-                        recipient, send_self=True, num_retry=2, also_test_next=True
+                        recipient, send_self=SEND_SELF, num_retry=NUM_RETRY, also_test_next=ALSO_TEST_NEXT
                     )
             elif now.minute == 0:
                 logging.info("Sleeping.")
@@ -48,9 +52,9 @@ def main(args):
         if mode.startswith("test"):
 
             def test_recipient(recipient: Recipient):
-                setup_recipient_test_mode(recipient, args)
+                set_recipient_test_mode(recipient, args)
                 if mode == "test":
-                    sender.send_recipient_email(recipient, also_test_next=True)
+                    sender.send_recipient_email(recipient, also_test_next=ALSO_TEST_NEXT)
                 elif mode == "testNext":
                     sender.test_recipient_next_day(recipient)
 
@@ -60,13 +64,13 @@ def main(args):
             def send_recipient_now(recipient: Recipient):
                 recipient.set_current_date_time(datetime.now())
                 sender.send_recipient_email(
-                    recipient, send_self=True, num_retry=2, also_test_next=True
+                    recipient, send_self=SEND_SELF, num_retry=NUM_RETRY, also_test_next=ALSO_TEST_NEXT
                 )
 
             for_all_recipients(send_recipient_now)
 
 
-def setup_recipient_test_mode(recipient: Recipient, args: List[str]):
+def set_recipient_test_mode(recipient: Recipient, args: List[str]):
     recipient.email_address = SENDER_EMAIL
     recipient.on_email_sent = lambda: None
     recipient.set_current_date_time(datetime.now())
@@ -77,21 +81,14 @@ def setup_recipient_test_mode(recipient: Recipient, args: List[str]):
 
 
 def get_recipients() -> Dict[str, List[Recipient]]:
-    return eval(open("configuration/recipient.py", "r").read())
+    with open("configuration/recipient.py", "r") as file:
+        return eval(file.read())
 
 
 def for_all_recipients(recipient_action):
     for _, recipients in get_recipients().items():
         for recipient in recipients:
             recipient_action(recipient)
-
-
-def sleep_until_next_minute(now: datetime):
-    next_minute = datetime(
-        now.year, now.month, now.day, now.hour, now.minute
-    ) + timedelta(minutes=1)
-    sleep_time = max(0, ceil((next_minute - datetime.now()).total_seconds()))
-    time.sleep(sleep_time)
 
 
 if __name__ == "__main__":
