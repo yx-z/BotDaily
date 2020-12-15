@@ -14,16 +14,15 @@ HEADER_FILE = "header.png"
 
 
 class Header(Feature):
-
     def __init__(
-            self,
-            topic: str,
-            text: str,
-            start_date: str,
-            text_size: int = 42,
-            image_style: str = "",
-            div_style: str = "",
-            title: Optional[str] = None,
+        self,
+        topic: str,
+        text: str,
+        start_date: str,
+        text_size: int = 42,
+        image_style: str = "",
+        div_style: str = "",
+        title: Optional[str] = None,
     ):
         super().__init__(div_style, title)
         self.text = text
@@ -64,15 +63,15 @@ class Header(Feature):
 
 class RandomHeader(Header):
     def __init__(
-            self,
-            file_name: str,
-            text: str,
-            start_date: str,
-            end_of_cycle_line: str = "=====",
-            text_size: int = 42,
-            image_style: str = "",
-            div_style: str = "",
-            title: Optional[str] = None,
+        self,
+        file_name: str,
+        text: str,
+        start_date: str,
+        end_of_cycle_line: str = "=====",
+        text_size: int = 42,
+        image_style: str = "",
+        div_style: str = "",
+        title: Optional[str] = None,
     ):
         super().__init__("", text, start_date, text_size, image_style, div_style, title)
         self.randomizer = ExternalRandomizer(file_name, end_of_cycle_line)

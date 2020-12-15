@@ -98,10 +98,8 @@ class Sender:
             {self.email_address},
             html_from_text(
                 f"""Recipient: {recipient.email_address}
-
-
+                
 Exception: {exception}
-
 
 Traceback: {traceback.format_exc()}
 """

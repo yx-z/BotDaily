@@ -7,11 +7,11 @@ from utility.system import get_resource_path, clear_file
 
 class ExternalRandomizer(Text):
     def __init__(
-            self,
-            file_name: str,
-            end_of_cycle_line: str = "=====",
-            div_style: str = "",
-            title: Optional[str] = None,
+        self,
+        file_name: str,
+        end_of_cycle_line: str = "=====",
+        div_style: str = "",
+        title: Optional[str] = None,
     ):
         super().__init__("", div_style, title)
         self.file_path = get_resource_path(file_name)

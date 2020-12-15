@@ -1,4 +1,5 @@
 import logging
+import traceback
 from datetime import datetime
 from typing import List
 
@@ -37,15 +38,23 @@ class Recipient:
         def get_name(feature: Feature) -> str:
             return type(feature).__name__
 
-        def gen_feature(feature: Feature) -> str:
+        def generate_feature(feature: Feature) -> str:
             logging.info(f"{get_name(feature)} generating.")
-            generated_html = feature.generate_html()
-            return generated_html
+            try:
+                generated_html = feature.generate_html()
+                return generated_html
+            except Exception as exception:
+                if test_filter:
+                    return f"""Exception: {exception}
+
+Traceback: {traceback.format_exc()}"""
+                else:
+                    raise exception
 
         return html_div(
             inner_html=HTML_NEW_LINE.join(
                 map(
-                    gen_feature,
+                    generate_feature,
                     filter(
                         lambda f: get_name(f) in self.test_next_day_feature,
                         self.features,
