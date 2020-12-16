@@ -7,7 +7,7 @@ from utility.system import get_resource_path
 
 def html_from_text(text: str, exclude_parse_list: List[str] = None) -> str:
     parsed = text
-    not_exclude = lambda s: s not in exclude_parse_list
+    not_exclude = lambda s: s not in ([] if exclude_parse_list is None else exclude_parse_list)
     # the following process order matters
     if not_exclude("<"):
         parsed = parsed.replace("<", HTML_LESS_THAN_TEXT)
