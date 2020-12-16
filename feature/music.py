@@ -30,7 +30,7 @@ class Music(Feature):
         days = (self.current_date_time - self.start_date).days
         content = music_list[len(music_list) - days - 2]
         if len(content) == 1:
-            return html_from_text(content[0], parse_angle_brackets=False)
+            return html_from_text(content[0], exclude_parse_list=["<", ">"])
 
         music_id, name, author, comment = content
         music_data = requests.get(

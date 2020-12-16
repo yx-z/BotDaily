@@ -1,20 +1,21 @@
-from utility.constant import HTML_LESS_THAN_TEXT, HTML_GREATER_THAN_TEXT, HTML_NEW_LINE
+from utility.constant import HTML_LESS_THAN_TEXT, HTML_GREATER_THAN_TEXT, HTML_NEW_LINE, HTML_SINGLE_QUOTE
 from utility.image import upload_image
-from typing import Optional
+from typing import Optional, List
 
 from utility.system import get_resource_path
 
 
-def html_from_text(
-    text: str, parse_angle_brackets: bool = True, parse_new_line: bool = True
-) -> str:
+def html_from_text(text: str, exclude_parse_list: List[str] = None) -> str:
     parsed = text
+    not_exclude = lambda s: s not in exclude_parse_list
     # the following process order matters
-    if parse_angle_brackets:
-        parsed = parsed.replace("<", HTML_LESS_THAN_TEXT).replace(
-            ">", HTML_GREATER_THAN_TEXT
-        )
-    if parse_new_line:
+    if not_exclude("<"):
+        parsed = parsed.replace("<", HTML_LESS_THAN_TEXT)
+    if not_exclude(">"):
+        parsed = parsed.replace(">", HTML_GREATER_THAN_TEXT)
+    if not_exclude("'"):
+        parsed = parsed.replace("'", HTML_SINGLE_QUOTE)
+    if not_exclude("\n"):
         parsed = parsed.replace("\n", HTML_NEW_LINE)
     return parsed
 
@@ -28,10 +29,10 @@ def html_tag(name: str, paired: bool = False, inner_html: str = "", **kwargs) ->
 
 
 def html_img(
-    url: Optional[str] = None,
-    file_name: Optional[str] = None,
-    style: str = "",
-    **kwargs,
+        url: Optional[str] = None,
+        file_name: Optional[str] = None,
+        style: str = "",
+        **kwargs,
 ) -> str:
     if url is None:
         url = upload_image(get_resource_path(file_name))
