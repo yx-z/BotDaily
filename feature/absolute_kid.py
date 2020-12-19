@@ -11,12 +11,12 @@ class AbsoluteKid(Feature):
         self,
         start_date: str,
         div_style: str = "",
-        image_style: str = CSS_FULL_WIDTH,
+        img_style: str = CSS_FULL_WIDTH,
         title: Optional[str] = "绝对小孩",
     ):
         super().__init__(div_style, title)
         self.start_date = datetime.strptime(start_date, DATE_FORMAT)
-        self.image_style = image_style
+        self.img_style = img_style
         self.current_date_time = None
 
     def generate_content(self) -> str:
@@ -29,6 +29,6 @@ class AbsoluteKid(Feature):
             )
         )
         return f"""
-{html_img(url=urls[0], style=self.image_style)}
-{html_img(url=urls[1], style=self.image_style)}
+{html_img(url=urls[0], style=self.img_style)}
+{html_img(url=urls[1], style=self.img_style)}
 """

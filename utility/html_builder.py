@@ -1,21 +1,33 @@
-from utility.constant import HTML_LESS_THAN_TEXT, HTML_GREATER_THAN_TEXT, HTML_NEW_LINE, HTML_SINGLE_QUOTE
+from utility.constant import (
+    HTML_LESS_THAN_TEXT,
+    HTML_GREATER_THAN_TEXT,
+    HTML_NEW_LINE,
+    HTML_SINGLE_QUOTE,
+)
 from utility.image import upload_image
 from typing import Optional, List
 
 from utility.system import get_resource_path
 
 
-def html_from_text(text: str, exclude_parse_list: List[str] = None) -> str:
-    parsed = text
-    not_exclude = lambda s: s not in ([] if exclude_parse_list is None else exclude_parse_list)
+def html_from_txt(
+    txt: str, parse_list: List[str] = None, exclude_parse_list: List[str] = None
+) -> str:
+    parsed = txt
+
+    def need_parse(symbol: str) -> bool:
+        if parse_list is not None:
+            return symbol in parse_list
+        return symbol not in exclude_parse_list
+
     # the following process order matters
-    if not_exclude("<"):
+    if need_parse("<"):
         parsed = parsed.replace("<", HTML_LESS_THAN_TEXT)
-    if not_exclude(">"):
+    if need_parse(">"):
         parsed = parsed.replace(">", HTML_GREATER_THAN_TEXT)
-    if not_exclude("'"):
+    if need_parse("'"):
         parsed = parsed.replace("'", HTML_SINGLE_QUOTE)
-    if not_exclude("\n"):
+    if need_parse("\n"):
         parsed = parsed.replace("\n", HTML_NEW_LINE)
     return parsed
 
@@ -29,10 +41,10 @@ def html_tag(name: str, paired: bool = False, inner_html: str = "", **kwargs) ->
 
 
 def html_img(
-        url: Optional[str] = None,
-        file_name: Optional[str] = None,
-        style: str = "",
-        **kwargs,
+    url: Optional[str] = None,
+    file_name: Optional[str] = None,
+    style: str = "",
+    **kwargs,
 ) -> str:
     if url is None:
         url = upload_image(get_resource_path(file_name))

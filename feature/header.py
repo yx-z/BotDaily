@@ -20,7 +20,7 @@ class Header(Feature):
         text: str,
         start_date: str,
         text_size: int = 42,
-        image_style: str = "",
+        img_style: str = "",
         div_style: str = "",
         title: Optional[str] = None,
     ):
@@ -29,7 +29,7 @@ class Header(Feature):
         self.topic = topic
         self.text_size = text_size
         self.start_date = datetime.strptime(start_date, DATE_FORMAT)
-        self.image_style = image_style
+        self.img_style = img_style
         self.current_date_time = None  # lazy initialization by Recipient class
 
     def generate_content(self) -> str:
@@ -58,7 +58,7 @@ class Header(Feature):
         image = draw_text(image, (80, 320), self.topic, font2, text_color, border_color)
 
         image.save(get_resource_path(HEADER_FILE))
-        return html_img(file_name=HEADER_FILE, style=self.image_style)
+        return html_img(file_name=HEADER_FILE, style=self.img_style)
 
 
 class RandomHeader(Header):
@@ -69,11 +69,11 @@ class RandomHeader(Header):
         start_date: str,
         end_of_cycle_line: str = "=====",
         text_size: int = 42,
-        image_style: str = "",
+        img_style: str = "",
         div_style: str = "",
         title: Optional[str] = None,
     ):
-        super().__init__("", text, start_date, text_size, image_style, div_style, title)
+        super().__init__("", text, start_date, text_size, img_style, div_style, title)
         self.randomizer = ExternalRandomizer(file_name, end_of_cycle_line)
 
     def generate_content(self) -> str:

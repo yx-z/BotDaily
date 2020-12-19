@@ -8,7 +8,7 @@ from typing import Set
 
 from mail.recipient import Recipient
 from utility.constant import SECONDS_IN_MINUTE
-from utility.html_builder import html_from_text
+from utility.html_builder import html_from_txt
 from utility.parse import date_to_string
 from utility.system import timeout_limit
 
@@ -96,7 +96,7 @@ class Sender:
         self._send_email(
             subject,
             {self.email_address},
-            html_from_text(
+            html_from_txt(
                 f"""Recipient: {recipient.email_address}
                 
 Exception: {exception}

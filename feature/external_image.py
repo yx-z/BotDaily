@@ -13,13 +13,13 @@ class ExternalImage(Feature):
         self,
         file_name: str = None,
         clear_after: bool = False,
-        image_style: str = CSS_MEDIUM,
+        img_style: str = CSS_MEDIUM,
         div_style: str = "",
         title: Optional[str] = None,
     ):
         super().__init__(div_style, title)
         self.file_path = get_resource_path(file_name)
-        self.image_style = image_style
+        self.img_style = img_style
         self.clear_after = clear_after
         self.image_url = None  # lazy
         self.file_path = None
@@ -30,8 +30,8 @@ class ExternalImage(Feature):
                 self.image_url = upload_image(self.file_path)  # cache
             else:
                 return ""  # empty div, return early
-        return html_img(url=self.image_url, style=self.image_style)
+        return html_img(url=self.image_url, style=self.img_style)
 
     def on_email_sent(self):
         if self.clear_after:
-            self.image_style = "display: none; !important"
+            self.img_style = "display: none; !important"

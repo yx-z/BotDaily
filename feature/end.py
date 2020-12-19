@@ -1,11 +1,11 @@
 from typing import Optional
 
 from feature import ExternalRandomizer
-from feature.text import Text
-from utility.html_builder import html_from_text
+from feature.txt import Txt
+from utility.html_builder import html_from_txt
 
 
-class End(Text):
+class End(Txt):
     def __init__(
         self, sender_name: str, div_style: str = "", title: Optional[str] = None
     ):
@@ -39,7 +39,7 @@ class RandomEnd(End):
         self.randomizer = ExternalRandomizer(file_name, end_of_cycle_line, div_style)
 
     def generate_content(self) -> str:
-        return html_from_text(
+        return html_from_txt(
             f"""
 =====
 祝{self.randomizer.generate_content()}的一天.

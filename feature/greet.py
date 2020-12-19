@@ -1,11 +1,11 @@
 from datetime import datetime
 from typing import Optional
 
-from feature.text import Text
+from feature.txt import Txt
 from utility.constant import DATE_FORMAT
 
 
-class Greet(Text):
+class Greet(Txt):
     def __init__(
         self,
         recipient_name: str,

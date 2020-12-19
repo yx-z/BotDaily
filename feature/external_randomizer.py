@@ -1,11 +1,11 @@
 from typing import Optional
 
 import random
-from feature import Text
+from feature import Txt
 from utility.system import get_resource_path, clear_file
 
 
-class ExternalRandomizer(Text):
+class ExternalRandomizer(Txt):
     def __init__(
         self,
         file_name: str,

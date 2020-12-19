@@ -10,12 +10,12 @@ from feature.base import Feature
 class One(Feature):
     def __init__(
         self,
-        image_style: str = "",
+        img_style: str = "",
         div_style: str = "",
         title: Optional[str] = "ONE·一个",
     ):
         super().__init__(div_style, title)
-        self.image_style = image_style
+        self.img_style = img_style
 
     @staticmethod
     def _get_soup(url: str) -> BeautifulSoup:
@@ -33,15 +33,15 @@ class One(Feature):
 class OneCover(One):
     def generate_content(self) -> str:
         img = One._get_home().find("img", class_="fp-one-imagen")
-        img["style"] = self.image_style
+        img["style"] = self.img_style
         return str(img)
 
 
 class OneQuote(One):
     def __init__(
-        self, image_style: str = "", div_style: str = "", title: Optional[str] = None
+        self, img_style: str = "", div_style: str = "", title: Optional[str] = None
     ):
-        super().__init__(image_style, div_style, title)
+        super().__init__(img_style, div_style, title)
 
     def generate_content(self) -> str:
         return One._get_home().find("div", class_="fp-one-cita").text.strip()
@@ -49,9 +49,9 @@ class OneQuote(One):
 
 class OneArticle(One):
     def __init__(
-        self, image_style: str = "", div_style: str = "", title: Optional[str] = None
+        self, img_style: str = "", div_style: str = "", title: Optional[str] = None
     ):
-        super().__init__(image_style, div_style, title)
+        super().__init__(img_style, div_style, title)
 
     def generate_content(self) -> str:
         p = One._get_home().find("p", class_="one-articulo-titulo")
