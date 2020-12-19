@@ -5,3 +5,6 @@ unsplash~=1.0.0a2
 bs4~=0.0.1
 beautifulsoup4~=4.9.1
 pdfkit~=0.6.1
+gkeepapi
+psutil
+
