@@ -15,6 +15,11 @@ def html_from_txt(
 ) -> str:
     parsed = txt
 
+    if parse_list is None:
+        parse_list = []
+    if exclude_parse_list is None:
+        exclude_parse_list = []
+
     def need_parse(symbol: str) -> bool:
         if parse_list is not None:
             return symbol in parse_list
