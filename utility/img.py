@@ -12,7 +12,7 @@ def open_img(path: str) -> Image:
 
 
 def upload_img(path: str) -> str:
-    return IMGUR.upload_img(path).link
+    return IMGUR.upload_image(path).link
 
 
 def draw_text(
