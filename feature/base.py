@@ -6,7 +6,7 @@ from PIL import ImageFont
 from utility.constant import CSS_FULL_WIDTH
 from utility.system import get_resource_path, FONT_PATH
 from utility.html_builder import html_img, html_div
-from utility.image import open_image, draw_text, save_image
+from utility.img import open_img, draw_text, save_img
 
 
 class Feature(ABC):
@@ -23,14 +23,14 @@ class Feature(ABC):
         text_color = (0, 0, 0)
         shadow_color = (255, 255, 255)
 
-        background = open_image(get_resource_path("feature_background.png"))
+        background = open_img(get_resource_path("feature_background.png"))
         font = ImageFont.truetype(FONT_PATH, text_size)
         title_image = draw_text(
             background, position, self.title, font, text_color, shadow_color
         )
 
         header_file = f"feature_header_{self.title}.png"
-        save_image(title_image, get_resource_path(header_file))
+        save_img(title_image, get_resource_path(header_file))
         return html_img(file_name=header_file, style=CSS_FULL_WIDTH)
 
     @abstractmethod

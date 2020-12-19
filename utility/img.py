@@ -7,16 +7,16 @@ from PIL import Image, ImageDraw, ImageFilter, ImageChops
 from configuration.secret import IMGUR, UNSPLASH
 
 
-def open_image(path: str) -> Image:
+def open_img(path: str) -> Image:
     return Image.open(path)
 
 
-def upload_image(path: str) -> str:
-    return IMGUR.upload_image(path).link
+def upload_img(path: str) -> str:
+    return IMGUR.upload_img(path).link
 
 
 def draw_text(
-    image: Image,
+    img: Image,
     position: Tuple[int, int],
     text: str,
     font: str,
@@ -24,16 +24,16 @@ def draw_text(
     shadow_color: Tuple[int, int, int],
 ) -> Image:
     x, y = position
-    shadow = Image.new("RGBA", image.size, (0, 0, 0, 0))
+    shadow = Image.new("RGBA", img.size, (0, 0, 0, 0))
     ImageDraw.Draw(shadow).text((x + 1, y + 1), text, font=font, fill=shadow_color)
     blurred_shadow = shadow.filter(ImageFilter.BLUR)
 
     ImageDraw.Draw(blurred_shadow).text(position, text, font=font, fill=color)
-    return Image.composite(image, blurred_shadow, ImageChops.invert(blurred_shadow))
+    return Image.composite(img, blurred_shadow, ImageChops.invert(blurred_shadow))
 
 
-def save_image(image: Image, path: str):
-    return image.save(path)
+def save_img(img: Image, path: str):
+    return img.save(path)
 
 
 def search_unsplash(topic: str, index: int) -> str:
@@ -42,10 +42,10 @@ def search_unsplash(topic: str, index: int) -> str:
     return photo.urls.regular
 
 
-def download_image(url: str) -> Image:
+def dl_img(url: str) -> Image:
     return Image.open(io.BytesIO(requests.get(url).content))
 
 
-def is_image_file(file: str) -> bool:
+def is_img_file(file: str) -> bool:
     f = file.lower()
     return any(f.endswith(f".{suffix}") for suffix in ["jpg", "jpeg", "gif", "png"])

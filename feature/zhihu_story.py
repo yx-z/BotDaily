@@ -114,7 +114,7 @@ class ZhihuStory(Feature):
                         item["content"]
                         .replace("<noscript>", "")
                         .replace("</noscript>", "")
-                        .replace('<img src="data:image/svg+xml', '<meta src="')
+                        .replace('<img src="data:img/svg+xml', '<meta src="')
                     )
                     # further use title, author, content here
                     # ...

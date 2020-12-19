@@ -8,7 +8,7 @@ from feature.base import Feature
 from utility.constant import DATE_FORMAT
 from utility.system import FONT_PATH, get_resource_path
 from utility.html_builder import html_img
-from utility.image import search_unsplash, download_image, draw_text
+from utility.img import search_unsplash, dl_img, draw_text
 
 HEADER_FILE = "header.png"
 
@@ -36,7 +36,7 @@ class Header(Feature):
         image_url = search_unsplash(
             self.topic, (self.current_date_time - self.start_date).days
         )
-        image = download_image(image_url)
+        image = dl_img(image_url)
 
         width, height = image.size
         left = 0

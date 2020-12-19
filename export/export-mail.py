@@ -10,7 +10,7 @@ from typing import Set, Dict
 from bs4 import BeautifulSoup
 
 from utility.constant import CSS_BIG, HTML_NEW_LINE
-from utility.image import is_image_file
+from utility.img import is_img_file
 from utility.parse import date_to_string, month_to_string, html_to_pdf
 
 SRC_MBOX = "mail.mbox"
@@ -77,7 +77,7 @@ def get_body(
         file_names = get_attach(date, message)
         first_see = True
         for file in os.listdir(f"{HTML_DIR}{ATTACH_DIR}"):
-            if is_image_file(file) and file in file_names:
+            if is_img_file(file) and file in file_names:
                 if first_see:
                     div = soup.new_tag("div")
                     div.string = "附件图片:"

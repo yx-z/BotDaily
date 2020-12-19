@@ -22,7 +22,7 @@ module.exports = async (query, request) => {
     url: `https://nosup-hz1.127.net/yyimgs/${res.body.result.objectKey}?offset=0&complete=true&version=1.0`,
     headers: {
       'x-nos-token': res.body.result.token,
-      'Content-Type': 'image/jpeg',
+      'Content-Type': 'img/jpeg',
     },
     data: query.imgFile.data,
   })

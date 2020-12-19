@@ -4,7 +4,7 @@ from utility.constant import (
     HTML_NEW_LINE,
     HTML_SINGLE_QUOTE,
 )
-from utility.image import upload_image
+from utility.img import upload_img
 from typing import Optional, List
 
 from utility.system import get_resource_path
@@ -52,7 +52,7 @@ def html_img(
     **kwargs,
 ) -> str:
     if url is None:
-        url = upload_image(get_resource_path(file_name))
+        url = upload_img(get_resource_path(file_name))
     return html_tag("img", False, src=url, style=style, **kwargs)
 
 
