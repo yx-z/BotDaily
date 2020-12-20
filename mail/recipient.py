@@ -9,6 +9,10 @@ from utility.constant import HTML_NEW_LINE, CSS_DEFAULT_DIV
 from utility.html_builder import html_div
 
 
+# if "all" in test_next_day_feature: test all
+TEST_ALL = "all"
+
+
 class Recipient:
     def __init__(
         self,
@@ -35,11 +39,8 @@ class Recipient:
         return self.subject.to_complete_string()
 
     def generate_body(self, test_filter: bool = False) -> str:
-        def get_name(feature: Feature) -> str:
-            return type(feature).__name__
-
         def generate_feature(feature: Feature) -> str:
-            logging.info(f"{get_name(feature)} generating.")
+            logging.info(f"{feature.get_name()} generating.")
             try:
                 generated_html = feature.generate_html()
                 return generated_html
@@ -51,12 +52,16 @@ Traceback: {traceback.format_exc()}"""
                 else:
                     raise exception
 
+        if TEST_ALL in self.test_next_day_feature:
+            # TEST_ALL as if no filter, i.e. add all features
+            test_filter = False
+
         return html_div(
             inner_html=HTML_NEW_LINE.join(
                 map(
                     generate_feature,
                     filter(
-                        lambda f: get_name(f) in self.test_next_day_feature,
+                        lambda f: f.get_name() in self.test_next_day_feature,
                         self.features,
                     )
                     if test_filter

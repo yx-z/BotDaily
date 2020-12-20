@@ -1,6 +1,6 @@
 from typing import Optional
 
-from feature import ExternalRandomizer
+from feature import ExtRand
 from feature.txt import Txt
 from utility.html_builder import html_from_txt
 
@@ -36,7 +36,7 @@ class RandomEnd(End):
         title: Optional[str] = None,
     ):
         super().__init__(sender_name, div_style, title)
-        self.randomizer = ExternalRandomizer(file_name, end_of_cycle_line, div_style)
+        self.randomizer = ExtRand(file_name, end_of_cycle_line, div_style)
 
     def generate_content(self) -> str:
         return html_from_txt(

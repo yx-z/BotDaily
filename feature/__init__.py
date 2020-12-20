@@ -4,8 +4,6 @@ from feature.ext_rand import *
 from feature.absolute_kid import *
 from feature.end import *
 from feature.ext_img import *
-from feature.goole_keep_txt import *
-from feature.extl_txt import *
 from feature.gif import *
 from feature.greet import *
 from feature.header import *

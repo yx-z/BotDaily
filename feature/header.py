@@ -3,7 +3,7 @@ from typing import Optional
 
 from PIL import ImageFont
 
-from feature import ExternalRandomizer
+from feature import ExtRand
 from feature.base import Feature
 from utility.constant import DATE_FORMAT
 from utility.system import FONT_PATH, get_resource_path
@@ -74,7 +74,7 @@ class RandomHeader(Header):
         title: Optional[str] = None,
     ):
         super().__init__("", text, start_date, text_size, img_style, div_style, title)
-        self.randomizer = ExternalRandomizer(file_name, end_of_cycle_line)
+        self.randomizer = ExtRand(file_name, end_of_cycle_line)
 
     def generate_content(self) -> str:
         self.topic = self.randomizer.generate_content()

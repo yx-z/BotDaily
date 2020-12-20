@@ -27,7 +27,7 @@ class ZhihuDaily(Feature):
         res = requests.get(story_url, headers=USER_AGENT).json()
         body = res["body"]
         soup = BeautifulSoup(body, "html.parser")
-        joke_str = str(soup.find("div", class_="content-inner"))
+        joke_str = str(soup.find("div", class_="chunk-inner"))
         filter_idx = joke_str.find("<p>以上瞎扯节选自")
         if filter_idx > 0:
             joke_str = joke_str[:filter_idx]

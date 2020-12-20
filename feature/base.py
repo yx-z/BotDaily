@@ -45,3 +45,6 @@ class Feature(ABC):
 
     def on_email_sent(self):
         pass
+
+    def get_name(self) -> str:
+        return type(self).__name__

@@ -3,6 +3,7 @@ from utility.constant import (
     HTML_GREATER_THAN_TEXT,
     HTML_NEW_LINE,
     HTML_SINGLE_QUOTE,
+    CSS_MEDIUM,
 )
 from utility.img import upload_img
 from typing import Optional, List
@@ -16,7 +17,8 @@ def html_from_txt(
     parsed = txt
 
     if parse_list is None:
-        parse_list = []
+        # default parse_list
+        parse_list = ["\n"]
     if exclude_parse_list is None:
         exclude_parse_list = []
 
@@ -48,7 +50,7 @@ def html_tag(name: str, paired: bool = False, inner_html: str = "", **kwargs) ->
 def html_img(
     url: Optional[str] = None,
     file_name: Optional[str] = None,
-    style: str = "",
+    style: str = CSS_MEDIUM,
     **kwargs,
 ) -> str:
     if url is None:

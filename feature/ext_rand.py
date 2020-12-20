@@ -5,7 +5,7 @@ from feature import Txt
 from utility.system import get_resource_path, clear_file
 
 
-class ExternalRandomizer(Txt):
+class ExtRand(Txt):
     def __init__(
         self,
         file_name: str,
@@ -19,13 +19,13 @@ class ExternalRandomizer(Txt):
 
     def generate_content(self) -> str:
         with open(self.file_path, "r") as file:
-            self.text = ExternalRandomizer.ignore_new_line(file.readline())
+            self.text = ExtRand.ignore_new_line(file.readline())
         return super().generate_content()
 
     def on_email_sent(self):
         # cannot clear_file() when file is opened, needs to open separate for read and write
         with open(self.file_path, "r") as file:
-            lines = list(map(ExternalRandomizer.ignore_new_line, file.readlines()))
+            lines = list(map(ExtRand.ignore_new_line, file.readlines()))
         lines.append(lines.pop(0))
         if lines[0] == self.end_of_cycle_line:
             lines = lines[1:]
@@ -33,7 +33,7 @@ class ExternalRandomizer(Txt):
             lines.append(self.end_of_cycle_line)
         clear_file(self.file_path)
         with open(self.file_path, "w") as file:
-            file.writelines(list(map(ExternalRandomizer.append_new_line, lines)))
+            file.writelines(list(map(ExtRand.append_new_line, lines)))
 
     @staticmethod
     def ignore_new_line(string: str) -> str:
