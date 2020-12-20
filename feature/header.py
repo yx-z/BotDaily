@@ -19,7 +19,7 @@ class Header(Feature):
         topic: str,
         txt: str,
         start_date: str,
-        text_size: int = 42,
+        txt_size: int = 42,
         img_style: str = CSS_FULL_WIDTH,
         div_style: str = "",
         title: Optional[str] = None,
@@ -27,16 +27,16 @@ class Header(Feature):
         super().__init__(div_style, title)
         self.txt = txt
         self.topic = topic
-        self.txt_size = text_size
+        self.txt_size = txt_size
         self.start_date = datetime.strptime(start_date, DATE_FORMAT)
         self.img_style = img_style
         self.current_date_time = None  # lazy initialization by Recipient class
 
     def generate_content(self) -> str:
-        image_url = search_unsplash(
+        img_url = search_unsplash(
             self.topic, (self.current_date_time - self.start_date).days
         )
-        img = dl_img(image_url)
+        img = dl_img(img_url)
 
         width, height = img.size
         left = 0
