@@ -15,7 +15,7 @@ from utility.parse import date_to_string, month_to_string, html_to_pdf
 
 SRC_MBOX = "mail.mbox"
 
-# year-month to output, empty list for all dates
+# year-month to content, empty list for all dates
 YEAR_MONTHS = []
 
 # named after month

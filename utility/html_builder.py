@@ -14,7 +14,7 @@ from utility.system import get_resource_path
 def html_from_txt(
     txt: str, parse_list: List[str] = None, exclude_parse_list: List[str] = None
 ) -> str:
-    parsed = txt
+    parsed_txt = txt
 
     if parse_list is None:
         # default parse_list
@@ -29,14 +29,14 @@ def html_from_txt(
 
     # the following process order matters
     if need_parse("<"):
-        parsed = parsed.replace("<", HTML_LESS_THAN_TEXT)
+        parsed_txt = parsed_txt.replace("<", HTML_LESS_THAN_TEXT)
     if need_parse(">"):
-        parsed = parsed.replace(">", HTML_GREATER_THAN_TEXT)
+        parsed_txt = parsed_txt.replace(">", HTML_GREATER_THAN_TEXT)
     if need_parse("'"):
-        parsed = parsed.replace("'", HTML_SINGLE_QUOTE)
+        parsed_txt = parsed_txt.replace("'", HTML_SINGLE_QUOTE)
     if need_parse("\n"):
-        parsed = parsed.replace("\n", HTML_NEW_LINE)
-    return parsed
+        parsed_txt = parsed_txt.replace("\n", HTML_NEW_LINE)
+    return parsed_txt
 
 
 def html_tag(name: str, paired: bool = False, inner_html: str = "", **kwargs) -> str:

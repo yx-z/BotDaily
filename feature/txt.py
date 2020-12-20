@@ -9,12 +9,12 @@ from utility.system import get_resource_path
 
 
 class Txt(Feature):
-    def __init__(self, text: str, div_style: str = "", title: Optional[str] = None):
+    def __init__(self, txt: str, div_style: str = "", title: Optional[str] = None):
         super().__init__(div_style, title)
-        self.text = text
+        self.txt = txt
 
     def generate_content(self) -> str:
-        return html_from_txt(self.text)
+        return html_from_txt(self.txt)
 
 
 class ExternalTxt(Txt):
@@ -33,9 +33,9 @@ class ExternalTxt(Txt):
 
     def generate_content(self) -> str:
         with open(self.file_path, "r") as file:
-            self.text = file.read()
+            self.txt = file.read()
             if self.as_python:
-                return html_from_txt(eval(self.text), exclude_parse_list=["<", ">"])
+                self.txt =  html_from_txt(eval(self.txt), exclude_parse_list=["<", ">"])
             return super().generate_content()
 
     def on_email_sent(self):

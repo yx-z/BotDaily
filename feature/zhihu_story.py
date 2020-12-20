@@ -43,9 +43,9 @@ class ZhihuStory(Feature):
 
     def _request_answer(self, answer_url: str) -> str:
         answer_id = answer_url[answer_url.rfind("/") + 1 :]
-        api_url = f"https://www.zhihu.com/api/v4/answers/{answer_id}?include=chunk"
+        api_url = f"https://www.zhihu.com/api/v4/answers/{answer_id}?include=content"
         response = requests.get(api_url, headers=HEADER).json()
-        content = response["chunk"]
+        content = response["content"]
         content = content.replace("<noscript>", "").replace("</noscript>", "")
         soup = BeautifulSoup(content, "html.parser")
         for tag in soup.find_all(lambda t: "data-actualsrc" in t.attrs):
@@ -111,12 +111,12 @@ class ZhihuStory(Feature):
                     title = item["question"]["title"]
                     author = item["author"]["name"]
                     content = (
-                        item["chunk"]
+                        item["content"]
                         .replace("<noscript>", "")
                         .replace("</noscript>", "")
                         .replace('<img src="data:img/svg+xml', '<meta src="')
                     )
-                    # further use title, author, chunk here
+                    # further use title, author, content here
                     # ...
             if res_json["paging"]["is_end"] or count >= res_json["paging"]["totals"]:
                 break

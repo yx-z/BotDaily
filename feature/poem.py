@@ -17,6 +17,6 @@ class Poem(Feature):
         url = "https://v2.jinrishici.com/sentence"
         data = requests.get(url, headers={"X-User-Token": self.token}).json()["data"]
         poem = data["origin"]
-        return f"""{data["chunk"]}
+        return f"""{data["content"]}
 —— {poem["dynasty"]}·{poem["author"]} 《{poem["title"]}》
 """
