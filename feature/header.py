@@ -61,7 +61,7 @@ class Header(Feature):
         return html_img(file_name=HEADER_FILE, style=self.img_style)
 
 
-class Randeader(Header):
+class RandHeader(Header):
     def __init__(
         self,
         file_name: str,
