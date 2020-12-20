@@ -8,7 +8,7 @@ from utility.constant import (
 from utility.img import upload_img
 from typing import Optional, List
 
-from utility.system import get_resource_path
+from utility.system import get_res_path
 
 
 def html_from_txt(
@@ -54,7 +54,7 @@ def html_img(
     **kwargs,
 ) -> str:
     if url is None:
-        url = upload_img(get_resource_path(file_name))
+        url = upload_img(get_res_path(file_name))
     return html_tag("img", False, src=url, style=style, **kwargs)
 
 

@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Optional
 
 from feature.base import Feature
-from utility.system import get_resource_path
+from utility.system import get_res_path
 from utility.html_builder import html_tag, html_img, html_emphasis
 from utility.constant import DATE_FORMAT
 
@@ -37,7 +37,7 @@ class Gif(Feature):
         file = list(
             filter(
                 lambda f: f.startswith(f"frame_{id_string}_delay-"),
-                os.listdir(get_resource_path(f"{FEATURE_PATH}/{self.directory_path}")),
+                os.listdir(get_res_path(f"{FEATURE_PATH}/{self.directory_path}")),
             )
         )[0]
         logging.info(f"Gif: {file}")

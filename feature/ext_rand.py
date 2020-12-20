@@ -2,7 +2,7 @@ from typing import Optional
 
 import random
 from feature import Txt
-from utility.system import get_resource_path, clear_file
+from utility.system import get_res_path, clear_file
 
 
 class ExtRand(Txt):
@@ -14,7 +14,7 @@ class ExtRand(Txt):
         title: Optional[str] = None,
     ):
         super().__init__("", div_style, title)
-        self.file_path = get_resource_path(file_name)
+        self.file_path = get_res_path(file_name)
         self.end_of_cycle_line = end_of_cycle_line
 
     def generate_content(self) -> str:

@@ -8,7 +8,7 @@ from configuration.secret import SENDER_EMAIL, SENDER_PASSWORD
 from feature.base import Feature
 from utility.constant import DATE_FORMAT, CSS_SMALL, CSS_CENTER
 from utility.google_keep import GoogleKeep
-from utility.system import get_resource_path
+from utility.system import get_res_path
 from utility.html_builder import html_img, html_from_txt, html_a
 
 
@@ -65,7 +65,7 @@ class ExtMusic(Music):
             title: Optional[str] = "云·音乐",
     ):
         super().__init__(div_style=div_style, img_style=img_style, title=title)
-        self.file_path = get_resource_path(file_name)
+        self.file_path = get_res_path(file_name)
         self.start_date = datetime.strptime(start_date, DATE_FORMAT)
         self.current_date_time = None
 

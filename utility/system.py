@@ -22,11 +22,11 @@ def clear_file(file_path: str):
     open(file_path, "w").close()
 
 
-def get_resource_path(path: str) -> str:
+def get_res_path(path: str) -> str:
     return f"{RESOURCE_PATH}/{path}"
 
 
-FONT_PATH = get_resource_path(FONT_NAME)
+FONT_PATH = get_res_path(FONT_NAME)
 
 
 def process_exists(process_name: str):

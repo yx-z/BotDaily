@@ -5,7 +5,7 @@ from feature.base import Feature
 from utility.constant import CSS_MEDIUM
 from utility.google_keep import GoogleKeep
 from utility.html_builder import html_from_txt, html_img
-from utility.system import get_resource_path
+from utility.system import get_res_path
 
 
 class Txt(Feature):
@@ -27,7 +27,7 @@ class ExternalTxt(Txt):
         title: Optional[str] = None,
     ):
         super().__init__("", div_style, title)
-        self.file_path = get_resource_path(file_name)
+        self.file_path = get_res_path(file_name)
         self.clear_after = clear_after
         self.as_python = as_python
 

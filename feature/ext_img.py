@@ -3,7 +3,7 @@ from typing import Optional
 
 from feature.base import Feature
 from utility.constant import CSS_MEDIUM
-from utility.system import get_resource_path
+from utility.system import get_res_path
 from utility.html_builder import html_img
 from utility.img import upload_img
 
@@ -18,7 +18,7 @@ class ExternalImage(Feature):
         title: Optional[str] = None,
     ):
         super().__init__(div_style, title)
-        self.file_path = get_resource_path(file_name)
+        self.file_path = get_res_path(file_name)
         self.img_style = img_style
         self.clear_after = clear_after
         self.image_url = None  # lazy

@@ -6,9 +6,9 @@ from PIL import ImageFont
 from feature import ExtRand
 from feature.base import Feature
 from utility.constant import DATE_FORMAT, CSS_FULL_WIDTH
-from utility.system import FONT_PATH, get_resource_path
+from utility.system import FONT_PATH, get_res_path
 from utility.html_builder import html_img
-from utility.img import search_unsplash, dl_img, draw_text
+from utility.img import search_unsplash, dl_img, draw_txt
 
 HEADER_FILE = "header.png"
 
@@ -17,7 +17,7 @@ class Header(Feature):
     def __init__(
         self,
         topic: str,
-        text: str,
+        txt: str,
         start_date: str,
         text_size: int = 42,
         img_style: str = CSS_FULL_WIDTH,
@@ -25,9 +25,9 @@ class Header(Feature):
         title: Optional[str] = None,
     ):
         super().__init__(div_style, title)
-        self.text = text
+        self.txt = txt
         self.topic = topic
-        self.text_size = text_size
+        self.txt_size = text_size
         self.start_date = datetime.strptime(start_date, DATE_FORMAT)
         self.img_style = img_style
         self.current_date_time = None  # lazy initialization by Recipient class
@@ -36,28 +36,28 @@ class Header(Feature):
         image_url = search_unsplash(
             self.topic, (self.current_date_time - self.start_date).days
         )
-        image = dl_img(image_url)
+        img = dl_img(image_url)
 
-        width, height = image.size
+        width, height = img.size
         left = 0
         top = height / 4
         right = min(1080, width)
         bottom = min(height, top + 400)
-        image = image.crop((left, top, right, bottom))
+        img = img.crop((left, top, right, bottom))
 
         position = (80, 100)
         text_color = (255, 255, 255)
         border_color = (0, 20, 20)
-        font = ImageFont.truetype(FONT_PATH, self.text_size)
-        text = (
-            f"{self.current_date_time.month}/{self.current_date_time.day} {self.text}"
+        font = ImageFont.truetype(FONT_PATH, self.txt_size)
+        txt = (
+            f"{self.current_date_time.month}/{self.current_date_time.day} {self.txt}"
         )
-        image = draw_text(image, position, text, font, text_color, border_color)
+        img = draw_txt(img, position, txt, font, text_color, border_color)
 
         font2 = ImageFont.truetype(FONT_PATH, 32)
-        image = draw_text(image, (80, 320), self.topic, font2, text_color, border_color)
+        img = draw_txt(img, (80, 320), self.topic, font2, text_color, border_color)
 
-        image.save(get_resource_path(HEADER_FILE))
+        img.save(get_res_path(HEADER_FILE))
         return html_img(file_name=HEADER_FILE, style=self.img_style)
 
 
@@ -65,7 +65,7 @@ class RandomHeader(Header):
     def __init__(
         self,
         file_name: str,
-        text: str,
+        txt: str,
         start_date: str,
         end_of_cycle_line: str = "=====",
         text_size: int = 42,
@@ -73,7 +73,7 @@ class RandomHeader(Header):
         div_style: str = "",
         title: Optional[str] = None,
     ):
-        super().__init__("", text, start_date, text_size, img_style, div_style, title)
+        super().__init__("", txt, start_date, text_size, img_style, div_style, title)
         self.randomizer = ExtRand(file_name, end_of_cycle_line)
 
     def generate_content(self) -> str:

@@ -15,7 +15,7 @@ def upload_img(path: str) -> str:
     return IMGUR.upload_image(path).link
 
 
-def draw_text(
+def draw_txt(
     img: Image,
     position: Tuple[int, int],
     text: str,
