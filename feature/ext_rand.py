@@ -19,7 +19,7 @@ class ExtRand(Txt):
 
     def generate_content(self) -> str:
         with open(self.file_path, "r") as file:
-            self.text = ExtRand.ignore_new_line(file.readline())
+            self.txt = ExtRand.ignore_new_line(file.readline())
         return super().generate_content()
 
     def on_email_sent(self):
