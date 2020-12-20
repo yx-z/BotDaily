@@ -61,19 +61,19 @@ class Header(Feature):
         return html_img(file_name=HEADER_FILE, style=self.img_style)
 
 
-class RandomHeader(Header):
+class Randeader(Header):
     def __init__(
         self,
         file_name: str,
         txt: str,
         start_date: str,
         end_of_cycle_line: str = "=====",
-        text_size: int = 42,
+        txt_size: int = 42,
         img_style: str = "",
         div_style: str = "",
         title: Optional[str] = None,
     ):
-        super().__init__("", txt, start_date, text_size, img_style, div_style, title)
+        super().__init__("", txt, start_date, txt_size, img_style, div_style, title)
         self.randomizer = ExtRand(file_name, end_of_cycle_line)
 
     def generate_content(self) -> str:
