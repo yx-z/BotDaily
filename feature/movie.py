@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Optional
 
 from feature.base import Feature
-from utility.constant import DATE_FORMAT
+from utility.constant import DATE_FORMAT, CSS_CENTER
 from utility.system import get_resource_path
 from utility.html_builder import html_div
 
@@ -15,7 +15,7 @@ class Movie(Feature):
         self,
         order_file_name: str,
         start_date: str,
-        div_style: str = "",
+        div_style: str = CSS_CENTER,
         title: Optional[str] = "云·电影",
     ):
         super().__init__(div_style, title)

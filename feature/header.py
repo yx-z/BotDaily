@@ -5,7 +5,7 @@ from PIL import ImageFont
 
 from feature import ExtRand
 from feature.base import Feature
-from utility.constant import DATE_FORMAT
+from utility.constant import DATE_FORMAT, CSS_FULL_WIDTH
 from utility.system import FONT_PATH, get_resource_path
 from utility.html_builder import html_img
 from utility.img import search_unsplash, dl_img, draw_text
@@ -20,7 +20,7 @@ class Header(Feature):
         text: str,
         start_date: str,
         text_size: int = 42,
-        img_style: str = "",
+        img_style: str = CSS_FULL_WIDTH,
         div_style: str = "",
         title: Optional[str] = None,
     ):

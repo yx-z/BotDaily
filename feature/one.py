@@ -5,6 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from feature.base import Feature
+from utility.constant import CSS_MEDIUM, CSS_CENTER
 
 
 class One(Feature):
@@ -31,6 +32,14 @@ class One(Feature):
 
 
 class OneCover(One):
+    def __init__(
+        self,
+        img_style: str = CSS_MEDIUM,
+        div_style: str = CSS_CENTER,
+        title: Optional[str] = "One·一个",
+    ):
+        super().__init__(img_style, div_style, title)
+
     def generate_content(self) -> str:
         img = One._get_home().find("img", class_="fp-one-imagen")
         img["style"] = self.img_style

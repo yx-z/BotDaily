@@ -15,7 +15,7 @@ class Weather(Feature):
         longitude: float,
         city_name: str,
         div_style: str = "",
-        title: Optional[str] = "今日天气",
+        title: Optional[str] = None,
     ):
         super().__init__(div_style, title)
         self.latitude = latitude

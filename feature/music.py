@@ -6,7 +6,7 @@ import requests
 
 from configuration.secret import SENDER_EMAIL, SENDER_PASSWORD
 from feature.base import Feature
-from utility.constant import DATE_FORMAT
+from utility.constant import DATE_FORMAT, CSS_SMALL, CSS_CENTER
 from utility.google_keep import GoogleKeep
 from utility.system import get_resource_path
 from utility.html_builder import html_img, html_from_txt, html_a
@@ -17,8 +17,8 @@ class Music(Feature):
         self,
         chunk: Optional[str] = None,
         netease_tuple: Optional[Tuple[int, str, str, str]] = None,
-        img_style: str = "",
-        div_style: str = "",
+        img_style: str = CSS_SMALL,
+        div_style: str = CSS_CENTER,
         title: Optional[str] = "云·音乐",
     ):
         super().__init__(div_style, title)
