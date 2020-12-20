@@ -35,7 +35,7 @@ class OneCover(One):
     def __init__(
         self,
         img_style: str = CSS_MEDIUM,
-        div_style: str = CSS_CENTER,
+        div_style: str = "",
         title: Optional[str] = "One·一个",
     ):
         super().__init__(img_style, div_style, title)
@@ -48,7 +48,7 @@ class OneCover(One):
 
 class OneQuote(One):
     def __init__(
-        self, img_style: str = "", div_style: str = "", title: Optional[str] = None
+        self, img_style: str = "", div_style: str = CSS_CENTER, title: Optional[str] = None
     ):
         super().__init__(img_style, div_style, title)
 

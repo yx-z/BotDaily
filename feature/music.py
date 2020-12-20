@@ -60,8 +60,8 @@ class ExtMusic(Music):
             self,
             file_name: str,
             start_date: str,
-            div_style: str = "",
-            img_style: str = "",
+            div_style: str = CSS_CENTER,
+            img_style: str = CSS_SMALL,
             title: Optional[str] = "云·音乐",
     ):
         super().__init__(div_style=div_style, img_style=img_style, title=title)
@@ -82,8 +82,8 @@ class GoogleKeepMusic(Music):
             self,
             note_id: str,
             clear_after: bool = False,
-            div_style: str = "",
-            img_sytle: str = "",
+            div_style: str = CSS_CENTER,
+            img_sytle: str = CSS_SMALL,
             title: Optional[str] = "云·音乐",
     ):
         super().__init__(div_style=div_style, img_style=img_sytle, title=title)
