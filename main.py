@@ -28,7 +28,7 @@ def main(args):
 
     is_prod = len(args) == 1
     if is_prod:
-        if process_exists("python3 main.py"):
+        if process_exists("python main.py"):
             logging.warning("BotDaily process already exists.")
             return
         setup_prod_logger()
