@@ -25,7 +25,7 @@ def draw_txt(
 ) -> Image:
     x, y = position
     shadow = Image.new("RGBA", img.size, (0, 0, 0, 0))
-    ImageDraw.Draw(shadow).txt((x + 1, y + 1), text, font=font, fill=shadow_color)
+    ImageDraw.Draw(shadow).text((x + 1, y + 1), text, font=font, fill=shadow_color)
     blurred_shadow = shadow.filter(ImageFilter.BLUR)
 
     ImageDraw.Draw(blurred_shadow).text(position, text, font=font, fill=color)
