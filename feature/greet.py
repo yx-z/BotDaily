@@ -28,9 +28,9 @@ class Greet(Txt):
 
     def generate_content(self) -> str:
         if self.start_date is not None:
-            self.txt += f"遇见{self.recipient_name}的第{self._get_days(self.start_date)}天, "
+            self.txt += f"初见{self.recipient_name}的第{self._get_days(self.start_date)}天, "
         if self.commit_date is not None:
-            self.txt += f"以及倾心的第{(self._get_days(self.commit_date))}天,"
+            self.txt += f"再见倾心的第{(self._get_days(self.commit_date))}天, "
 
         hour = self.current_date_time.hour
         if hour in range(5, 13):
