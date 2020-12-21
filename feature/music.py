@@ -14,11 +14,11 @@ from utility.html_builder import html_img, html_from_txt, html_a
 
 class Music(Feature):
     def __init__(
-            self,
-            content: Optional[str] = None,
-            img_style: str = CSS_SMALL,
-            div_style: str = CSS_CENTER,
-            title: Optional[str] = "云·音乐",
+        self,
+        content: Optional[str] = None,
+        img_style: str = CSS_SMALL,
+        div_style: str = CSS_CENTER,
+        title: Optional[str] = "云·音乐",
     ):
         super().__init__(div_style, title)
         self.img_style = img_style
@@ -57,12 +57,12 @@ class Music(Feature):
 
 class ExtMusic(Music):
     def __init__(
-            self,
-            file_name: str,
-            start_date: str,
-            div_style: str = CSS_CENTER,
-            img_style: str = CSS_SMALL,
-            title: Optional[str] = "云·音乐",
+        self,
+        file_name: str,
+        start_date: str,
+        div_style: str = CSS_CENTER,
+        img_style: str = CSS_SMALL,
+        title: Optional[str] = "云·音乐",
     ):
         super().__init__(div_style=div_style, img_style=img_style, title=title)
         self.file_path = get_res_path(file_name)
@@ -79,12 +79,12 @@ class ExtMusic(Music):
 
 class GoogleKeepMusic(Music):
     def __init__(
-            self,
-            note_id: str,
-            clear_after: bool = False,
-            div_style: str = CSS_CENTER,
-            img_sytle: str = CSS_SMALL,
-            title: Optional[str] = "云·音乐",
+        self,
+        note_id: str,
+        clear_after: bool = False,
+        div_style: str = CSS_CENTER,
+        img_sytle: str = CSS_SMALL,
+        title: Optional[str] = "云·音乐",
     ):
         super().__init__(div_style=div_style, img_style=img_sytle, title=title)
         self.note_id = note_id

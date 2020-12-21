@@ -2,7 +2,7 @@ import time
 from datetime import datetime, timedelta
 from math import ceil
 
-from utility.constant import RESOURCE_PATH, FONT_NAME
+from utility.constant import RES_PATH, FONT_NAME
 
 import signal
 from contextlib import contextmanager
@@ -23,7 +23,7 @@ def clear_file(file_path: str):
 
 
 def get_res_path(path: str) -> str:
-    return f"{RESOURCE_PATH}/{path}"
+    return f"{RES_PATH}/{path}"
 
 
 FONT_PATH = get_res_path(FONT_NAME)

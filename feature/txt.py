@@ -35,7 +35,7 @@ class ExternalTxt(Txt):
         with open(self.file_path, "r") as file:
             self.txt = file.read()
             if self.as_python:
-                self.txt =  html_from_txt(eval(self.txt), exclude_parse_list=["<", ">"])
+                self.txt = html_from_txt(eval(self.txt), exclude_parse_list=["<", ">"])
             return super().generate_content()
 
     def on_email_sent(self):

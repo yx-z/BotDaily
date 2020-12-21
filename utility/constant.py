@@ -1,4 +1,4 @@
-RESOURCE_PATH = "resource"
+RES_PATH = "resource"
 
 FONT_NAME = "Hiragino Sans GB.ttc"
 

@@ -49,9 +49,7 @@ class Header(Feature):
         text_color = (255, 255, 255)
         border_color = (0, 20, 20)
         font = ImageFont.truetype(FONT_PATH, self.txt_size)
-        txt = (
-            f"{self.current_date_time.month}/{self.current_date_time.day} {self.txt}"
-        )
+        txt = f"{self.current_date_time.month}/{self.current_date_time.day} {self.txt}"
         img = draw_txt(img, position, txt, font, text_color, border_color)
 
         font2 = ImageFont.truetype(FONT_PATH, 32)
