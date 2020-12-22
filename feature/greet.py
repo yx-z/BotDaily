@@ -27,6 +27,7 @@ class Greet(Txt):
         self.current_date_time = None  # lazy initialization by Recipient class
 
     def generate_content(self) -> str:
+        self.txt = ""
         if self.start_date is not None:
             self.txt += f"初见{self.recipient_name}的第{self._get_days(self.start_date)}天, "
         if self.commit_date is not None:
