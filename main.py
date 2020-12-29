@@ -4,7 +4,7 @@ import sys
 import time
 from math import ceil
 
-from configuration.secret import LOG_FILE, SENDER_EMAIL, SENDER_PASSWORD
+from configuration.secret import LOG_DIR, SENDER_EMAIL, SENDER_PASSWORD
 from mail.sender import GmailSender
 from utility.constant import *
 from datetime import datetime, timedelta
