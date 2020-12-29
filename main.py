@@ -32,10 +32,9 @@ def main(args):
             logging.warning("BotDaily process already exists.")
             return
 
-        setup_prod_logger(datetime.now())
-
         while True:
             now = datetime.now()
+            setup_prod_logger(now)
             now_str = now.strftime("%H:%M")
             time_to_recipients = get_recipients()
             if now_str in time_to_recipients:
