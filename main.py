@@ -31,9 +31,11 @@ def main(args):
         if process_exists("python"):
             logging.warning("BotDaily process already exists.")
             return
+
+        setup_prod_logger(datetime.now())
+
         while True:
             now = datetime.now()
-            setup_prod_logger(now)
             now_str = now.strftime("%H:%M")
             time_to_recipients = get_recipients()
             if now_str in time_to_recipients:
@@ -50,27 +52,24 @@ def main(args):
 
             sleep_until_next_minute(now)
     else:
-        now = datetime.now()
-        setup_test_logger(now)
+        setup_test_logger(datetime.now())
         mode = args[1]
         if mode.startswith("test"):
 
-            def test_recipient(recipient: Recipient):
-                set_recipient_test_mode(recipient, now, args)
+            def test_recipient(rec: Recipient):
+                set_recipient_test_mode(rec, args)
                 if mode == "test":
-                    sender.send_recipient_email(
-                        recipient, also_test_next=ALSO_TEST_NEXT
-                    )
+                    sender.send_recipient_email(rec, also_test_next=ALSO_TEST_NEXT)
                 elif mode == "testNext":
-                    sender.test_recipient_next_day(recipient)
+                    sender.test_recipient_next_day(rec)
 
             for_all_recipients(test_recipient)
         elif mode.startswith("now"):
 
-            def send_recipient_now(recipient: Recipient):
-                recipient.set_current_date_time(now)
+            def send_recipient_now(rec: Recipient):
+                rec.set_current_date_time(datetime.now())
                 sender.send_recipient_email(
-                    recipient,
+                    rec,
                     send_self=SEND_SELF,
                     num_retry=NUM_RETRY,
                     also_test_next=ALSO_TEST_NEXT,
@@ -79,12 +78,12 @@ def main(args):
             for_all_recipients(send_recipient_now)
 
 
-def set_recipient_test_mode(recipient: Recipient, date: datetime, args: List[str]):
+def set_recipient_test_mode(recipient: Recipient, args: List[str]):
     recipient.email_address = SENDER_EMAIL
     recipient.on_email_sent = lambda: None
-    recipient.set_current_date_time(date)
-    previous_subject = recipient.generate_subject
-    recipient.generate_subject = lambda: f"TEST {previous_subject()}"
+    recipient.set_current_date_time(datetime.now())
+    generate_pre_subject = recipient.generate_subject
+    recipient.generate_subject = lambda: f"TEST {generate_pre_subject()}"
     if len(args) > 2:
         recipient.test_next_day_feature = args[2:]
 

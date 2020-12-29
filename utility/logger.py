@@ -16,6 +16,8 @@ def setup_prod_logger(date: datetime):
         datefmt=f"{DATE_FORMAT} {TIME_FORMAT}",
         filename=f"{LOG_DIR}/prod_{date.strftime('%Y%m%d')}.log",
     )
+    pid = os.getpid()
+    logging.info(f"PID - {os.getpid()}")
 
 
 def setup_test_logger(date: datetime):
