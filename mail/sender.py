@@ -40,7 +40,7 @@ class Sender:
                 logging.info(f"Email sent to {destination_email_address}")
                 recipient.on_email_sent()
         except Exception as exception:
-            logging.info(f"Exception occured during body generation: {exception}")
+            logging.info(f"Exception occurred during body generation: {exception}")
             logging.info(traceback.format_exc())
             if num_retry > 0:
                 logging.info(f"Retrying with remaining tries of {num_retry}")

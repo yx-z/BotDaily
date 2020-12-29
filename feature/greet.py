@@ -7,22 +7,20 @@ from utility.constant import DATE_FORMAT
 
 class Greet(Txt):
     def __init__(
-            self,
-            recipient_name: str,
-            start_date: Optional[str] = None,
-            commit_date: Optional[str] = None,
-            div_style: str = "",
-            title: Optional[str] = None,
+        self,
+        recipient_name: str,
+        start_date: Optional[str] = None,
+        commit_date: Optional[str] = None,
+        div_style: str = "",
+        title: Optional[str] = None,
     ):
         super().__init__("", div_style, title)
         self.recipient_name = recipient_name
         self.start_date = (
-            None if start_date is None
-            else datetime.strptime(start_date, DATE_FORMAT)
+            None if start_date is None else datetime.strptime(start_date, DATE_FORMAT)
         )
         self.commit_date = (
-            None if commit_date is None
-            else datetime.strptime(commit_date, DATE_FORMAT)
+            None if commit_date is None else datetime.strptime(commit_date, DATE_FORMAT)
         )
         self.current_date_time = None  # lazy initialization by Recipient class
 
