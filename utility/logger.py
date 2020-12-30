@@ -1,6 +1,7 @@
 import logging
 import os
 from datetime import datetime
+from pathlib import Path
 
 from configuration.secret import LOG_DIR
 
@@ -10,6 +11,7 @@ LOG_FORMAT = "%(asctime)s %(levelname)-10s %(message)s"
 
 
 def setup_prod_logger(date: datetime):
+    Path.mkdir(LOG_DIR, exist_ok=True)
     logging.basicConfig(
         level=logging.INFO,
         format=LOG_FORMAT,
@@ -19,6 +21,7 @@ def setup_prod_logger(date: datetime):
 
 
 def setup_test_logger(date: datetime):
+    Path.mkdir(LOG_DIR, exist_ok=True)
     logging.basicConfig(
         level=logging.INFO,
         format=LOG_FORMAT,
