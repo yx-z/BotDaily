@@ -11,7 +11,7 @@ class GoogleKeep:
         self._keep.login(self.account, self.password)
 
     def _get_note(self) -> TopLevelNode:
-        return self._keep.find(query=self.title)[0]
+        return next(self._keep.find(query=self.title))
 
     def get_note_txt(self):
         return self._get_note().text

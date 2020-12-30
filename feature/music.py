@@ -80,16 +80,16 @@ class ExtMusic(Music):
 class GoogleKeepMusic(Music):
     def __init__(
         self,
-        note_id: str,
+        google_keep_name: str,
         clear_after: bool = False,
         div_style: str = CSS_CENTER,
         img_sytle: str = CSS_SMALL,
         title: Optional[str] = "云·音乐",
     ):
         super().__init__(div_style=div_style, img_style=img_sytle, title=title)
-        self.note_id = note_id
+        self.note_id = google_keep_name
         self.clear_after = clear_after
-        self.keep = GoogleKeep(SENDER_EMAIL, SENDER_PASSWORD, note_id)
+        self.keep = GoogleKeep(SENDER_EMAIL, SENDER_PASSWORD, google_keep_name)
 
     def generate_content(self) -> str:
         content = self.keep.get_note_txt().split("\n")
