@@ -3,18 +3,15 @@ from gkeepapi.node import TopLevelNode
 
 
 class GoogleKeep:
-    def __init__(self, account: str, password: str, note_id: str):
+    def __init__(self, account: str, password: str, title: str):
         self._keep = gkeepapi.Keep()
         self.account = account
         self.password = password
-        self.note_id = note_id
+        self.title = title
         self._keep.login(self.account, self.password)
 
     def _get_note(self) -> TopLevelNode:
-        return self._keep.get(self.note_id)
-
-    def get_note_title(self):
-        return self._get_note().title
+        return self._keep.find(query=self.title)[0]
 
     def get_note_txt(self):
         return self._get_note().text
