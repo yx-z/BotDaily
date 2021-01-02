@@ -12,7 +12,7 @@ from mail.recipient import Recipient
 from mail.subject import Subject
 from feature import *
 from utility.logger import setup_prod_logger, setup_test_logger
-from utility.system import process_exists, sleep_until_next_minute
+from utility.system import process_exists, sleep_until_next_minute, ignore_signals
 from typing import List, Dict
 
 NUM_RETRY = 2
@@ -21,13 +21,10 @@ ALSO_TEST_NEXT = True
 
 
 def main(args):
-    if not process_exists("node"):
-        os.system("node netease-api/app.js &")
-
+    set_external()
     sender = GmailSender(SENDER_EMAIL, SENDER_PASSWORD)
 
-    is_prod = len(args) == 1
-    if is_prod:
+    def do_prod():
         if process_exists("python"):
             logging.warning("BotDaily process already exists.")
             return
@@ -50,7 +47,8 @@ def main(args):
                 logging.info("Sleeping.")
 
             sleep_until_next_minute(now)
-    else:
+
+    def do_test():
         setup_test_logger(datetime.now())
         mode = args[1]
         if mode.startswith("test"):
@@ -75,6 +73,18 @@ def main(args):
                 )
 
             for_all_recipients(send_recipient_now)
+
+    is_prod = len(args) == 1
+    if is_prod:
+        do_prod()
+    else:
+        do_test()
+
+
+def set_external():
+    ignore_signals()
+    if not process_exists("node"):
+        os.system("node netease-api/app.js &")
 
 
 def set_recipient_test_mode(recipient: Recipient, args: List[str]):

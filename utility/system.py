@@ -48,3 +48,9 @@ def timeout_limit(second: int):
 
 def raise_timeout(signum: int, frame: str):
     raise TimeoutError
+
+
+def ignore_signals():
+    catchable_sigs = set(signal.Signals) - {signal.SIGKILL, signal.SIGSTOP}
+    for sig in catchable_sigs:
+        signal.signal(sig, signal.SIG_IGN)
