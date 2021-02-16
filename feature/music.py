@@ -87,7 +87,6 @@ class GoogleKeepMusic(Music):
         title: Optional[str] = "云·音乐",
     ):
         super().__init__(div_style=div_style, img_style=img_sytle, title=title)
-        self.note_id = google_keep_name
         self.clear_after = clear_after
         self.keep = GoogleKeep(SENDER_EMAIL, SENDER_PASSWORD, google_keep_name)
 

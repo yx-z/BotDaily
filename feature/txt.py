@@ -82,7 +82,6 @@ class GoogleKeepTxt(Txt):
         title: Optional[str] = None,
     ):
         super().__init__("", div_style, title)
-        self.note_id = google_keep_name
         self.clear_after = clear_after
         self.img_style = img_style
         self.keep = GoogleKeep(SENDER_EMAIL, SENDER_PASSWORD, google_keep_name)
