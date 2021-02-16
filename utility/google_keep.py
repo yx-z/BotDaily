@@ -11,7 +11,11 @@ class GoogleKeep:
         self._keep.login(self.account, self.password)
 
     def _get_note(self) -> TopLevelNode:
-        return next(self._keep.find(query=self.title))
+        candidates = self._keep.find(func=lambda x: x.title.startswith(self.title))
+        indices = list(map(lambda t: int(t.title[len(self.title):]), candidates))
+        # get candidate w/ largest index
+        return sorted(zip(candidates, indices), key=lambda t: t[1])[-1][0]
+
 
     def get_note_txt(self):
         return self._get_note().text
