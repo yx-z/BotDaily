@@ -17,7 +17,6 @@ class GoogleKeep:
         # get candidate w/ largest index
         return sorted(zip(candidates, indices), key=lambda x: x[1])[-1][0]
 
-
     def get_note_txt(self):
         return self._get_note().text
 
@@ -31,3 +30,6 @@ class GoogleKeep:
 
     def clear_note(self):
         self.set_note_txt("")
+
+    def create_note(self, title: str, text: str):
+        self._keep.createNote(title, text)
