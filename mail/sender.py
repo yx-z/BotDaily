@@ -76,6 +76,7 @@ class Sender:
                 logging.info(
                     f"Checked for {recipient.email_address} on {next_day_date_time_string}"
                 )
+                logging.info(body_html)
                 self._send_email(
                     f"NextDay {subject} for {recipient.email_address} on {next_day_date_time_string}",
                     {self.email_address},

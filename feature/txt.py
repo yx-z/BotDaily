@@ -19,12 +19,12 @@ class Txt(Feature):
 
 class ExternalTxt(Txt):
     def __init__(
-            self,
-            file_name: str,
-            as_python: bool = False,
-            clear_after: bool = False,
-            div_style: str = "",
-            title: Optional[str] = None,
+        self,
+        file_name: str,
+        as_python: bool = False,
+        clear_after: bool = False,
+        div_style: str = "",
+        title: Optional[str] = None,
     ):
         super().__init__("", div_style, title)
         self.file_path = get_res_path(file_name)
@@ -74,12 +74,12 @@ f"""
 
 class GoogleKeepTxt(Txt):
     def __init__(
-            self,
-            google_keep_name: str,
-            clear_after: bool = False,
-            img_style: str = CSS_MEDIUM,
-            div_style: str = "",
-            title: Optional[str] = None,
+        self,
+        google_keep_name: str,
+        clear_after: bool = False,
+        img_style: str = CSS_MEDIUM,
+        div_style: str = "",
+        title: Optional[str] = None,
     ):
         super().__init__("", div_style, title)
         self.clear_after = clear_after
@@ -97,5 +97,5 @@ class GoogleKeepTxt(Txt):
         if self.clear_after:
             self.keep.clear_note()
             if len(self.keep.get_note_imgs()) > 0:
-                seq = int(self.keep._get_note().title[self.title:])
+                seq = int(self.keep._get_note().title[self.title :])
                 self.keep.create_note(f"{self.title}{seq + 1}", "")

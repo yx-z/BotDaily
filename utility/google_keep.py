@@ -11,9 +11,11 @@ class GoogleKeep:
         self._keep.login(self.account, self.password)
 
     def _get_note(self) -> TopLevelNode:
-        candidates = list(self._keep.find(func=lambda x: x.title.startswith(self.title)))
+        candidates = list(
+            self._keep.find(func=lambda x: x.title.startswith(self.title))
+        )
         # get index by suffix in title
-        indices = list(map(lambda x: int(x.title[len(self.title):]), candidates))
+        indices = list(map(lambda x: int(x.title[len(self.title) :]), candidates))
         # get candidate w/ largest index
         return sorted(zip(candidates, indices), key=lambda x: x[1])[-1][0]
 

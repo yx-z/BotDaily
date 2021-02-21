@@ -26,8 +26,7 @@ def setup_test_logger(date: datetime):
         format=LOG_FORMAT,
         datefmt=f"{DATE_FORMAT} {TIME_FORMAT}",
         handlers=[
-            logging.FileHandler(
-                f"{LOG_DIR}/test_{date.strftime('%Y%m%d')}.log"),
+            logging.FileHandler(f"{LOG_DIR}/test_{date.strftime('%Y%m%d')}.log"),
             logging.StreamHandler(),
         ],
     )
