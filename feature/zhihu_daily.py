@@ -19,7 +19,10 @@ class ZhihuDaily(Feature):
         stories = requests.get(stories_url, headers=USER_AGENT).json()["stories"]
         return "".join(
             map(
-                lambda story: f"{html_img(url=story['images'][0], style=CSS_SMALL)}{html_div(inner_html=html_a(text=story['title'], url=story['url']), style=CSS_CENTER)}",
+                lambda story: f"""
+{html_img(url=story['images'][0], style=CSS_SMALL)}
+{html_div(inner_html=html_a(text=story['title'], url=story['url']), style=CSS_CENTER + "padding: 5px;")}
+""",
                 stories,
             )
         )
