@@ -1,10 +1,11 @@
-from typing import List, Dict, Optional
+from typing import Optional
+
 from utility.constant import CSS_SMALL, CSS_CENTER
 
 import requests
-from bs4 import BeautifulSoup
 
 from feature.base import Feature
+from utility.html_builder import html_img, html_a
 
 USER_AGENT = {"User-agent": "Mozilla/5.0"}
 
@@ -16,12 +17,14 @@ class ZhihuDaily(Feature):
     def generate_content(self) -> str:
         stories_url = "https://news-at.zhihu.com/api/4/stories/latest"
         stories = requests.get(stories_url, headers=USER_AGENT).json()["stories"]
-        html = ""
-        for story in stories:
-            html += f"""
-<div style="padding: 5px;">
-<img src="{story['images'][0]}" style="{CSS_SMALL}">
-<div style="{CSS_CENTER}"><a href="{story['url']}">{story['title']}</a></div>
-</div>
-"""
-        return html
+        return "".join(
+            map(
+                lambda story: "".join(
+                    [
+                        html_img(url=story["images"][0], style=CSS_SMALL),
+                        html_a(text=story["title"], url=story["url"], style=CSS_CENTER),
+                    ]
+                ),
+                stories,
+            )
+        )

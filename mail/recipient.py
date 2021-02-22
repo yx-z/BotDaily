@@ -26,6 +26,8 @@ class Recipient:
         self.subject = subject
         self.div_style = div_style
         self.features = features
+        if test_next_day_feature is None:
+            test_next_day_feature = []
         self.test_next_day_feature = test_next_day_feature
         self.current_date_time = None  # lazy initialization by set_current_date_time
 
