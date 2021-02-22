@@ -5,7 +5,7 @@ from utility.constant import CSS_SMALL, CSS_CENTER
 import requests
 
 from feature.base import Feature
-from utility.html_builder import html_img, html_a
+from utility.html_builder import html_img, html_a, html_div
 
 USER_AGENT = {"User-agent": "Mozilla/5.0"}
 
@@ -22,7 +22,10 @@ class ZhihuDaily(Feature):
                 lambda story: "".join(
                     [
                         html_img(url=story["images"][0], style=CSS_SMALL),
-                        html_a(text=story["title"], url=story["url"], style=CSS_CENTER),
+                        html_div(
+                            inner_html=html_a(text=story["title"], url=story["url"], style=CSS_CENTER),
+                            style=f"padding: 5px; {CSS_CENTER}"
+                        )
                     ]
                 ),
                 stories,
