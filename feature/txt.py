@@ -97,5 +97,5 @@ class GoogleKeepTxt(Txt):
         if self.clear_after:
             self.keep.clear_note()
             if len(self.keep.get_note_imgs()) > 0:
-                seq = int(self.keep._get_note().title[self.title :])
+                seq = int(self.keep._get_note().title[len(self.title) :])
                 self.keep.create_note(f"{self.title}{seq + 1}", "")

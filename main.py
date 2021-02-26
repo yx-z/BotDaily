@@ -15,7 +15,7 @@ from utility.logger import setup_prod_logger, setup_test_logger
 from utility.system import process_exists, sleep_until_next_minute, ignore_signals
 from typing import List, Dict
 
-NUM_RETRY = 2
+NUM_RETRY = 1
 SEND_SELF = True
 ALSO_TEST_NEXT = True
 
